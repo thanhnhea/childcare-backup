@@ -8,6 +8,6 @@ public class DemoController {
 
     @GetMapping("/")
     public String testConnection(){
-        return "hello world";
+        return "hello world 12 2 33 4 ";
     }
 }
