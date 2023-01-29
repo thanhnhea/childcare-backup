@@ -5,26 +5,31 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "blogs")
 public class Blog {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "users_id")
-    Users users;
-
+    @Column(nullable = false)
     private String title;
-    private String content;
-    private Date createdDate;
-    private Date updatedDate;
+
+    @Column(nullable = false)
+    private String author;
+
+    @Column(nullable = false)
+    private LocalDateTime datePublished;
+
+    @Column(nullable = false, columnDefinition = "text")
+    private String bodyText;
 
 
 }

@@ -6,22 +6,32 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class Feedback {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "users_id")
-    private Users users;
+    @Column(nullable = false)
+    private String customerName;
 
-    private String content;
-    private String name;
+    @Column(nullable = false)
+    private LocalDateTime date;
+
+    @Column(nullable = false)
+    private Integer rating;
+
+    @Column(nullable = false)
+    private String reviewText;
+
+    @ManyToOne
+    @JoinColumn(name = "booking_id")
+    private Booking booking;
 
 
 }
