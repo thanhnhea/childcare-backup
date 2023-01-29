@@ -1,13 +1,15 @@
 package com.fu.swp.childcare.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class DemoController {
+@RequestMapping("/")
+public class TestController {
 
-    @GetMapping("/")
-    public String testConnection(){
-        return "hello world";
+    @GetMapping
+    public String getHOme(){
+        return "Hello World";
     }
 }
