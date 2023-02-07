@@ -1,27 +1,25 @@
 package com.fu.swp.childcare.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.List;
-
 @Entity
+@Table(name = "authorities")
 @Getter
 @Setter
-@NoArgsConstructor
-public class Role {
+public class Authority {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
     @GenericGenerator(name = "native",strategy = "native")
     private Long id;
 
-    @Column(nullable = false, unique = true)
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "id")
     private User user;
+
 }

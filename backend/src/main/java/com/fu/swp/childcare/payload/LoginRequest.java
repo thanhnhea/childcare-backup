@@ -1,4 +1,4 @@
-package com.fu.swp.childcare.auth;
+package com.fu.swp.childcare.payload;
 
 public class LoginRequest {
     private String username;

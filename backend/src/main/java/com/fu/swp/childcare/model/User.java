@@ -1,9 +1,13 @@
 package com.fu.swp.childcare.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Entity
 @Getter
@@ -31,13 +35,16 @@ public class User {
 
     private String address;
 
-    // other properties
-
     @OneToOne(mappedBy = "user")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Password password;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @JsonIgnore
+    @OneToMany(mappedBy="user",fetch=FetchType.EAGER)
+    private Set<Authority> authorities;
 
 }
