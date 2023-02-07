@@ -1,8 +1,5 @@
-package com.fu.swp.childcare.auth;
+package com.fu.swp.childcare.payload;
 
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.Collection;
 import java.util.List;
 
 public class LoginResponse {
