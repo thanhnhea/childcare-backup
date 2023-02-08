@@ -1,5 +1,7 @@
 package com.fu.swp.childcare.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fu.swp.childcare.controller.mapping.UserDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,9 +37,22 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Password password;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
+
+    public UserDto toUserDto() {
+        UserDto toUser = new UserDto();
+        toUser.setId(id);
+        toUser.setEmail(email);
+        toUser.setAddress(address);
+        toUser.setPhone(phone);
+        toUser.setUsername(username);
+        toUser.setFirstName(firstName);
+        toUser.setLastName(lastName);
+        toUser.setRole(role);
+        return toUser;
+    }
 }
