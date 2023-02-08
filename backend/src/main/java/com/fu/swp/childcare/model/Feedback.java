@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "feedbacks")
 public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
