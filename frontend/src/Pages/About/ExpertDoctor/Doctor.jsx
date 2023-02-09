@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import expertDentist from '../../../Images/experienceddentist.png';
-import './Dentist.css';
+import './Doctor.css';
 
 const Dentist = () => {
     return (
@@ -14,8 +14,8 @@ const Dentist = () => {
                     <Col lg={6}>
                         <div className="expertDentist-txt mt-5 mt-lg-0">
                             <h2>Experienced Doctor</h2>
-                            <p>Smiling comes naturally to Dr. Harrie, author of ‘Donto’. He has embraced Cosmetic Dentistry and has redesigned the smiles for thev thousands of patients.</p>
-                            <p>Dr. Harrie believes in providing her patients with more than just world class dental care. He also helps patients recognize the vital connection between dental health and whole body health. A graduate of the University of California’s School of Dentistry, Dr. Harrie is a leader in the movement to bring environmental sanity and well-being into the dental world for future.</p>
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, ducimus? Fuga similique ducimus deleniti, quas beatae incidunt repellendus dolorem ex dolore sit sunt quaerat dicta quia non? Sapiente, ab iure?</p>
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero quae adipisci quam voluptatem! Fugit, deserunt? Aspernatur inventore, ex ipsam perspiciatis vero, nobis facilis, fugiat explicabo cupiditate dolor nihil sunt nisi.</p>
                         </div>
                     </Col>
                 </Row>

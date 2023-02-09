@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { FakeDoctors } from '../../FakeData/Dentist';
+import { FakeDoctors } from '../../FakeData/Doctor';
 import Doctors from '../../Pages/Home/Doctors/Doctors';
 
 const Dentist = () => {

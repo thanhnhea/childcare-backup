@@ -1,7 +1,7 @@
 export const FakeBlog = [
     {
         "id": "001",
-        "title": "Maximize Your 2019 Dental Insurance with lots of Benefits",
+        "title": "Maximize Your 2023 Dental Insurance with lots of Benefits",
         "span1": "Post by: Salman",
         "span2": "12 Oct, 2019",
         "img": "https://i.ibb.co/1LnXPFk/blog1.jpg"
