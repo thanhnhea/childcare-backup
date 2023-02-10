@@ -2,6 +2,10 @@ package com.fu.swp.childcare.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+<<<<<<< HEAD
+=======
+import com.fu.swp.childcare.controller.mapping.UserDto;
+>>>>>>> master
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +43,10 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Password password;
 
+<<<<<<< HEAD
+=======
+    @JsonIgnore
+>>>>>>> master
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
@@ -47,4 +55,20 @@ public class User {
     @OneToMany(mappedBy="user",fetch=FetchType.EAGER)
     private Set<Authority> authorities;
 
+<<<<<<< HEAD
+=======
+
+    public UserDto toUserDto() {
+        UserDto toUser = new UserDto();
+        toUser.setId(id);
+        toUser.setEmail(email);
+        toUser.setAddress(address);
+        toUser.setPhone(phone);
+        toUser.setUsername(username);
+        toUser.setFirstName(firstName);
+        toUser.setLastName(lastName);
+        toUser.setRole(role);
+        return toUser;
+    }
+>>>>>>> master
 }

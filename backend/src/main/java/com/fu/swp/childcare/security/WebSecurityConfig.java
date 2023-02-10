@@ -34,6 +34,7 @@ public class WebSecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+<<<<<<< HEAD
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
         requestHandler.setCsrfRequestAttributeName("_csrf");
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
@@ -66,6 +67,31 @@ public class WebSecurityConfig {
                 .requestMatchers("/","/signin","/register").permitAll()
                 .and().formLogin()
                 .and().httpBasic();
+=======
+        http.cors().and().csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeHttpRequests ()
+                .requestMatchers ("/", "/api/auth/signup").permitAll()
+                .requestMatchers ("/api/auth/signin").permitAll()
+                .requestMatchers ("/api/test/**").permitAll()
+                .requestMatchers ("/admin/**").hasAnyAuthority("ADMIN")
+                .requestMatchers ("/account/**").hasAnyAuthority("USER")
+                .requestMatchers("/manage/**").hasAnyAuthority("MANAGER")
+                .requestMatchers("/staff/**").hasAnyAuthority("STAFF")
+                .anyRequest().authenticated()
+                .and()
+                // logout
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/access-denied");
+//                .requestMatchers ("localhost/8080" + "/**").permitAll()
+        // fix H2 database console: Refused to display ' in a frame because it set 'X-Frame-Options' to 'deny'
+        http.headers().frameOptions().sameOrigin();
+
+>>>>>>> master
         return http.build();
     }
 
@@ -74,7 +100,10 @@ public class WebSecurityConfig {
         return new JdbcUserDetailsManager(dataSource);
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
