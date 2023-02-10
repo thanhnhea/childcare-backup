@@ -1,12 +1,7 @@
 package com.fu.swp.childcare.controller;
 
-import com.fu.swp.childcare.model.ERole;
-import com.fu.swp.childcare.model.Role;
-import com.fu.swp.childcare.model.User;
 import com.fu.swp.childcare.payload.LoginRequest;
-import com.fu.swp.childcare.payload.SignupRequest;
 import com.fu.swp.childcare.payload.response.JwtResponse;
-import com.fu.swp.childcare.payload.response.MessageResponse;
 import com.fu.swp.childcare.repositories.RoleRepository;
 import com.fu.swp.childcare.repositories.UserRepository;
 import com.fu.swp.childcare.security.jwt.JwtUtils;
@@ -21,9 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -43,11 +36,6 @@ public class AuthController {
     PasswordEncoder encoder;
     @Autowired
     JwtUtils jwtUtils;
-
-    @GetMapping("/test")
-    public String testAuthController () {
-        return "hello world";
-    }
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
