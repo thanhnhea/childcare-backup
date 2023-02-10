@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
@@ -26,7 +27,8 @@ import javax.sql.DataSource;
 
 
 @Configuration
-@EnableGlobalAuthentication
+@EnableGlobalMethodSecurity(
+        prePostEnabled = true)
 public class WebSecurityConfig {
 
     @Bean
@@ -39,7 +41,7 @@ public class WebSecurityConfig {
                 .requestMatchers ("/api/test/**").permitAll()
                 .requestMatchers ("/admin/**").hasAnyAuthority("ADMIN")
                 .requestMatchers ("/account/**").hasAnyAuthority("USER")
-                .requestMatchers("/manage/**").hasAnyAuthority("MANAGER")
+                .requestMatchers("/mod/**").hasAnyAuthority("MANAGER")
                 .requestMatchers("/staff/**").hasAnyAuthority("STAFF")
                 .anyRequest().authenticated()
                 .and()

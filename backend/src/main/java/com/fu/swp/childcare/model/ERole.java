@@ -2,6 +2,7 @@ package com.fu.swp.childcare.model;
 
 public enum ERole {
   ROLE_USER,
-  ROLE_MODERATOR,
-  ROLE_ADMIN
+  ROLE_MANAGER,
+  ROLE_ADMIN,
+  ROLE_STAFF
 }
