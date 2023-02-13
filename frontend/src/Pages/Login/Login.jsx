@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWith
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import useAuth from '../../Hooks/useAuth';
+import serviceDetailImg from '../../Images/service-details-promo1.png';
 import './Login.css';
 
 
@@ -47,7 +48,6 @@ const Login = () => {
     const handlePasswordChange = e => {
         setPassword(e.target.value)
     }
-
     return (
         <>
             <section className="h-100 gradient-form pb-5">
@@ -81,7 +81,7 @@ const Login = () => {
 
                                                 <div className="d-flex align-items-center justify-content-center pb-4">
                                                     <p className="mb-0 me-2">Don't have an account?</p>
-                                                    <button type="button" className="btn btn-outline-danger"><a style={{ textDecoration: 'none' }} href="/register">Create new</a></button>
+                                                    <button type="button" className="btn btn-outline-danger"><a style={{textDecoration : 'None'}} href="/register">Create new</a></button>
                                                 </div>
 
                                             </form>
@@ -94,6 +94,8 @@ const Login = () => {
                                             <p className="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                                                 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                                                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                                <img src={serviceDetailImg} alt="expertDoctor" className="img-fluid pt-xs-5" />
+                                           
                                         </div>
                                     </div>
                                 </div>
