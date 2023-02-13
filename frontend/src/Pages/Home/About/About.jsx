@@ -50,7 +50,7 @@ const About = () => {
                                 <div className="single-fun sp-fun" data-aos="fade-left">
                                     <span>50</span>
                                     <span>+</span>
-                                    <p>Dental Awards</p>
+                                    <p>Awards</p>
                                 </div>
                                 <span className="line"></span>
                             </div>

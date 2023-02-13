@@ -47,6 +47,7 @@ const Login = () => {
     const handlePasswordChange = e => {
         setPassword(e.target.value)
     }
+
     return (
         <>
             <section className="h-100 gradient-form pb-5">
@@ -80,7 +81,7 @@ const Login = () => {
 
                                                 <div className="d-flex align-items-center justify-content-center pb-4">
                                                     <p className="mb-0 me-2">Don't have an account?</p>
-                                                    <button type="button" className="btn btn-outline-danger">Create new</button>
+                                                    <button type="button" className="btn btn-outline-danger"><a style={{ textDecoration: 'none' }} href="/register">Create new</a></button>
                                                 </div>
 
                                             </form>

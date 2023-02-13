@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import serviceDetailImg from '../../../Images/service-details-promo1.png';
-import serviceDetailImg2 from '../../../Images/service-details-promo2.png';
+import serviceDetailImg2 from '../../../Images/service-details-promo3.jpg';
 import './Detail.css';
 
 const Detail = () => {
