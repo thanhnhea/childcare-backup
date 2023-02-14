@@ -57,6 +57,16 @@ public class User {
         this.password = password;
     }
 
+    public User(String username, String email, String firstName, String lastName, String phone, String address, String password) {
+        this.username = username;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.address = address;
+        this.password = password;
+    }
+
     public UserDto toUserDto() {
         UserDto toUser = new UserDto();
         toUser.setId(id);
