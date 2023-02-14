@@ -15,14 +15,14 @@ return (
                   <div className="col-md-6 mb-4">
   
                     <div className="form-outline">
-                      <input placeholder="First Name" type="text" id="firstName" className="form-control form-control-lg" />                     
+                      <input placeholder="First Name" type="text" id="firstName" className="form-control form-control-lg" required />                     
                     </div>
   
                   </div>
                   <div classNameName="col-md-6 mb-4">
   
                     <div className="form-outline">
-                      <input placeholder="Last Name" type="text" id="lastName" className="form-control form-control-lg" />                       
+                      <input placeholder="Last Name" type="text" id="lastName" className="form-control form-control-lg" required />                       
                     </div>
   
                   </div>
@@ -33,7 +33,7 @@ return (
   
                     <div className="form-outline datepicker w-100">
                       <h6 className="mb-2 pb-1">Birthday: </h6>
-                      <input placeholder="Birthday" type="date" className="form-control form-control-lg" id="birthdayDate" />         
+                      <input placeholder="Birthday" type="date" className="form-control form-control-lg" id="birthdayDate" required />         
                     </div>
   
                   </div>
@@ -55,7 +55,7 @@ return (
   
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="radio" name="inlineRadioOptions" id="otherGender"
-                        value="option3" />
+                        value="option3" required />
                       <label className="form-check-label" for="otherGender">Other</label>
                     </div>
   
@@ -66,14 +66,14 @@ return (
                   <div className="col-md-6 mb-4 pb-2">
   
                     <div className="form-outline">
-                      <input placeholder="Email" type="email" id="emailAddress" className="form-control form-control-lg" />                  
+                      <input placeholder="Email" type="email" id="emailAddress" className="form-control form-control-lg" required/>                  
                     </div>
   
                   </div>
                   <div className="col-md-6 mb-4 pb-2">
   
                     <div className="form-outline">
-                      <input placeholder="Phone Number" type="tel" id="phoneNumber" className="form-control form-control-lg" />                
+                      <input placeholder="Phone Number" type="tel" id="phoneNumber" className="form-control form-control-lg" required/>                
                     </div>
                   </div>
                 </div>  
@@ -82,7 +82,7 @@ return (
                   <div className="col-md-6 mb-4 pb-2">
   
                     <div className="form-outline">
-                      <input placeholder="Password" type="password" id="password" className="form-control form-control-lg" />                  
+                      <input placeholder="Password" type="password" id="password" className="form-control form-control-lg" required />                  
                     </div>
   
                   </div>

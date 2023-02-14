@@ -3,7 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { FakeDoctors } from '../../FakeData/Doctor';
 import Doctors from '../../Pages/Home/Doctors/Doctors';
 
-const Dentist = () => {
+const Doctor = () => {
     return (
         <section className="doctor-wrapper">
             <Container>
@@ -26,4 +26,4 @@ const Dentist = () => {
     );
 };
 
-export default Dentist;
+export default Doctor;

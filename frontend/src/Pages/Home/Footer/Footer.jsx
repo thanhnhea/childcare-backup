@@ -41,11 +41,11 @@ const Footer = () => {
                                 <h2>Services</h2>
                             </div>
                             <div className="widget-content">
-                                <NavLink className="footer-link">Dental Dictionary</NavLink>
-                                <NavLink className="footer-link">Dental Sealands</NavLink>
-                                <NavLink className="footer-link">Dental Implants</NavLink>
-                                <NavLink className="footer-link">General Dentistry</NavLink>
-                                <NavLink className="footer-link">Sedation Dentistry</NavLink>
+                                <NavLink className="footer-link">Lorem desto</NavLink>
+                                <NavLink className="footer-link">Lorem desto</NavLink>
+                                <NavLink className="footer-link">Lorem desto</NavLink>
+                                <NavLink className="footer-link">Lorem desto</NavLink>
+                                <NavLink className="footer-link">Lorem desto</NavLink>
                             </div>
                         </div>
                     </Col>
@@ -59,7 +59,7 @@ const Footer = () => {
                                 <NavLink className="footer-link">Village Dr Mason, NY.</NavLink>
                                 <NavLink className="footer-link">Phone:+1 3500 5867 340</NavLink>
                                 <NavLink className="footer-link">Email:yourdomain@gmail.com</NavLink>
-                                <NavLink className="footer-link">Fax:+1 675 5867 340</NavLink>
+                                <NavLink className="footer-link">Fax:+(09)75 5867 340</NavLink>
                             </div>
                         </div>
                     </Col>
