@@ -1,5 +1,6 @@
 package com.fu.swp.childcare.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,8 +15,11 @@ import java.time.LocalDateTime;
 @Setter
 @Table(name = "comment")
 public class Comment {
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(nullable = false)
@@ -24,11 +28,11 @@ public class Comment {
     @Column(nullable = false)
     private LocalDateTime dateTime;
 
-    @ManyToOne
-    @JoinColumn(name = "blog_post_id")
+    @OneToOne
+    @JoinColumn(name = "blog_id")
     private Blog blog;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 }

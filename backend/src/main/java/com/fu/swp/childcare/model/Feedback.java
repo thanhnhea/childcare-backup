@@ -1,5 +1,6 @@
 package com.fu.swp.childcare.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,11 +12,13 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name = "feedbacks")
 public class Feedback {
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(nullable = false)
@@ -33,6 +36,5 @@ public class Feedback {
     @ManyToOne
     @JoinColumn(name = "booking_id")
     private Booking booking;
-
 
 }
