@@ -36,7 +36,7 @@ public class WebSecurityConfig {
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests ()
-                .requestMatchers ("/", "/api/auth/signup").permitAll()
+                .requestMatchers ("/", "/api/**","/blog/**").permitAll()
                 .requestMatchers ("/api/auth/signin").permitAll()
                 .requestMatchers ("/api/test/**").permitAll()
                 .requestMatchers ("/admin/**").hasAnyAuthority("ADMIN")

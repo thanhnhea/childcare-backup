@@ -15,7 +15,7 @@ public class Blog {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -35,5 +35,20 @@ public class Blog {
     @JoinColumn(name = "user_id")
     User user;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    Category category;
 
+    @Override
+    public String toString() {
+        return "Blog{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", datePublished=" + datePublished +
+                ", bodyText='" + bodyText + '\'' +
+                ", user=" + user +
+                ", category=" + category +
+                '}';
+    }
 }
