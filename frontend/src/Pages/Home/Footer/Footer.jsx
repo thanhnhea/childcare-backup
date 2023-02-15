@@ -41,11 +41,11 @@ const Footer = () => {
                                 <h2>Services</h2>
                             </div>
                             <div className="widget-content">
-                                <NavLink className="footer-link">Lorem desto</NavLink>
-                                <NavLink className="footer-link">Lorem desto</NavLink>
-                                <NavLink className="footer-link">Lorem desto</NavLink>
-                                <NavLink className="footer-link">Lorem desto</NavLink>
-                                <NavLink className="footer-link">Lorem desto</NavLink>
+                                <NavLink className="footer-link">Sevice 1</NavLink>
+                                <NavLink className="footer-link">Sevice 2</NavLink>
+                                <NavLink className="footer-link">Sevice 3</NavLink>
+                                <NavLink className="footer-link">Sevice 4</NavLink>
+                                <NavLink className="footer-link">Sevice 5</NavLink>
                             </div>
                         </div>
                     </Col>
@@ -56,10 +56,10 @@ const Footer = () => {
                             </div>
                             <div className="widget-content">
                                 <NavLink className="footer-link">Datobbo Dentistry 5212 Cedar</NavLink>
-                                <NavLink className="footer-link">Village Dr Mason, NY.</NavLink>
-                                <NavLink className="footer-link">Phone:+1 3500 5867 340</NavLink>
-                                <NavLink className="footer-link">Email:yourdomain@gmail.com</NavLink>
-                                <NavLink className="footer-link">Fax:+(09)75 5867 340</NavLink>
+                                <NavLink className="footer-link">55 West, 33rd Street, 5th Floor, New York.</NavLink>
+                                <NavLink className="footer-link">Phone: (888) 4421-1238-32</NavLink>
+                                <NavLink className="footer-link">Email: childrencarecenter@gmail.com</NavLink>
+                                <NavLink className="footer-link">Fax: +(09)75 5867 340</NavLink>
                             </div>
                         </div>
                     </Col>

@@ -9,9 +9,12 @@ const Content = () => {
                 <Row>
                     <Col md={12} lg={8}  className="text-center">
                         <div className="section-title">
-                            <h1>Our Doctor Practice</h1>
+                            <h1>Some information about</h1>
+                            <h2>Children Care Center</h2>
                         </div>
-                        <p className="w-50 m-auto content-inner">Since 1998, Childrencare has been proud to combine modern techniques and high-tech equipment. Dr. John Dae, Micha and his team deliver a personalized and comfortable dental care experience unlike any other Mason dentist.</p>
+                        <p className="w-50 m-auto content-inner">Since 1998, Children Care Center has proudly combined traditional and modern methods
+                        of raising and caring for children. Dr. John Dae, Micha and his team have brought effective strategies,
+                        ways to teach and care for children, bringing a sense of security to parents.</p>
                     </Col>
                 </Row>
             </Container>
