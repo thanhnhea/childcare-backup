@@ -3,8 +3,10 @@ package com.fu.swp.childcare.controller.user;
 
 import com.fu.swp.childcare.controller.mapping.UserDto;
 import com.fu.swp.childcare.model.User;
+import com.fu.swp.childcare.payload.response.MessageResponse;
 import com.fu.swp.childcare.services.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/account")
 public class UserProfileController {
 
     @Autowired
@@ -20,19 +22,28 @@ public class UserProfileController {
 
 
     @GetMapping(value = "/users")
-    public ResponseEntity<List<UserDto>> getAllUser() {
+    public ResponseEntity<?> getAllUser() {
         try {
-            return ResponseEntity.ok(userService.getAllUser());
+            return new ResponseEntity<>(userService.getAllUser(), HttpStatus.OK);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/users/{pageIndex}/{pageSize}")
+    public ResponseEntity<?> getAllUser(@PathVariable int pageIndex, @PathVariable int pageSize) {
+        try {
+            return ResponseEntity.ok(userService.getAllUser(pageIndex, pageSize));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new MessageResponse("userList is empty"));
         }
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UserDto> getById(@PathVariable Long id){
+    public ResponseEntity<UserDto> getById(@PathVariable Long id) {
         try {
-             return ResponseEntity.ok(userService.getUserById(id).toUserDto());
-        }catch (Exception e){
+            return ResponseEntity.ok(userService.getUserById(id).toUserDto());
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
