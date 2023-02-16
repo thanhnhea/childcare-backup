@@ -64,12 +64,11 @@ const Login = () => {
                                             <p className="d-flex justify-content-start">Please login to your account</p>
                                             <form onSubmit={handleSubmit}>
                                                 <div className="form-outline mb-4">
-                                                    <input onBlur={handleEmailChange} type="email" id="form2Example11" className="form-control"
-                                                        placeholder="Email Address" required />
+                                                    <input onBlur={handleEmailChange} type="text" id="form2Example11" className="form-control"
+                                                        placeholder="Username" required pattern="[a-zA-Z0-9]+" />
                                                 </div>
-
                                                 <div className="form-outline mb-4">
-                                                    <input onBlur={handlePasswordChange} type="password" id="form2Example22" placeholder="Password" className="form-control" required />
+                                                    <input onBlur={handlePasswordChange} type="password" id="form2Example22" placeholder="Password" className="form-control" required minLength="8" />
                                                 </div>
 
                                                 <div className="text-center pt-1 mb-5 pb-1">
