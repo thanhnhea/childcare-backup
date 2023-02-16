@@ -8,5 +8,6 @@ public interface UserProfileService {
     public User getUserById(Long id);
 
     public List<UserDto> getAllUser();
+    public List<UserDto> getAllUser(int pageIndex, int pageSize);
 
 }
