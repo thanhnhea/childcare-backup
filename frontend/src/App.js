@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import AuthProvider from './Context/AuthProvider';
 import About from './Pages/About/About/About';
 import Approved from './Pages/Approved/Approved';
 import Contact from './Pages/Contact/Contact/Contact';
@@ -11,11 +10,14 @@ import Home from './Pages/Home/Home/Home.jsx';
 import Login from './Pages/Login/Login';
 import NotFound from './Pages/NotFound/NotFound';
 import Service from './Pages/Services/Service/Service';
-
+import Register from './Pages/Register/Register';
+import ChangePasword from './Pages/ChangePassword/ChangePassword';
+import ResetPassword from './Pages/ResetPassword/ResetPassword';
+import UserDetails from './Pages/UserDetails/UserDetails';
+import UserList from './Pages/UserList/UserList';
 function App() {
   return (
     <div className="App">
-      <AuthProvider>
       <Router>
         <Header />
         <Routes>
@@ -23,15 +25,20 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path='/about' element={<About />} />
           <Route path='/service' element={<Service />} />
-          <Route path='/dentist' element={<Doctors />} />
+          <Route path='/doctor' element={<Doctors />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/approved' element={<Approved />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
           <Route path='*' element={<NotFound />} />
+          <Route path='/ResetPassword' element={<ResetPassword />} />
+          <Route path='/ChangePasword' element={<ChangePasword/>}/>
+          <Route path='/UserDetails' element={<UserDetails/>}/>
+          <Route path='/UserList' element={<UserList/>}/>
         </Routes>
         <Footer />
       </Router>
-    </AuthProvider>
+
     </div>
   );
 }

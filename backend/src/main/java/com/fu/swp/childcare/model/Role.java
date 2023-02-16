@@ -12,16 +12,15 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "native",strategy = "native")
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private ERole name;
 
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private User user;
 }

@@ -20,7 +20,7 @@ const Safety = () => {
                     <Col md={6} lg={6}>
                         <div className="vedio-item">
                             <div className="vedio-bg-img">
-                                <a href="https://youtu.be/IVqKLxp6R4U"><FontAwesomeIcon icon={faPlayCircle} className="vedio-play-btn" /></a>
+                                <a href="https://www.youtube.com/watch?v=XqZsoesa55w"><FontAwesomeIcon icon={faPlayCircle} className="vedio-play-btn" /></a>
                             </div>
                             <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos veritatis culpa debitis ut quae? Nam totam in repellendus nulla tempora amet, alias rem, ut veniam minima velit eius dolorum incidunt.</h5>
                         </div>
@@ -28,7 +28,7 @@ const Safety = () => {
                     <Col md={6} lg={6}>
                         <div className="vedio-item">
                             <div className="vedio-bg-img img2">
-                                <a href="https://youtu.be/0s35QCFg7p0"><FontAwesomeIcon icon={faPlayCircle} className="vedio-play-btn" /></a>
+                                <a href="https://www.youtube.com/watch?v=dL3SP9t048Y"><FontAwesomeIcon icon={faPlayCircle} className="vedio-play-btn" /></a>
                             </div>
                             <h5>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque id fugit error modi debitis quam quia vel ad itaque odio dolor, distinctio tempora dolorum maiores aliquam perferendis nihil cumque. Suscipit.</h5>
                         </div>

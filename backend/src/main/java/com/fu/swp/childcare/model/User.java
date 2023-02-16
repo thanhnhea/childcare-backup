@@ -2,15 +2,16 @@ package com.fu.swp.childcare.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-<<<<<<< HEAD
-=======
 import com.fu.swp.childcare.controller.mapping.UserDto;
->>>>>>> master
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -23,40 +24,48 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank
+    @Size(max = 20)
     private String username;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank
+    @Size(max = 50)
+    @Email
     private String email;
 
-    @Column(nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
     private String lastName;
 
     private String phone;
 
     private String address;
 
-    @OneToOne(mappedBy = "user")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Password password;
+    @NotBlank
+    @Size(max = 120)
+    private String password;
 
-<<<<<<< HEAD
-=======
-    @JsonIgnore
->>>>>>> master
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(  name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy="user",fetch=FetchType.EAGER)
-    private Set<Authority> authorities;
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
-<<<<<<< HEAD
-=======
+    public User(String username, String email, String firstName, String lastName, String phone, String address, String password) {
+        this.username = username;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.address = address;
+        this.password = password;
+    }
 
     public UserDto toUserDto() {
         UserDto toUser = new UserDto();
@@ -67,8 +76,7 @@ public class User {
         toUser.setUsername(username);
         toUser.setFirstName(firstName);
         toUser.setLastName(lastName);
-        toUser.setRole(role);
+        toUser.setRole(roles);
         return toUser;
     }
->>>>>>> master
 }

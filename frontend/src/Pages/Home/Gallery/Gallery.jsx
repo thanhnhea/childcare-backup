@@ -5,6 +5,8 @@ import g2 from '../../../Images/g2.jpg';
 import g3 from '../../../Images/g3.jpg';
 import g4 from '../../../Images/g4.jpg';
 import g5 from '../../../Images/g5.jpg';
+import g7 from '../../../Images/g7.png';
+
 import './Gallery.css';
 
 
@@ -44,7 +46,7 @@ const Gallery = () => {
                     <Col md={6} lg={8} sm={12}>
                         <div className="single-item-box">
                             <div className="thumbnail">
-                                <img src={g4} alt="" className="img-fluid" />
+                                <img src={g7} alt="" className="img-fluid" />
                             </div>
                         </div>
                     </Col>

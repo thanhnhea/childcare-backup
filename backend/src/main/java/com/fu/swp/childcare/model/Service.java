@@ -1,5 +1,6 @@
 package com.fu.swp.childcare.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,13 +13,24 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 public class Service {
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String serviceTitle;
     private Date createdDate;
     private Date updatedDate;
     private String servicePrice;
     private String serviceDetail;
+    private int rateStar;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    Category category;
+
+
+
 }

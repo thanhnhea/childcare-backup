@@ -1,9 +1,9 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import expertDentist from '../../../Images/experienceddentist.png';
+import expertDentist from '../../../Images/experienceddoctor.png';
 import './Doctor.css';
 
-const Dentist = () => {
+const Doctor = () => {
     return (
         <section className='expert-dentist'>
             <Container>
@@ -24,4 +24,4 @@ const Dentist = () => {
     );
 };
 
-export default Dentist;
+export default Doctor;
