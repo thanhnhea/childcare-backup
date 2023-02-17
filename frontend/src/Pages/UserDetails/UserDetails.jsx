@@ -1,12 +1,15 @@
 import React from "react";
 
+
 const UserDetails = () =>{
     return (
 
         <div className="container snippet">
     <div className="row">
-          <div className="col-md-10"><h1>User Profile</h1></div>
-       
+          <div className="col-md-10">
+            <h1>User Profile</h1>
+        </div>
+
     </div>
     <div className="row">
           <div className="col-md-3">
@@ -28,52 +31,56 @@ const UserDetails = () =>{
                         <div className="form-group">
                           
                             <div className="col-md-12">
-                                <label for="first_name">Full Name</label>
                                 <input type="text" className="form-control" name="first_name" id="first_name" placeholder="full name" title="enter your first name if any."/>
                             </div>
                         </div>
+
+
+                        <br></br>
                         <div className="form-group">
                             
                             <div className="col-md-12">
-                              <label for="last_name">Date Of Birth</label>
-                                <input type="text" className="form-control" name="last_name" id="last_name" placeholder="enter you d.o.b" title="enter your last name if any."/>
+                                <input type="text" className="form-control" name="d.o.b" id="d.o.b" placeholder="enter you d.o.b" pattern="/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/"/>
                             </div>
                         </div>
                      
           
-                      
-                        <div className="form-group">
+                        <br></br>
+                        <div className="form-group"> 
                           
                             <div className="col-md-12">
-                                <label for="phone">Phone</label>
-                                <input type="text" className="form-control" name="phone" id="phone" placeholder="enter your phone number" title="enter your phone number if any."/>
+                            <input type="text" className="form-control" pattern="(\+84|0)\d{9,10}" placeholder="enter your phone number" />
                             </div>
                         </div>
-            
+
+
+                        <br></br>
                         <div className="form-group">
                             <div className="col-md-12">
-                               <label for="mobile">Identity Card Number</label>
-                                <input type="text" className="form-control" name="card" id="card" placeholder="enter identity card number" title="enter your mobile number if any."/>
+                            <input type="text" className="form-control" pattern="(\1|2|3|4|5|6|7|8|9|0)\d{9,12}" placeholder="enter your identity card number" />
                             </div>
                         </div>
                       
-                     
+
+                        <br></br>
                         <div className="form-group">
                           
                             <div className="col-md-12">
-                                <label for="email">Email</label>
-                                <input type="email" className="form-control" name="email" id="email" placeholder="you@email.com" title="enter your email."/>
+                            <input type="email" className="form-control" required id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" size="30" placeholder="you@gmail.com"/>
                             </div>
-                        </div>                                          
+                        </div>   
+
+
+                        <br></br>                                    
                         <div className="form-group">
                           
                             <div className="col-md-12">
-                                <label for="password">Address</label>
-                                <input type="password" className="form-control" name="password" id="password" placeholder="enter your address" title="enter your password."/>
+                                <input type="address" className="form-control" name="address" id="address" placeholder="enter your address" title="enter your password."/>
                             </div>
                         </div>
                        
-                   
+
+                        <br></br>
                       <div className="form-group">
                            <div className="col-md-12">               
                                   <button style={{margin:20}} className="btn btn-lg btn-success" type="submit"><i className="glyphicon glyphicon-ok-sign"></i> Save</button>
@@ -90,6 +97,7 @@ const UserDetails = () =>{
 </div>
     );
 }
+
 
 
 export default UserDetails;
