@@ -16,6 +16,17 @@ public class UserDetailsImpl implements UserDetails {
   @Serial
   private static final long serialVersionUID = 1L;
 
+  @Override
+  public String toString() {
+    return "UserDetailsImpl{" +
+            "id=" + id +
+            ", username='" + username + '\'' +
+            ", email='" + email + '\'' +
+            ", password='" + password + '\'' +
+            ", authorities=" + authorities +
+            '}';
+  }
+
   private Long id;
 
   private String username;
