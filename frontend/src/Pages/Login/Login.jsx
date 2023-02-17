@@ -3,9 +3,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import serviceDetailImg from '../../Images/service-details-promo1.png';
 import './Login.css';
-
+import axios from 'axios';
+import { useState,useEffect } from 'react';
 
 const Login = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const handleLogin = async () => {
+        
+        // Send the user's credentials to the server
+        const res = await axios.post('http://localhost:8080/api/auth/signin', { username, password });
+        // Store the JWT token in local storage
+        console.log(res);
+        localStorage.setItem('token', res.data.token);
+    }
+
+
+
 
     return (
         <>
@@ -24,16 +38,16 @@ const Login = () => {
                                             <p className="d-flex justify-content-start">Please login to your account</p>
                                             <form>
                                                 <div className="form-outline mb-4">
-                                                    <input type="email" id="form2Example11" className="form-control"
-                                                        placeholder="Email Address" required />
+                                                    <input type="text" id="form2Example11" className="form-control"
+                                                        placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required pattern="[a-zA-Z0-9]+" />
                                                 </div>
 
                                                 <div className="form-outline mb-4">
-                                                    <input type="password" id="form2Example22" placeholder="Password" className="form-control" required />
+                                                    <input type="password" id="form2Example22" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="form-control" required minLength="8" />
                                                 </div>
 
                                                 <div className="text-center pt-1 mb-5 pb-1">
-                                                    <button className="theme-btn btn-fill" type="submit">Log
+                                                    <button className="theme-btn btn-fill" type="submit" onClick={handleLogin}>Log
                                                         in</button>
                                                     <a className="text-muted text-decoration-none" href="ChangePasword">Forgot password?</a>
                                                 </div>
@@ -79,5 +93,24 @@ const Login = () => {
         </>
     );
 };
+
+const Protected = () => {
+    const [data, setData] = useState('');
+
+    useEffect(() => {
+        const fetchProtectedData = async () => {
+            // Send the JWT token with the API request
+            const token = localStorage.getItem('token');
+            const res = await axios.get('/protected', { headers: { authorization: token } });
+            setData(res.data);
+        }
+        fetchProtectedData();
+    }, []);
+
+    return (
+        <div>{data}</div>
+    );
+}
+
 
 export default Login;

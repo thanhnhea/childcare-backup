@@ -27,8 +27,10 @@ const About = () => {
                     <Col md={12} lg={6}>
                         <div className="about-right mt-5 mt-lg-0">
                             <div className="about-content text-start" data-aos="zoom-in">
-                                <h1>Welcome to a Family</h1>
-                                <p>Welcome to Datobbo Dental represents everything going to doctor necessary. We have upgraded your dreaded doctor appointment and transformed it into a relaxing. Consectetur adipisicing elit. Quod ea, consequuntur itaque enim et expedita, optio omnis ipsa magni, perspiciatis totam ipsum! Voluptatibus, neque at.</p>
+                                <h1>Welcome to our Family</h1>
+                                <p>Welcome to our Babysitter Center that represents everything babysisters need.
+                                    We have improved the methods of education and child care from both traditional and modern methods.
+                                    This perfect combination will make parents happy!</p>
                                 <a href='/page/about'>About Us</a>
                             </div>
                             <div className="fun-fact-sec" data-aos="fade-right">
