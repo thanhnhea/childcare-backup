@@ -4,12 +4,13 @@ import React from 'react';
 import serviceDetailImg from '../../Images/service-details-promo1.png';
 import './Login.css';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState,useEffect } from 'react';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const handleLogin = async () => {
+        
         // Send the user's credentials to the server
         const res = await axios.post('http://localhost:8080/api/auth/signin', { username, password });
         // Store the JWT token in local storage
@@ -17,8 +18,11 @@ const Login = () => {
         localStorage.setItem('token', res.data.token);
     }
 
+
+
+
     return (
-        <div>
+        <>
             <section className="h-100 gradient-form pb-5">
                 <div className="container py-5 h-100">
                     <div className="row d-flex justify-content-center align-items-center h-100">
@@ -34,12 +38,12 @@ const Login = () => {
                                             <p className="d-flex justify-content-start">Please login to your account</p>
                                             <form>
                                                 <div className="form-outline mb-4">
-                                                    <input type="email" id="form2Example11" className="form-control"
-                                                        placeholder="Email Address" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                                                    <input type="text" id="form2Example11" className="form-control"
+                                                        placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required pattern="[a-zA-Z0-9]+" />
                                                 </div>
 
                                                 <div className="form-outline mb-4">
-                                                    <input type="password" id="form2Example22" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="form-control" required />
+                                                    <input type="password" id="form2Example22" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="form-control" required minLength="8" />
                                                 </div>
 
                                                 <div className="text-center pt-1 mb-5 pb-1">
@@ -50,7 +54,7 @@ const Login = () => {
 
                                                 <div className="d-flex align-items-center justify-content-center pb-4">
                                                     <p className="mb-0 me-2">Don't have an account?</p>
-                                                    <button type="button" className="btn btn-outline-danger"><a style={{ textDecoration: 'None' }} href="/register">Create new</a></button>
+                                                    <button type="button" className="btn btn-outline-danger"><a style={{textDecoration : 'None'}} href="/register">Create new</a></button>
                                                 </div>
 
                                             </form>
@@ -63,8 +67,8 @@ const Login = () => {
                                             <p className="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                                                 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                                                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                            <img src={serviceDetailImg} alt="expertDoctor" className="img-fluid pt-xs-5" />
-
+                                                <img src={serviceDetailImg} alt="expertDoctor" className="img-fluid pt-xs-5" />
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -86,7 +90,7 @@ const Login = () => {
                     </div>
                 </div>
             </section>
-        </div>
+        </>
     );
 };
 

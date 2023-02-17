@@ -28,8 +28,8 @@ const ContactUs = () => {
                             </div>
                             <div className="c-info text-start">
                                 <h4>Email</h4>
-                                <p>info@dentzone.com</p>
-                                <p>email@gmail.com</p>
+                                <p>childrencarecenter@dentzone.com</p>
+                                <p>childrencarecenter@gmail.com</p>
                             </div>
                         </div>
                     </Col>

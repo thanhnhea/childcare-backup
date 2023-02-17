@@ -33,6 +33,40 @@ public class WebSecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+<<<<<<< HEAD
+        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+        requestHandler.setCsrfRequestAttributeName("_csrf");
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .cors().configurationSource(new CorsConfigurationSource() {
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                        CorsConfiguration config = new CorsConfiguration();
+                        config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+                        config.setAllowedMethods(Collections.singletonList("*"));
+                        config.setAllowCredentials(true);
+                        config.setAllowedHeaders(Collections.singletonList("*"));
+                        config.setExposedHeaders(Arrays.asList("Authorization"));
+                        config.setMaxAge(3600L);
+                        return config;
+                    }
+                }).and().csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/contact","/register")
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+                .addFilterAt(new AuthoritiesLoggingAtFilter(),BasicAuthenticationFilter.class)
+                .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
+                .authorizeHttpRequests()
+                .requestMatchers("/myAccount").hasRole("USER")
+                .requestMatchers("/admin").hasAnyRole("ADMIN")
+                .requestMatchers("/manager").hasRole("MANAGER")
+                .requestMatchers("/staff").hasRole("STAFF")
+                .requestMatchers("/user").authenticated()
+                .requestMatchers("/","/signin","/register").permitAll()
+                .and().formLogin()
+                .and().httpBasic();
+=======
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests ()
@@ -53,6 +87,7 @@ public class WebSecurityConfig {
         // fix H2 database console: Refused to display ' in a frame because it set 'X-Frame-Options' to 'deny'
         http.headers().frameOptions().sameOrigin();
 
+>>>>>>> master
         return http.build();
     }
 
@@ -61,6 +96,10 @@ public class WebSecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
