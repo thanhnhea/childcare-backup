@@ -8,20 +8,27 @@ import com.fu.swp.childcare.services.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
+
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/account")
-public class UserProfileController {
+public class UserController {
 
     @Autowired
     private UserProfileService userService;
 
+    @Autowired
+    PasswordEncoder encoder;
+
 
     @GetMapping(value = "/users")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getAllUser() {
         try {
             return new ResponseEntity<>(userService.getAllUser(), HttpStatus.OK);
@@ -52,7 +59,7 @@ public class UserProfileController {
     public ResponseEntity<String> resetPassword(@Valid @RequestBody User newUser) {
         try {
             User oldUser = userService.getUserById(newUser.getId());
-            if (oldUser.getPassword().equals(newUser.getPassword())) {
+            if (encoder.matches(newUser.getPassword(),oldUser.getPassword())) {
                 return ResponseEntity.badRequest().body("new password and old password cannot be the same");
             }
             return ResponseEntity.ok("success");
