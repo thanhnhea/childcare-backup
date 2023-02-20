@@ -88,21 +88,27 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
         }
 
+        Set<Role> roles = new HashSet<>();
+        String requestedRole = registerRequest.getRole();
+        Role userRole;
+        if (requestedRole == null) {
+            userRole = roleRepository.findByName(ERole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        } else {
+            userRole = roleRepository.findByName(ERole.valueOf(registerRequest.getRole()))
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        }
+
+        roles.add(userRole);
         User user = new User(registerRequest.getUsername(),
                 registerRequest.getEmail(),
                 registerRequest.getFirstName(),
                 registerRequest.getLastName(),
                 registerRequest.getPhone(),
                 registerRequest.getAddress(),
-                encoder.encode(registerRequest.getPassword())
+                encoder.encode(registerRequest.getPassword()),
+                roles
         );
-
-        Set<Role> roles = new HashSet<>();
-
-        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        roles.add(userRole);
-        user.setRoles(roles);
         userRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
@@ -116,19 +122,19 @@ public class AuthController {
         }
         String generatedToken = UUID.randomUUID().toString();
         User user = users.get(0);
-        PasswordResetToken token = new PasswordResetToken(generatedToken,user);
+        PasswordResetToken token = new PasswordResetToken(generatedToken, user);
         token.setExpiryDate();
         resetPasswordRepo.save(token);
         String url = "http://localhost:8080/api/auth";
         Map<String, Object> model = new HashMap<>();
-        model.put("token",generatedToken);
-        model.put("user",user);
+        model.put("token", generatedToken);
+        model.put("user", user);
         model.put("signature", "children-careswp391");
 
         model.put("resetUrl", url + "/reset-password?token=" + token.getToken());
 
         try {
-            emailService.sendSimpleMail(email,model);
+            emailService.sendSimpleMail(email, model);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
@@ -141,7 +147,7 @@ public class AuthController {
         if (passToken == null) {
             return ResponseEntity.badRequest().body(new MessageResponse("invalid token"));
         }
-        if(passToken.isExpired()){
+        if (passToken.isExpired()) {
             return ResponseEntity.badRequest().body(new MessageResponse("Token expired"));
         }
         User user = passToken.getUser();
