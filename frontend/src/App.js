@@ -15,6 +15,12 @@ import ChangePasword from './Pages/ChangePassword/ChangePassword';
 import ResetPassword from './Pages/ResetPassword/ResetPassword';
 import UserDetails from './Pages/UserDetails/UserDetails';
 import UserList from './Pages/UserList/UserList';
+import Profile from './Pages/profile'
+import BoardAdmin from './Pages/board-admin.component'
+import BoardModerator from './Pages/board-moderator.component'
+import BoardUser from './Pages/board-user.component'
+
+
 function App() {
   return (
     <div className="App">
@@ -32,9 +38,14 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='*' element={<NotFound />} />
           <Route path='/ResetPassword' element={<ResetPassword />} />
-          <Route path='/ChangePasword' element={<ChangePasword/>}/>
-          <Route path='/UserDetails' element={<UserDetails/>}/>
-          <Route path='/UserList' element={<UserList/>}/>
+          <Route path='/ChangePasword' element={<ChangePasword />} />
+          <Route path='/UserDetails' element={<UserDetails />} />
+          <Route path='/UserList' element={<UserList />} />
+          <Route path='/profile' element={<Profile />} />
+
+          <Route path="/mod" element={<BoardModerator />} />
+          <Route path="/admin" element={<BoardAdmin />} />
+          <Route path="/user" element={<BoardUser />} />
         </Routes>
         <Footer />
       </Router>
