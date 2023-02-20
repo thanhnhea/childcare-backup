@@ -15,9 +15,11 @@ const Banner = () => {
                     <Row className="align-items-center">
                         <Col md={12} sm={12} lg={6}>
                             <div className="hero-slide-left justify-content-end align-items-center text-center text-lg-start">
-                                <h2>Better Life Through</h2>
-                                <h1>Better Doctor</h1>
-                                <p className="mb-xs-5">Join us to a fun and friendly dental environment. Our professionals are working so hard to see smile on your face that you deserve! We are dedicated about our duties.</p>
+                                <h2>A child is not a vase to be filled,</h2> 
+                                <h1>But a fire to be lit!</h1>
+                                <p className="mb-xs-5">Join us for a fun and friendly childcare environment.
+                                Our experts are working very hard to see the smile on your child's face that you deserve!
+                                We are dedicated to our mission.</p>
                                 <div className="banner-btn m-sm-auto">
                                     <Link to="/login"><button className="theme-btn btn-fill">Appoinment</button></Link>
                                     <button className='theme-btn bth-blank'>Learn More</button>
