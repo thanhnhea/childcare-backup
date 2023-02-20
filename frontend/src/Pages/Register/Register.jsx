@@ -1,5 +1,7 @@
 import "./Register.css"
 import React, { useState, useEffect } from 'react';
+import AuthService from '../../services/auth.service'
+
 const Register = () => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -21,6 +23,32 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Perform form submission logic here
+    console.log("handle submit here");
+    AuthService.register(
+      this.state.username,
+      this.state.email,
+      this.state.password
+    ).then(
+      response => {
+        this.setState({
+          message: response.data.message,
+          successful: true
+        });
+      },
+      error => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        this.setState({
+          successful: false,
+          message: resMessage
+        });
+      }
+    );
   };
 
   useEffect(() => {

@@ -17,20 +17,20 @@ public class TestController {
     }
 
     @GetMapping("/user")
-    @PreAuthorize("hasRole('USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ROLE_MANAGER') or hasRole('ADMIN')")
     public String userAccess() {
-        return "User Content.";
+        return "User Content from spring boot server";
     }
 
     @GetMapping("/mod")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     public String moderatorAccess() {
-        return "Moderator Board.";
+        return "Moderator Board from spring boot server";
     }
 
     @GetMapping("/admin")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public String adminAccess() {
-        return "Admin Board.";
+        return "Admin Board from spring boot server";
     }
 }
