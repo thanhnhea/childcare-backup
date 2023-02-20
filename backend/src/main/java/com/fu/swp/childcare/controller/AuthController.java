@@ -6,7 +6,7 @@ import com.fu.swp.childcare.model.ERole;
 import com.fu.swp.childcare.model.Role;
 import com.fu.swp.childcare.model.User;
 import com.fu.swp.childcare.payload.LoginRequest;
-import com.fu.swp.childcare.payload.RequestChangePassword;
+import com.fu.swp.childcare.payload.RequestResetPassword;
 import com.fu.swp.childcare.payload.response.JwtResponse;
 import com.fu.swp.childcare.payload.response.MessageResponse;
 import com.fu.swp.childcare.repositories.PasswordResetTokenRepository;
@@ -14,24 +14,20 @@ import com.fu.swp.childcare.repositories.RoleRepository;
 import com.fu.swp.childcare.repositories.UserRepository;
 import com.fu.swp.childcare.security.jwt.JwtUtils;
 import com.fu.swp.childcare.security.services.UserDetailsImpl;
-import com.fu.swp.childcare.services.EmailService;
+import com.fu.swp.childcare.services.MailService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.nio.charset.Charset;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -54,7 +50,7 @@ public class AuthController {
     @Autowired
     PasswordResetTokenRepository resetPasswordRepo;
     @Autowired
-    EmailService emailService;
+    MailService emailService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -121,7 +117,8 @@ public class AuthController {
         String generatedToken = UUID.randomUUID().toString();
         User user = users.get(0);
         PasswordResetToken token = new PasswordResetToken(generatedToken,user);
-//        resetPasswordRepo.save(token);
+        token.setExpiryDate();
+        resetPasswordRepo.save(token);
         String url = "http://localhost:8080/api/auth";
         Map<String, Object> model = new HashMap<>();
         model.put("token",generatedToken);
@@ -130,16 +127,26 @@ public class AuthController {
 
         model.put("resetUrl", url + "/reset-password?token=" + token.getToken());
 
-        emailService.sendSimpleMail(email,model);
+        try {
+            emailService.sendSimpleMail(email,model);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
         return ResponseEntity.ok(new MessageResponse("token generated!"));
     }
 
-    @PostMapping("reset-password?token={token}")
-    ResponseEntity<?> resetPasswordWithToken(@PathVariable String token) {
-        PasswordResetToken passToken = resetPasswordRepo.findByToken(token);
+    @PostMapping("reset-password")
+    public ResponseEntity<?> resetPasswordWithToken(@Valid @RequestBody RequestResetPassword request) {
+        PasswordResetToken passToken = resetPasswordRepo.findByToken(request.getToken());
         if (passToken == null) {
             return ResponseEntity.badRequest().body(new MessageResponse("invalid token"));
         }
+        if(passToken.isExpired()){
+            return ResponseEntity.badRequest().body(new MessageResponse("Token expired"));
+        }
+        User user = passToken.getUser();
+        user.setPassword(encoder.encode(request.getPassword()));
+        userRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("password save successfully!"));
     }
 

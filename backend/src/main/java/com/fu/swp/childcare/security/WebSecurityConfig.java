@@ -36,13 +36,10 @@ public class WebSecurityConfig {
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests ()
-                .requestMatchers ("/", "/api/**","/blog/**").permitAll()
-                .requestMatchers ("/api/auth/signin").permitAll()
-                .requestMatchers ("/api/test/**").permitAll()
-                .requestMatchers ("/admin/**").hasAnyAuthority("ADMIN")
-                .requestMatchers ("/account/**").hasAnyAuthority("USER")
-                .requestMatchers("/mod/**").hasAnyAuthority("MANAGER")
-                .requestMatchers("/staff/**").hasAnyAuthority("STAFF")
+                .requestMatchers ("/", "/api/**").permitAll()
+                .requestMatchers ("/account/**").hasAnyAuthority("ROLE_USER")
+                .requestMatchers("/mod/**").hasAnyAuthority("ROLE_MANAGER")
+                .requestMatchers("/staff/**").hasAnyAuthority("ROLE_STAFF")
                 .anyRequest().authenticated()
                 .and()
                 // logout
@@ -52,7 +49,10 @@ public class WebSecurityConfig {
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/access-denied");
+//                .requestMatchers ("localhost/8080" + "/**").permitAll()
+        // fix H2 database console: Refused to display ' in a frame because it set 'X-Frame-Options' to 'deny'
         http.headers().frameOptions().sameOrigin();
+
         return http.build();
     }
 
@@ -60,7 +60,6 @@ public class WebSecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

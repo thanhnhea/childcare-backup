@@ -8,7 +8,10 @@ import java.util.Date;
 
 @Entity
 public class PasswordResetToken {
-    private static final int EXPIRATION = 60 * 24;
+    private static final int EXPIRATION = 15;
+
+    public PasswordResetToken() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,9 +56,9 @@ public class PasswordResetToken {
     public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
     }
-    public void setExpiryDate(int minutes) {
+    public void setExpiryDate() {
         Calendar now = Calendar.getInstance();
-        now.add(Calendar.MINUTE, minutes);
+        now.add(Calendar.MINUTE, EXPIRATION);
         this.expiryDate = now.getTime();
     }
 
