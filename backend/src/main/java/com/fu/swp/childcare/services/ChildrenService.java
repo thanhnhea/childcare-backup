@@ -2,6 +2,7 @@ package com.fu.swp.childcare.services;
 
 import com.fu.swp.childcare.model.ChildInformation;
 import com.fu.swp.childcare.repositories.ChildrenRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,5 +30,9 @@ public class ChildrenService {
         childrenRepository.save(child);
     }
 
+    public ChildInformation getChildById(String id)  {
+        return childrenRepository.findById(Long.parseLong(id))
+                .orElseThrow(() -> new EntityNotFoundException("Child Not Found"));
+    }
 
 }

@@ -5,32 +5,31 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.HashSet;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
+@Table(name = "classes")
 public class Classes {
-    @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column( name = "id" , unique = true )
     private Long id;
 
+    @Column(unique = true)
     String className;
-    Date createdDate;
-    Date updatedDate;
-    Date startDate;
-    Date endDate;
-    String classDetails;
+    LocalDate createdDate;
+    LocalDate updatedDate;
+    LocalDate startDate;
+    LocalDate endDate;
+    String description;
+    @OneToOne
+    User createdPerson;
 
     @OneToMany
-    Set<ChildInformation> childInformation = new HashSet<>();
-
-    @ManyToOne
-    User user;
-
+    @JoinColumn(name = "child_information_id")
+    Set<ChildInformation> childInformation;
 }

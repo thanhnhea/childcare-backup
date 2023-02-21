@@ -4,6 +4,7 @@ package com.fu.swp.childcare.controller.user;
 import com.fu.swp.childcare.controller.mapping.UserDto;
 import com.fu.swp.childcare.model.ChildInformation;
 import com.fu.swp.childcare.model.User;
+import com.fu.swp.childcare.payload.ChildProfile;
 import com.fu.swp.childcare.payload.RequestChangePassword;
 import com.fu.swp.childcare.payload.SubmitChildrenInfoRequest;
 import com.fu.swp.childcare.payload.response.MessageResponse;
@@ -22,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.text.ParseException;
@@ -124,5 +126,19 @@ public class UserController {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
     }
+
+    @GetMapping("/users/child")
+    @PreAuthorize("hasRole('USER') or hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> getChildProfile(@RequestParam String id)  {
+        try{
+            ChildInformation childInfo = childrenService.getChildById(id) ;
+            ChildProfile child = new ChildProfile(childInfo.getFirstName(), childInfo.getLastName(), childInfo.getDob(),childInfo.isGender(),childInfo.getInterest(),childInfo.getNeeds(), childInfo.getNote());
+            return ResponseEntity.ok(child) ;
+        }catch (Exception exc){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Child Not Found", exc);
+        }
+    }
+
 
 }
