@@ -38,7 +38,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests ()
                 .requestMatchers ("/", "/api/**").permitAll()
                 .requestMatchers ("/account/**").permitAll()
-                .requestMatchers("/mod/**").hasAnyAuthority("ROLE_MANAGER")
+                .requestMatchers("/mod/**").permitAll()
                 .requestMatchers("/staff/**").hasAnyAuthority("ROLE_STAFF")
                 .anyRequest().authenticated()
                 .and()
