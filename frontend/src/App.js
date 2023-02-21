@@ -15,6 +15,9 @@ import ChangePasword from './Pages/ChangePassword/ChangePassword';
 import ResetPassword from './Pages/ResetPassword/ResetPassword';
 import UserDetails from './Pages/UserDetails/UserDetails';
 import UserList from './Pages/UserList/UserList';
+import ClassList from './Pages/ClassChildren/ClassList/ClassList';
+import ClassDetails from './Pages/ClassChildren/ClassDetails/ClassDetails';
+import Children  from './Pages/ClassChildren/Children/Children';
 import Profile from './Pages/profile'
 import BoardAdmin from './Pages/board-admin.component'
 import BoardModerator from './Pages/board-moderator.component'
@@ -38,6 +41,12 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='*' element={<NotFound />} />
           <Route path='/ResetPassword' element={<ResetPassword />} />
+          <Route path='/ChangePasword' element={<ChangePasword/>}/>
+          <Route path='/UserDetails' element={<UserDetails/>}/>
+          <Route path='/UserList' element={<UserList/>}/>
+          <Route path='/ClassList' element={<ClassList/>}/>
+          <Route path='/ClassDetails' element={<ClassDetails/>}/>
+          <Route path='/Children' element={<Children/>}/>
           <Route path='/ChangePasword' element={<ChangePasword />} />
           <Route path='/UserDetails' element={<UserDetails />} />
           <Route path='/UserList' element={<UserList />} />
