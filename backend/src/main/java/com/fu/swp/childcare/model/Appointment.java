@@ -5,13 +5,14 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "reservation")
-public class Reservation {
+@Table(name = "appointments")
+public class Appointment {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @Id
@@ -19,12 +20,16 @@ public class Reservation {
     @Column(name = "id", nullable = false)
     private Long id;
 
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    User user;
-    Double totalPrice;
+    String parentFirstName;
+    String parentLastname;
+    String contactNumber;
+    String email;
+    String address;
     String notes;
-    Date dateCreated;
 
+    @OneToMany
+    Set<ChildInformation> childInformation = new HashSet<>();
+
+    @OneToMany
+    Set<Service> service = new HashSet<>();
 }

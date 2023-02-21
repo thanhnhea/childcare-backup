@@ -10,6 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
+@Table(name = "childinfo")
 public class ChildInformation {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
@@ -22,8 +23,11 @@ public class ChildInformation {
     String lastName;
     Date dob;
     boolean gender;
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    User user;
+    String interest;
+    String needs;
     String note;
+    @ManyToOne
+    User user;
+
+
 }
