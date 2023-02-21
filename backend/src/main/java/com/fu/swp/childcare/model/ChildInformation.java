@@ -29,5 +29,23 @@ public class ChildInformation {
     @ManyToOne
     User user;
 
-
+    public ChildInformation(
+            String firstName,
+            String lastName,
+            Date dob,
+            boolean gender,
+            String interest,
+            String needs,
+            String note,
+            User user
+    ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.gender = gender;
+        this.interest = interest;
+        this.needs = needs;
+        this.note = note;
+        this.user = user;
+    }
 }
