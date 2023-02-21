@@ -18,6 +18,11 @@ import UserList from './Pages/UserList/UserList';
 import ClassList from './Pages/ClassChildren/ClassList/ClassList';
 import ClassDetails from './Pages/ClassChildren/ClassDetails/ClassDetails';
 import Children  from './Pages/ClassChildren/Children/Children';
+import Profile from './Pages/profile'
+import BoardAdmin from './Pages/board-admin.component'
+import BoardModerator from './Pages/board-moderator.component'
+import BoardUser from './Pages/board-user.component'
+
 
 function App() {
   return (
@@ -42,6 +47,14 @@ function App() {
           <Route path='/ClassList' element={<ClassList/>}/>
           <Route path='/ClassDetails' element={<ClassDetails/>}/>
           <Route path='/Children' element={<Children/>}/>
+          <Route path='/ChangePasword' element={<ChangePasword />} />
+          <Route path='/UserDetails' element={<UserDetails />} />
+          <Route path='/UserList' element={<UserList />} />
+          <Route path='/profile' element={<Profile />} />
+
+          <Route path="/mod" element={<BoardModerator />} />
+          <Route path="/admin" element={<BoardAdmin />} />
+          <Route path="/user" element={<BoardUser />} />
         </Routes>
         <Footer />
       </Router>

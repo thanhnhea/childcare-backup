@@ -12,24 +12,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
     @Autowired
     UserService s;
     @GetMapping("/userList")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> findUsers(){
         List<User> userList = s.getAllUser();
+        System.out.println(userList);
         if(userList==null){
-            return new  ResponseEntity("Userlist's empty",HttpStatus.OK);
+            return new  ResponseEntity("Userlist 's empty",HttpStatus.OK);
         }else {
             return new ResponseEntity<>(userList, HttpStatus.OK);
         }
+
     }
-    public ResponseEntity<?> userDetails(@RequestBody String username){
+    @GetMapping("/userDetails")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> userDetails(@RequestParam String username){
         User u = s.getUserDetail(username);
+
         if(u != null){
             return new ResponseEntity<>(u, HttpStatus.OK);
         } else {

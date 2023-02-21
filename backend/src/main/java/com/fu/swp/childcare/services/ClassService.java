@@ -1,16 +1,23 @@
 package com.fu.swp.childcare.services;
 
 import com.fu.swp.childcare.model.Classes;
+import com.fu.swp.childcare.repositories.ClassRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public interface ClassService {
+public class ClassService {
+    @Autowired
+    ClassRepository classRepository;
 
-    List<Classes> findALl();
+    public List<Classes> getALl (){
+        return new ArrayList<>((Collection) classRepository.findAll());
+    }
 
-    Classes findById(String id);
 
 }
+
