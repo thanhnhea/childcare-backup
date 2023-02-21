@@ -22,6 +22,8 @@ import Profile from './Pages/profile'
 import BoardAdmin from './Pages/board-admin.component'
 import BoardModerator from './Pages/board-moderator.component'
 import BoardUser from './Pages/board-user.component'
+import Booking from './Pages/Booking/BookingForm/Booking';
+import AddChild from './Pages/Booking/AddChildren/AddChildren';
 
 
 function App() {
@@ -51,10 +53,11 @@ function App() {
           <Route path='/UserDetails' element={<UserDetails />} />
           <Route path='/UserList' element={<UserList />} />
           <Route path='/profile' element={<Profile />} />
-
+          <Route path='/Booking' element={<Booking />} />
           <Route path="/mod" element={<BoardModerator />} />
           <Route path="/admin" element={<BoardAdmin />} />
           <Route path="/user" element={<BoardUser />} />
+          <Route path="/AddChild" element={<AddChild />} />
         </Routes>
         <Footer />
       </Router>
