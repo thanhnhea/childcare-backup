@@ -1,6 +1,7 @@
 import "./Register.css"
 import React, { useState, useEffect } from 'react';
 import AuthService from '../../services/auth.service'
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -20,20 +21,23 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const [message, setMessage] = useState();
+  const [successful, setSuccessful] = useState(false);
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     // Perform form submission logic here
+
     console.log("handle submit here");
     AuthService.register(
-      this.state.username,
-      this.state.email,
-      this.state.password
+      username,
+      email,
+      password
     ).then(
       response => {
-        this.setState({
-          message: response.data.message,
-          successful: true
-        });
+        setMessage(response.data.message);
+        setSuccessful(true);
+        navigate('/login');
       },
       error => {
         const resMessage =
@@ -42,11 +46,8 @@ const Register = () => {
             error.response.data.message) ||
           error.message ||
           error.toString();
-
-        this.setState({
-          successful: false,
-          message: resMessage
-        });
+        setMessage(resMessage);
+        setSuccessful(false);
       }
     );
   };
@@ -98,10 +99,10 @@ const Register = () => {
   }, [formData]);
 
   return (
-    <section classNameName="vh-100 gradient-custom">
-      <div classNameName="container-fluid py-5 h-100">
-        <div classNameName="row justify-content-center align-items-center h-100">
-          <div classNameName="col-md-9">
+    <section className="vh-100 gradient-custom">
+      <div className="container-fluid py-5 h-100">
+        <div className="row justify-content-center align-items-center h-100">
+          <div className="col-md-9">
             <div className="card shadow-2-strong card-registration" >
               <div className="card-body p-4 p-md-5">
                 <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Registration Form</h3>
@@ -117,7 +118,7 @@ const Register = () => {
 
                     </div>
 
-                    <div classNameName="col-md-12 mb-4">
+                    <div className="col-md-12 mb-4">
 
                       <div className="form-outline">
                         {errors.lastName && <span>{errors.lastName}</span>}
