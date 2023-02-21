@@ -10,4 +10,8 @@ public interface UserProfileService {
     public List<UserDto> getAllUser();
     public List<UserDto> getAllUser(int pageIndex, int pageSize);
 
+    public User loadUserByUsername(String username);
+
+    public void save(User user);
+
 }
