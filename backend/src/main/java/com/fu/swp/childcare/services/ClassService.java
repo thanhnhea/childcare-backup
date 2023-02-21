@@ -9,9 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ClassService {
@@ -41,7 +39,9 @@ public class ClassService {
     public void assignChild(String childID , String classID){
         ChildInformation childInformation = childrenService.getChildById(childID) ;
         Classes classes = classRepository.findById(Long.parseLong(classID)).orElseThrow();
-        classes.setChildInformation(childInformation);
+
+
+        classes.getChildInformation().add(childInformation) ;
         classRepository.save(classes);
     }
 }

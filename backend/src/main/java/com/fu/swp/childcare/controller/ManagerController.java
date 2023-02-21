@@ -4,6 +4,7 @@ import com.fu.swp.childcare.model.ChildInformation;
 import com.fu.swp.childcare.model.Classes;
 import com.fu.swp.childcare.model.User;
 import com.fu.swp.childcare.payload.AssignClass;
+import com.fu.swp.childcare.payload.ChildProfile;
 import com.fu.swp.childcare.payload.ClassDetail;
 import com.fu.swp.childcare.payload.response.MessageResponse;
 import com.fu.swp.childcare.services.ChildrenService;
@@ -22,6 +23,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequestMapping("/mod")
@@ -99,7 +102,12 @@ public class ManagerController {
 
     @PostMapping("/assignChhild")
     public ResponseEntity<?> assignChild(@RequestBody @Valid AssignClass assignClass){
-
-        return null ;
+        try{
+            classService.assignChild(assignClass.getChildId(), assignClass.getClassId());
+            String msg = "Saved " +assignClass.getChildId() +" into "+assignClass.getClassId() ;
+            return ResponseEntity.ok(msg);
+        }catch (Exception exception){
+            return new ResponseEntity<>(exception.getLocalizedMessage(),HttpStatus.BAD_REQUEST) ;
+        }
     }
 }

@@ -4,11 +4,8 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -16,7 +13,6 @@ import java.util.Set;
 @Entity
 @Table(name = "classes")
 public class Classes {
-    @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +29,7 @@ public class Classes {
     @OneToOne
     User createdPerson;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "child_information_id")
-    ChildInformation childInformation;
+    Set<ChildInformation> childInformation;
 }

@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,4 +24,9 @@ public class ClassDetail {
     private LocalDate endDate;
 
     private String description;
+
+    Set<ChildProfile> setChild;
+
+    public ClassDetail(String className, LocalDate startDate, LocalDate endDate, String description) {
+    }
 }
