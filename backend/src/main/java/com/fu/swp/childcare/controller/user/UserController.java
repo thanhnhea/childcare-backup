@@ -12,6 +12,9 @@ import com.fu.swp.childcare.services.ChildrenService;
 import com.fu.swp.childcare.services.UserProfileService;
 import com.fu.swp.childcare.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,6 +27,7 @@ import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -51,7 +55,7 @@ public class UserController {
     }
 
     @PostMapping("submit_children")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> createChildrenProfile(@Valid @RequestBody SubmitChildrenInfoRequest request) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
@@ -76,6 +80,22 @@ public class UserController {
         );
         childrenService.save(child);
         return ResponseEntity.ok(new MessageResponse("Success"));
+    }
+
+    @GetMapping("current-user-children")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> getCurrentUserChildren(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = userDetails.getUsername();
+        User user = userService.loadUserByUsername(username);
+        Pageable paging = PageRequest.of(page, size);
+        Page<ChildInformation> children = childrenService.loadAllChildrenFromUser(user.getId(), paging);
+        if (children.isEmpty()) {
+            return new ResponseEntity(new MessageResponse("theres no children"), HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(children.getContent().stream().map(ChildInformation::toChildrenInfoDto).collect(Collectors.toList()), HttpStatus.OK);
+        }
     }
 
     @GetMapping(value = "/users/{pageIndex}/{pageSize}")

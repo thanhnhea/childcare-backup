@@ -1,5 +1,6 @@
 package com.fu.swp.childcare.model;
 
+import com.fu.swp.childcare.controller.mapping.ChildrenInfoDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -28,6 +29,22 @@ public class ChildInformation {
     String note;
     @ManyToOne
     User user;
+
+    public ChildInformation() {
+    }
+
+    public ChildrenInfoDto toChildrenInfoDto() {
+        return new ChildrenInfoDto(
+                this.firstName,
+                this.lastName,
+                this.dob,
+                this.gender,
+                this.interest,
+                this.needs,
+                this.note,
+                this.user.toUserDto()
+        );
+    }
 
     public ChildInformation(
             String firstName,
