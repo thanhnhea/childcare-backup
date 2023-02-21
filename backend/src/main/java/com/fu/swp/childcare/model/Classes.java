@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,17 +16,21 @@ public class Classes {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     String className;
-
     Date createdDate;
-
+    Date updatedDate;
+    Date startDate;
+    Date endDate;
     String classDetails;
 
+    @OneToMany
+    Set<ChildInformation> childInformation = new HashSet<>();
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
     User user;
+
 }

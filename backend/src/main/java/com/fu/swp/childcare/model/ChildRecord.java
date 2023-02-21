@@ -10,11 +10,12 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@Table(name = "childrecord")
 public class ChildRecord {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -26,8 +27,6 @@ public class ChildRecord {
 
     String notes;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne
     User user;
-
 }
