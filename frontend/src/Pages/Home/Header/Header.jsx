@@ -18,6 +18,7 @@ class Header extends Component {
         this.state = {
             showModeratorBoard: false,
             showAdminBoard: false,
+            showUserBoard: false,
             currentUser: undefined,
         };
     }
@@ -30,6 +31,7 @@ class Header extends Component {
                 currentUser: user,
                 showModeratorBoard: user.roles.includes("ROLE_MANAGER"),
                 showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+                showUserBoard: user.roles.includes("ROLE_USER")
             });
         }
     }
@@ -39,11 +41,12 @@ class Header extends Component {
         this.setState({
             showModeratorBoard: false,
             showAdminBoard: false,
+            showUserBoard: false,
             currentUser: undefined,
         });
     }
     render() {
-        const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+        const { currentUser, showModeratorBoard, showAdminBoard, showUserBoard } = this.state;
 
         return (
             <div className="head-bg">
@@ -69,6 +72,11 @@ class Header extends Component {
                                     </Link>
                                 )}
 
+                                {showUserBoard && (
+                                    <Link to={"/addchild"} className="list-item text-decoration-none">
+                                        Board
+                                    </Link>
+                                )}
                                 {currentUser ? (
                                     <div className="navbar-nav ml-auto">
                                         <li className="nav-item">

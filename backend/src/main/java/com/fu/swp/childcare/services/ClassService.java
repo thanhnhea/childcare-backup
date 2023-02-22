@@ -38,8 +38,8 @@ public class ClassService {
 
     public void assignChild(String childID , String classID){
         ChildInformation childInformation = childrenService.getChildById(childID) ;
+        childInformation.setStatus(true);
         Classes classes = classRepository.findById(Long.parseLong(classID)).orElseThrow();
-
 
         classes.getChildInformation().add(childInformation) ;
         classRepository.save(classes);

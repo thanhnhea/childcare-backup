@@ -34,8 +34,15 @@ public class ManagerController {
     @Autowired
     ChildrenService childrenService;
 
+
+    @Autowired
+    ClassService classService ;
+
+    @Autowired
+    UserService userService;
+
     @GetMapping("/children")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
+    @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<?> getAllChildren(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         Pageable paging = PageRequest.of(page, size);
         Page<ChildInformation> children = childrenService.loadAllChildren(paging);
@@ -45,12 +52,6 @@ public class ManagerController {
             return new ResponseEntity<>(children.getContent().stream().map(ChildInformation::toChildrenInfoDto).collect(Collectors.toList()), HttpStatus.OK);
         }
     }
-
-    @Autowired
-    ClassService classService ;
-
-    @Autowired
-    UserService userService;
 
     @GetMapping("/class")
     @PreAuthorize("hasRole('ROLE_MANAGER')")

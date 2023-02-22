@@ -28,6 +28,8 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -62,13 +64,9 @@ public class UserController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String username = userDetails.getUsername();
-        Date dob;
-        try {
-            dob = new SimpleDateFormat("dd/MM/yyyy").parse(request.getDob());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(new MessageResponse("Wrong format date"));
-        }
+        LocalDate dob;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        dob = LocalDate.parse(request.getDob(), formatter);
         User user = userService.loadUserByUsername(username);
         ChildInformation child = new ChildInformation(
                 request.getFirstName(),

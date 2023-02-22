@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -22,13 +23,15 @@ public class ChildInformation {
 
     String firstName;
     String lastName;
-    Date dob;
+    LocalDate dob;
     boolean gender;
     String interest;
     String needs;
     String note;
     @ManyToOne
     User user;
+
+    boolean status = false;
 
     public ChildInformation() {
     }
@@ -42,6 +45,7 @@ public class ChildInformation {
                 this.interest,
                 this.needs,
                 this.note,
+                this.status,
                 this.user.toUserDto()
         );
     }
@@ -49,7 +53,7 @@ public class ChildInformation {
     public ChildInformation(
             String firstName,
             String lastName,
-            Date dob,
+            LocalDate dob,
             boolean gender,
             String interest,
             String needs,
