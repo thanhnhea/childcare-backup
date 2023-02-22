@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -22,7 +23,7 @@ public class ChildProfile {
     @Size(min = 2, max = 10)
     private String lastName;
     @NotNull
-    private Date dob;
+    private LocalDate dob;
     @NotNull
     private boolean gender;
     private String interest;

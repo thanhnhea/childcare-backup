@@ -3,6 +3,7 @@ package com.fu.swp.childcare.controller.mapping;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Setter
@@ -10,12 +11,13 @@ import java.util.Date;
 public class ChildrenInfoDto {
     String firstName;
     String lastName;
-    Date dob;
+    LocalDate dob;
     boolean gender;
     String interest;
     String needs;
     String note;
     private UserDto user;
+    private boolean status = false;
 
     public ChildrenInfoDto() {
     }
@@ -23,11 +25,12 @@ public class ChildrenInfoDto {
     public ChildrenInfoDto(
             String firstName,
             String lastName,
-            Date dob,
+            LocalDate dob,
             boolean gender,
             String interest,
             String needs,
             String note,
+            boolean status,
             UserDto user
     ) {
         this.firstName = firstName;
@@ -38,5 +41,6 @@ public class ChildrenInfoDto {
         this.needs = needs;
         this.note = note;
         this.user = user;
+        this.status = status;
     }
 }
