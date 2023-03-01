@@ -23,8 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RequestMapping("/mod")
@@ -76,6 +75,16 @@ public class ManagerController {
             return new ResponseEntity<>(pageResult.getContent(), HttpStatus.OK);
         }
     }
+    @GetMapping("/available-classes")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> getAllClass(){
+        List<Classes> classes = classService.getAllAvailableClass();
+        if (classes.isEmpty()) {
+            return ResponseEntity.badRequest().body("Class list is empty");
+        } else {
+            return new ResponseEntity<>(classes, HttpStatus.OK);
+        }
+    }
 
     @PostMapping("/newClass")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
@@ -101,7 +110,8 @@ public class ManagerController {
         }
     }
 
-    @PostMapping("/assignChhild")
+    @PostMapping("/assignChild")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public ResponseEntity<?> assignChild(@RequestBody @Valid AssignClass assignClass){
         try{
             classService.assignChild(assignClass.getChildId(), assignClass.getClassId());
