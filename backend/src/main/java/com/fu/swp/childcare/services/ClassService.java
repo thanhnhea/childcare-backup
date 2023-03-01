@@ -32,17 +32,30 @@ public class ClassService {
         return classRepository.findAll(pageable);
     }
 
+    public List<Classes> getAllAvailableClass() {
+        List<Classes> classes = classRepository.findAll();
+        List<Classes> filteredClass = new ArrayList<>();
+        for (Classes selectedClass : classes) {
+            if (selectedClass.getChildInformation().size() < CLASS_CAPACITY) {
+                filteredClass.add(selectedClass);
+            }
+        }
+        return filteredClass;
+    }
+
     public void save(Classes c) {
         classRepository.save(c);
     }
 
-    public void assignChild(String childID , String classID){
-        ChildInformation childInformation = childrenService.getChildById(childID) ;
+    public void assignChild(String childID, String classID) {
+        ChildInformation childInformation = childrenService.getChildById(childID);
         childInformation.setStatus(true);
         Classes classes = classRepository.findById(Long.parseLong(classID)).orElseThrow();
 
-        classes.getChildInformation().add(childInformation) ;
+        classes.getChildInformation().add(childInformation);
         classRepository.save(classes);
     }
+
+    static final int CLASS_CAPACITY = 32;
 }
 
