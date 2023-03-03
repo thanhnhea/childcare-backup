@@ -20,7 +20,7 @@ import ClassDetails from './Pages/ClassChildren/ClassDetails/ClassDetails';
 import Children from './Pages/ClassChildren/Children/Children';
 import Profile from './Pages/profile'
 import BoardAdmin from './Pages/board-admin.component'
-import BoardModerator from './Pages/board-moderator.component'
+// import BoardModerator from './Pages/board-moderator.component'
 import BoardUser from './Pages/board-user.component'
 import Booking from './Pages/Booking/BookingForm/Booking';
 import AddChild from './Pages/Booking/AddChildren/AddChildren';
@@ -42,15 +42,15 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='*' element={<NotFound />} />
-          <Route path='/ResetPassword' element={<ResetPassword />} />
-          <Route path='/ChangePasword' element={<ChangePasword />} />
-          <Route path='/UserDetails' element={<UserDetails />} />
-          <Route path='/UserList' element={<UserList />} />
-          <Route path='/ClassList' element={<ClassList />} />
-          <Route path='/ClassDetails' element={<ClassDetails />} />
+          <Route path='/resetpassword' element={<ResetPassword />} />
+          <Route path='/changepasword' element={<ChangePasword />} />
+          <Route path='/userDetails' element={<UserDetails />} />
+          <Route path='/userList' element={<UserList />} />
+          <Route path='/classList' element={<ClassList />} />
+          <Route path='/classpetails' element={<ClassDetails />} />
           <Route path='/mod' element={<Children />} />
-          <Route path='/ChangePasword' element={<ChangePasword />} />
-          <Route path='/UserDetails' element={<UserDetails />} />
+          <Route path='/changepasword' element={<ChangePasword />} />
+          <Route path='/userdetails' element={<UserDetails />} />
           <Route path='/users' element={<UserList />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/booking' element={<Booking />} />
