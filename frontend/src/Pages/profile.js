@@ -30,11 +30,12 @@ export default class Profile extends Component {
 
         return (
             
-            <Table responsive style={{fontSize :40}}>               
+            <Table responsive style={{fontSize :35}}>               
                 {(this.state.userReady) ?
                     <div className="container mt-5 mb-5">
                         <tr>
-                            <td><strong>{currentUser.username}</strong> Profile</td>
+                            <td><strong>{currentUser.username}</strong> Profile <img src="https://picsum.photos/200" width="200" height="200" className="img-fluid" alt="userp" /></td>
+                            
                         </tr>
                       
                         <tr>
