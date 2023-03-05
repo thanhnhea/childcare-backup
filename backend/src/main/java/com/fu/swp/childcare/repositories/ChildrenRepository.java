@@ -10,8 +10,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ChildrenRepository extends JpaRepository<ChildInformation,Long> {
+public interface ChildrenRepository extends JpaRepository<ChildInformation, Long> {
     @Query(value = "SELECT * FROM `childinfo` c WHERE c.user_id = ?1",
-    nativeQuery = true)
+            nativeQuery = true)
     Page<ChildInformation> loadChildrenFromUserId(long id, Pageable pageable);
+
+    @Query(value = "SELECT * FROM childinfo WHERE child_information_id is null",
+            nativeQuery = true)
+    Page<ChildInformation> loadUnassignedChildren(Pageable pageable);
+
+
 }

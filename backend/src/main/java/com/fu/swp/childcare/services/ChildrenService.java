@@ -35,4 +35,8 @@ public class ChildrenService {
                 .orElseThrow(() -> new EntityNotFoundException("Child Not Found"));
     }
 
+    public Page<ChildInformation> getUnassignedChild(Pageable pageable){
+        return childrenRepository.loadUnassignedChildren(pageable);
+    }
+
 }
