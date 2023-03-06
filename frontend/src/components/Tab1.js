@@ -4,7 +4,6 @@ const Tab1 = () => {
 
     const [selectedChildren, setSelectedChildren] = useState([]);
 
-
     const items = [
         { firstName: 'John', lastName: 'Doe', dob: '01/01/1990', status: 'Assigned' },
         { firstName: 'Jane', lastName: 'Doe', dob: '02/02/1995', status: 'Inactive' },
