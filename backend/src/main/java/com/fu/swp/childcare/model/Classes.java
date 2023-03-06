@@ -18,7 +18,6 @@ public class Classes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column( name = "id" , unique = true )
     private Long id;
-
     @Column(unique = true)
     String className;
     LocalDate createdDate;
@@ -32,4 +31,6 @@ public class Classes {
     @OneToMany
     @JoinColumn(name = "child_information_id")
     Set<ChildInformation> childInformation;
+
+
 }

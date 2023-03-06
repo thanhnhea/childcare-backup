@@ -28,8 +28,10 @@ public class ChildInformation {
     String interest;
     String needs;
     String note;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     User user;
+
+
 
     boolean status = false;
 

@@ -24,6 +24,8 @@ import BoardAdmin from './Pages/board-admin.component'
 import BoardUser from './Pages/board-user.component'
 import Booking from './Pages/Booking/BookingForm/Booking';
 import AddChild from './Pages/Booking/AddChildren/AddChildren';
+import ManageBoard from './components/ManagerBoard';
+import ChildProfile from './components/ChildProfile';
 
 
 function App() {
@@ -48,7 +50,7 @@ function App() {
           <Route path='/userList' element={<UserList />} />
           <Route path='/classList' element={<ClassList />} />
           <Route path='/classpetails' element={<ClassDetails />} />
-          <Route path='/mod' element={<Children />} />
+          <Route path='/mod' element={<ManageBoard />} />
           <Route path='/changepasword' element={<ChangePasword />} />
           <Route path='/userdetails' element={<UserDetails />} />
           <Route path='/users' element={<UserList />} />
@@ -57,6 +59,7 @@ function App() {
           <Route path="/admin" element={<BoardAdmin />} />
           <Route path="/user" element={<BoardUser />} />
           <Route path="/addchild" element={<AddChild />} />
+          <Route path="/child" element={<ChildProfile />} />
         </Routes>
         <Footer />
       </Router>
