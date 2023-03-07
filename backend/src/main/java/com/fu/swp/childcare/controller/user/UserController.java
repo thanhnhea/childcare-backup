@@ -3,6 +3,7 @@ package com.fu.swp.childcare.controller.user;
 
 import com.fu.swp.childcare.controller.mapping.UserDto;
 import com.fu.swp.childcare.model.ChildInformation;
+import com.fu.swp.childcare.model.Reservation;
 import com.fu.swp.childcare.model.User;
 import com.fu.swp.childcare.payload.ChildProfile;
 import com.fu.swp.childcare.payload.RequestChangePassword;
@@ -138,6 +139,23 @@ public class UserController {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Child Not Found", exc);
         }
+    }
+
+    @PostMapping("/users/reservations")
+    @PreAuthorize("hasRole('USER') or hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> reservation(@RequestBody Reservation reservation)  {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = userDetails.getUsername();
+    try {
+        User user = userService.loadUserByUsername(username);
+        reservation.setUser(user);
+
+    }catch (Exception e){
+
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+        return ResponseEntity.ok("");
     }
 
 
