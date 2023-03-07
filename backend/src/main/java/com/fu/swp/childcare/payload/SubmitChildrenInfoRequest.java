@@ -20,4 +20,18 @@ public class SubmitChildrenInfoRequest {
     String interest;
     String needs;
     String notes;
+
+    @Override
+    public String toString() {
+        return "SubmitChildrenInfoRequest{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dob='" + dob + '\'' +
+                ", gender=" + gender +
+                ", note='" + note + '\'' +
+                ", interest='" + interest + '\'' +
+                ", needs='" + needs + '\'' +
+                ", notes='" + notes + '\'' +
+                '}';
+    }
 }
