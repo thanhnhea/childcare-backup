@@ -52,16 +52,7 @@ public class ManagerController {
         }
     }
 
-    @GetMapping("/class")
-    @PreAuthorize("hasRole('ROLE_MANAGER')")
-    public ResponseEntity<?> getClassDetails(@RequestParam String id) {
-        try {
-            Classes clas = classService.getClassById(id);
-            return ResponseEntity.ok(clas);
-        } catch (Exception ex) {
-            return new ResponseEntity<>("Class Not Found", HttpStatus.BAD_REQUEST);
-        }
-    }
+
 
     @GetMapping("/classes")
     @PreAuthorize("hasRole('ROLE_MANAGER')")

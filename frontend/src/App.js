@@ -60,6 +60,7 @@ function App() {
           <Route path="/user" element={<BoardUser />} />
           <Route path="/addchild" element={<AddChild />} />
           <Route path="/child" element={<ChildProfile />} />
+          <Route path="/class/:id" element={<ClassDetails />} />
         </Routes>
         <Footer />
       </Router>

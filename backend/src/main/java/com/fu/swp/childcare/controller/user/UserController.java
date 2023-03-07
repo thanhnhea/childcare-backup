@@ -3,6 +3,7 @@ package com.fu.swp.childcare.controller.user;
 
 import com.fu.swp.childcare.controller.mapping.UserDto;
 import com.fu.swp.childcare.model.ChildInformation;
+import com.fu.swp.childcare.model.Classes;
 import com.fu.swp.childcare.model.User;
 import com.fu.swp.childcare.payload.ChildProfile;
 import com.fu.swp.childcare.payload.RequestChangePassword;
@@ -10,6 +11,7 @@ import com.fu.swp.childcare.payload.SubmitChildrenInfoRequest;
 import com.fu.swp.childcare.payload.response.MessageResponse;
 import com.fu.swp.childcare.repositories.UserRepository;
 import com.fu.swp.childcare.services.ChildrenService;
+import com.fu.swp.childcare.services.ClassService;
 import com.fu.swp.childcare.services.UserProfileService;
 import com.fu.swp.childcare.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,8 @@ public class UserController {
     @Autowired
     PasswordEncoder encoder;
 
+    @Autowired
+    ClassService classService;
 
     @GetMapping(value = "/users")
     @PreAuthorize("hasRole('USER')")
@@ -140,5 +144,14 @@ public class UserController {
         }
     }
 
+    @GetMapping("/class")
+    public ResponseEntity<?> getClassDetails(@RequestParam String id) {
+        try {
+            Classes clas = classService.getClassById(id);
+            return ResponseEntity.ok(clas);
+        } catch (Exception ex) {
+            return new ResponseEntity<>("Class Not Found", HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }
