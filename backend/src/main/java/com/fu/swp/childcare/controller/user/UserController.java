@@ -66,8 +66,10 @@ public class UserController {
         String username = userDetails.getUsername();
         LocalDate dob;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        System.out.println(request);
         dob = LocalDate.parse(request.getDob(), formatter);
         User user = userService.loadUserByUsername(username);
+
         ChildInformation child = new ChildInformation(
                 request.getFirstName(),
                 request.getLastName(),
