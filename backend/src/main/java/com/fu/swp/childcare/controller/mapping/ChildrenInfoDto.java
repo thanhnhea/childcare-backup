@@ -9,6 +9,7 @@ import java.util.Date;
 @Setter
 @Getter
 public class ChildrenInfoDto {
+    String id;
     String firstName;
     String lastName;
     LocalDate dob;
@@ -33,6 +34,30 @@ public class ChildrenInfoDto {
             boolean status,
             UserDto user
     ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.gender = gender;
+        this.interest = interest;
+        this.needs = needs;
+        this.note = note;
+        this.user = user;
+        this.status = status;
+    }
+
+    public ChildrenInfoDto(
+            String id,
+            String firstName,
+            String lastName,
+            LocalDate dob,
+            boolean gender,
+            String interest,
+            String needs,
+            String note,
+            boolean status,
+            UserDto user
+    ) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
