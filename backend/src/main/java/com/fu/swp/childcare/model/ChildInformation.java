@@ -38,6 +38,7 @@ public class ChildInformation {
 
     public ChildrenInfoDto toChildrenInfoDto() {
         return new ChildrenInfoDto(
+                this.id.toString(),
                 this.firstName,
                 this.lastName,
                 this.dob,
@@ -50,6 +51,27 @@ public class ChildInformation {
         );
     }
 
+    public ChildInformation(
+            Long id,
+            String firstName,
+            String lastName,
+            LocalDate dob,
+            boolean gender,
+            String interest,
+            String needs,
+            String note,
+            User user
+    ) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.gender = gender;
+        this.interest = interest;
+        this.needs = needs;
+        this.note = note;
+        this.user = user;
+    }
     public ChildInformation(
             String firstName,
             String lastName,
