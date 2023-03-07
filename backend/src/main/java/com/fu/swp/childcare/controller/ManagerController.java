@@ -9,6 +9,7 @@ import com.fu.swp.childcare.payload.ClassDetail;
 import com.fu.swp.childcare.payload.response.MessageResponse;
 import com.fu.swp.childcare.services.ChildrenService;
 import com.fu.swp.childcare.services.ClassService;
+import com.fu.swp.childcare.services.MailService;
 import com.fu.swp.childcare.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class ManagerController {
 
     @Autowired
     ChildrenService childrenService;
+
+    @Autowired
+    MailService emailService;
 
 
     @Autowired
@@ -115,8 +119,17 @@ public class ManagerController {
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     public ResponseEntity<?> assignChild(@RequestBody @Valid AssignClass assignClass) {
         try {
+            String childID = assignClass.getChildId();
             classService.assignChild(assignClass.getChildId(), assignClass.getClassId());
+            ChildInformation child = childrenService.getChildById(childID);
+            User parents = child.getUser();
             String msg = "Saved " + assignClass.getChildId() + " into " + assignClass.getClassId();
+            System.out.println("line 127: EMAIL "+parents.getEmail());
+
+            emailService.sendHtmlMessage(
+                    parents.getEmail(),
+                    "Your child have been assign to a class",
+                    "Dear mr. " + parents.getFirstName() + ", your child have been assign to a class");
             return ResponseEntity.ok(msg);
         } catch (Exception exception) {
             return new ResponseEntity<>(exception.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
