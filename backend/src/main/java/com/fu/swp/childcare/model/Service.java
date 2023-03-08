@@ -1,11 +1,13 @@
 package com.fu.swp.childcare.model;
 
+import com.fu.swp.childcare.controller.mapping.ServiceDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import jakarta.persistence.*;
+
 import java.util.Date;
 
 @Entity
@@ -31,4 +33,16 @@ public class Service {
     @JoinColumn(name = "category_id")
     Category category;
 
+    public ServiceDto toServiceDto() {
+        return new ServiceDto(
+                this.id,
+                this.serviceTitle,
+                this.createdDate,
+                this.updatedDate,
+                this.servicePrice,
+                this.serviceDetail,
+                this.rateStar,
+                this.category.getName()
+        );
+    }
 }

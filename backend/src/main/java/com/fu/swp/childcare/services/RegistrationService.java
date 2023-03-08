@@ -1,5 +1,6 @@
 package com.fu.swp.childcare.services;
 
+import com.fu.swp.childcare.controller.mapping.ServiceDto;
 import com.fu.swp.childcare.repositories.ServiceRepository;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 public class RegistrationService {
@@ -23,7 +25,7 @@ public class RegistrationService {
         return serviceRepository.findAll(pageable);
     }
 
-    public List<Service> getAllServices() {
-        return serviceRepository.findAll();
+    public List<ServiceDto> getAllServices() {
+        return serviceRepository.findAll().stream().map(Service::toServiceDto).collect(Collectors.toList());
     }
 }
