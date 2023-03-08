@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import userService from '../services/user.service';
 import Child from './Child';
 
 const ChildProfile = () => {
+
+    const { id } = useParams();
+
+    const [childInfo, setChildInfo] = useState({});
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await userService.getChildInfo(id);
+            setChildInfo(response.data);
+        }
+        fetchData();
+    }, []);
+
+    if (!childInfo) {
+        return <div>Loading...</div>;
+    }
+
     const child = {
         firstName: 'John',
         lastName: 'Doe',
@@ -12,15 +31,18 @@ const ChildProfile = () => {
         medications: 'None'
     };
 
+
     return (
         <Child
-            firstName={child.firstName}
-            lastName={child.lastName}
-            dob={child.dob}
-            status={child.status}
-            address={child.address}
-            allergies={child.allergies}
-            medications={child.medications}
+            firstName={childInfo.firstName}
+            lastName={childInfo.lastName}
+            dob={childInfo.dob}
+            status={childInfo.status}
+            gender={childInfo.gender}
+            interest={childInfo.interest}
+            needs={childInfo.needs}
+            allergies={childInfo.allergies}
+            medications={childInfo.medications}
         />
     );
 }

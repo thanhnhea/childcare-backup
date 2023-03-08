@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Child = ({ firstName, lastName, dob, status, address, allergies, medications }) => {
+const Child = ({ firstName, lastName, dob, status, gender, interest, needs, allergies, medications }) => {
 
     const age = calculateAge(dob);
 
@@ -12,8 +12,10 @@ const Child = ({ firstName, lastName, dob, status, address, allergies, medicatio
             </div>
             <p className="text-gray-600">{dob} (Age: {age})</p>
             <p>Status: {status}</p>
-            <h3 className="text-lg font-bold mt-4">Address</h3>
-            <p>{address}</p>
+            <h3 className="text-lg font-bold mt-4">Interest</h3>
+            <p>{interest}</p>
+            <h3 className="text-lg font-bold mt-4">Needs</h3>
+            <p>{needs}</p>
             <h3 className="text-lg font-bold mt-4">Medical Information</h3>
             <p>Allergies: {allergies}</p>
             <p>Medications: {medications}</p>

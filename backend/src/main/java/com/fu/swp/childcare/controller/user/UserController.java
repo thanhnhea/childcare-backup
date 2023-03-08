@@ -1,6 +1,7 @@
 package com.fu.swp.childcare.controller.user;
 
 
+import com.fu.swp.childcare.controller.mapping.ParentDTO;
 import com.fu.swp.childcare.controller.mapping.UserDto;
 import com.fu.swp.childcare.model.ChildInformation;
 import com.fu.swp.childcare.model.Classes;
@@ -60,6 +61,13 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/details")
+    public ResponseEntity<?> getUserDetail(@RequestParam String id){
+        User userDetails = userService.getUserById(Long.parseLong(id)) ;
+        ParentDTO parentDTO = new ParentDTO();
+
     }
 
     @PostMapping("submit_children")

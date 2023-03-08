@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const classes = [
     { id: 1, name: "Class A", ageRange: "2-4", service: "Full Time", numChildren: 15 },
@@ -121,7 +122,7 @@ const Tab2 = () => {
                     <div className="col-sm-3 mb-3" key={c.id}>
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title">{c.name}</h5>
+                                <Link to={`/class/${c.id}`} className="card-title">{c.name}</Link>
                                 <p className="card-text">
                                     Age Range: {c.ageRange}<br />
                                     Service: {c.service}<br />
