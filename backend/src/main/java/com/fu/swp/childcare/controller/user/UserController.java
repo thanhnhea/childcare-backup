@@ -1,10 +1,9 @@
 package com.fu.swp.childcare.controller.user;
 
 
-import com.fu.swp.childcare.controller.mapping.ParentDTO;
 import com.fu.swp.childcare.controller.mapping.UserDto;
 import com.fu.swp.childcare.model.ChildInformation;
-import com.fu.swp.childcare.model.Classes;
+import com.fu.swp.childcare.model.Reservation;
 import com.fu.swp.childcare.model.User;
 import com.fu.swp.childcare.payload.ChildProfile;
 import com.fu.swp.childcare.payload.RequestChangePassword;
@@ -12,7 +11,6 @@ import com.fu.swp.childcare.payload.SubmitChildrenInfoRequest;
 import com.fu.swp.childcare.payload.response.MessageResponse;
 import com.fu.swp.childcare.repositories.UserRepository;
 import com.fu.swp.childcare.services.ChildrenService;
-import com.fu.swp.childcare.services.ClassService;
 import com.fu.swp.childcare.services.UserProfileService;
 import com.fu.swp.childcare.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +48,6 @@ public class UserController {
     @Autowired
     PasswordEncoder encoder;
 
-    @Autowired
-    ClassService classService;
 
     @GetMapping(value = "/users")
     @PreAuthorize("hasRole('USER')")
@@ -61,13 +57,6 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
         }
-    }
-
-    @GetMapping("/details")
-    public ResponseEntity<?> getUserDetail(@RequestParam String id){
-        User userDetails = userService.getUserById(Long.parseLong(id)) ;
-        ParentDTO parentDTO = new ParentDTO();
-
     }
 
     @PostMapping("submit_children")
@@ -152,14 +141,22 @@ public class UserController {
         }
     }
 
-    @GetMapping("/class")
-    public ResponseEntity<?> getClassDetails(@RequestParam String id) {
-        try {
-            Classes clas = classService.getClassById(id);
-            return ResponseEntity.ok(clas);
-        } catch (Exception ex) {
-            return new ResponseEntity<>("Class Not Found", HttpStatus.BAD_REQUEST);
-        }
+    @PostMapping("/users/reservations")
+    @PreAuthorize("hasRole('USER') or hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> reservation(@RequestBody Reservation reservation)  {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = userDetails.getUsername();
+    try {
+        User user = userService.loadUserByUsername(username);
+        reservation.setUser(user);
+
+    }catch (Exception e){
+
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
+        return ResponseEntity.ok("");
+    }
+
 
 }
