@@ -17,7 +17,7 @@ const ManageBoard = () => {
                         className={`nav-link ${activeTab === 0 ? 'active' : ''}`}
                         onClick={() => setActiveTab(0)}
                     >
-                        Tab 1
+                        Children List
                     </a>
                 </li>
                 <li className="nav-item">
@@ -25,7 +25,7 @@ const ManageBoard = () => {
                         className={`nav-link ${activeTab === 1 ? 'active' : ''}`}
                         onClick={() => setActiveTab(1)}
                     >
-                        Tab 2
+                        Class List
                     </a>
                 </li>
                 <li className="nav-item">
@@ -33,7 +33,7 @@ const ManageBoard = () => {
                         className={`nav-link ${activeTab === 2 ? 'active' : ''}`}
                         onClick={() => setActiveTab(2)}
                     >
-                        Tab 3
+                        Booking Request
                     </a>
                 </li>
             </ul>

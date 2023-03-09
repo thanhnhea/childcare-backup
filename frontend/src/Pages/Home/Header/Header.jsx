@@ -73,8 +73,8 @@ class Header extends Component {
                                 )}
 
                                 {showUserBoard && (
-                                    <Link to={"/addchild"} className="list-item text-decoration-none">
-                                        Board
+                                    <Link to={"/parent"} className="list-item text-decoration-none">
+                                        Parent Board
                                     </Link>
                                 )}
                                 {currentUser ? (

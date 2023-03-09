@@ -26,6 +26,7 @@ import Booking from './Pages/Booking/BookingForm/Booking';
 import AddChild from './Pages/Booking/AddChildren/AddChildren';
 import ManageBoard from './components/ManagerBoard';
 import ChildProfile from './components/ChildProfile';
+import BoardParent from './Pages/board-parent.component';
 
 
 function App() {
@@ -59,7 +60,9 @@ function App() {
           <Route path="/admin" element={<BoardAdmin />} />
           <Route path="/user" element={<BoardUser />} />
           <Route path="/addchild" element={<AddChild />} />
-          <Route path="/child" element={<ChildProfile />} />
+          <Route path="/child/:id" element={<ChildProfile />} />
+          <Route path="/class/:id" element={<ClassDetails />} />
+          <Route path="/parent" element={<BoardParent />} />
         </Routes>
         <Footer />
       </Router>

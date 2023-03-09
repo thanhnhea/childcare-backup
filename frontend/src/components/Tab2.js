@@ -1,21 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import userService from "../services/user.service";
 
-const classes = [
-    { id: 1, name: "Class A", ageRange: "2-4", service: "Full Time", numChildren: 15 },
-    { id: 2, name: "Class B", ageRange: "4-6", service: "Full Time", numChildren: 10 },
-    { id: 3, name: "Class C", ageRange: "2-4", service: "Part Time", numChildren: 20 },
-    { id: 4, name: "Class D", ageRange: "4-6", service: "Part Time", numChildren: 18 },
-];
+// const classes = [
+//     { id: 1, name: "Class A", ageRange: "2-4", service: "Full Time", numChildren: 15 },
+//     { id: 2, name: "Class B", ageRange: "4-6", service: "Full Time", numChildren: 10 },
+//     { id: 3, name: "Class C", ageRange: "2-4", service: "Part Time", numChildren: 20 },
+//     { id: 4, name: "Class D", ageRange: "4-6", service: "Part Time", numChildren: 18 },
+// ];
 
-const children = [
-    { id: 1, firstName: "Alice", lastName: "Smith", dob: "2018-01-01", status: "Active" },
-    { id: 2, firstName: "Bob", lastName: "Johnson", dob: "2017-02-01", status: "Inactive" },
-    { id: 3, firstName: "Charlie", lastName: "Davis", dob: "2016-03-01", status: "Active" },
-    { id: 4, firstName: "David", lastName: "Brown", dob: "2015-04-01", status: "Inactive" },
-    { id: 5, firstName: "Ella", lastName: "Garcia", dob: "2014-05-01", status: "Active" },
-];
+// const children = [
+//     { id: 1, firstName: "Alice", lastName: "Smith", dob: "2018-01-01", status: "Active" },
+//     { id: 2, firstName: "Bob", lastName: "Johnson", dob: "2017-02-01", status: "Inactive" },
+//     { id: 3, firstName: "Charlie", lastName: "Davis", dob: "2016-03-01", status: "Active" },
+//     { id: 4, firstName: "David", lastName: "Brown", dob: "2015-04-01", status: "Inactive" },
+//     { id: 5, firstName: "Ella", lastName: "Garcia", dob: "2014-05-01", status: "Active" },
+// ];
 
 const Tab2 = () => {
+
+    const [classes, setClasses] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await userService.getAllClassesMod();
+            setClasses(response.data);
+        }
+        fetchData();
+    }, []);
+    const [children, setChildren] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            const response2 = await userService.getUnassignedChildMod();
+            setChildren(response2.data);
+        }
+        fetchData();
+    }, []);
+
+
+
     const [ageRangeFilter, setAgeRangeFilter] = useState("");
     const [serviceFilter, setServiceFilter] = useState("");
     const [numChildrenFilter, setNumChildrenFilter] = useState("");
@@ -52,11 +75,12 @@ const Tab2 = () => {
     };
 
     const handleAssignClass = (c) => {
-        if (selectedChild && selectedChild.status === "Inactive") {
+        if (selectedChild && selectedChild.status === "UnAssigned") {
+            userService.postAssignClass(selectedChild.id, c.id)
             alert(`Assigned ${selectedChild.firstName} to ${c.name}`);
             setSelectedChild(null);
         } else {
-            alert("Please select an inactive child to assign to a class");
+            alert("Please select an UnAssigned child to assign to a class");
         }
     };
 
@@ -121,7 +145,7 @@ const Tab2 = () => {
                     <div className="col-sm-3 mb-3" key={c.id}>
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title">{c.name}</h5>
+                                <Link to={`/class/${c.id}`} className="card-title">{c.name}</Link>
                                 <p className="card-text">
                                     Age Range: {c.ageRange}<br />
                                     Service: {c.service}<br />
@@ -155,15 +179,19 @@ const Tab2 = () => {
                             <td>{c.dob}</td>
                             <td>{c.status}</td>
                             <td>
-                                {c.status === "Inactive" ? (
+                                {c.status === "UnAssigned" ? (
                                     <div>
                                         <input type="checkbox" onChange={() => handleSelectChild(c)} />
-                                        <button
-                                            className="btn btn-sm btn-primary ms-2"
-                                            onClick={() => handleSelectChild(c)}
-                                        >
-                                            Assign
-                                        </button>
+                                        {
+                                            // <button
+                                            //     className="btn btn-sm btn-primary ms-2"
+                                            //     onClick={() => handleSelectChild(c)}
+                                            // >
+                                            //     Assign
+                                            // </button>
+
+                                        }
+
                                     </div>
                                 ) : (
                                     <span className="text-muted">N/A</span>

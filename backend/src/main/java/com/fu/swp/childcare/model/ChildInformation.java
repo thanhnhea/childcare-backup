@@ -1,6 +1,7 @@
 package com.fu.swp.childcare.model;
 
 import com.fu.swp.childcare.controller.mapping.ChildrenInfoDto;
+import com.fu.swp.childcare.controller.mapping.UserDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -30,8 +31,6 @@ public class ChildInformation {
     String note;
     @ManyToOne(fetch = FetchType.LAZY)
     User user;
-
-
 
     boolean status = false;
 

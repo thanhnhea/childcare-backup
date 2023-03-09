@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import userService from "../services/user.service";
 
 const Tab1 = () => {
+
+    const navigate = useNavigate();
 
     const [selectedChildren, setSelectedChildren] = useState([]);
 
@@ -15,21 +18,21 @@ const Tab1 = () => {
         fetchData();
     }, []);
 
-    console.log(data);
-
     const items = [
         { firstName: 'John', lastName: 'Doe', dob: '01/01/1990', status: 'Assigned' },
-        { firstName: 'Jane', lastName: 'Doe', dob: '02/02/1995', status: 'Inactive' },
+        { firstName: 'Jane', lastName: 'Doe', dob: '02/02/1995', status: 'UnAssigned' },
         { firstName: 'Bob', lastName: 'Smith', dob: '03/03/2000', status: 'Assigned' },
-        { firstName: 'Alice', lastName: 'Johnson', dob: '04/04/1992', status: 'Inactive' },
+        { firstName: 'Alice', lastName: 'Johnson', dob: '04/04/1992', status: 'UnAssigned' },
     ];
 
-    // const sortedItems = data.sort((b, a) => a.status.localeCompare(b.status));
+    const sortedItems = items.sort((b, a) => a.status.localeCompare(b.status));
+
+    const sportedData = data.sort((b, a) => String(a.status).localeCompare(String(b.status)));
 
     const handleCheckboxChange = (event, index) => {
         const isChecked = event.target.checked;
-        const itemStatus = data[index].status;
-        if (itemStatus === 0) {
+        const itemStatus = sportedData[index].status;
+        if (itemStatus === 'Assigned') {
             if (isChecked) {
                 setSelectedChildren([...selectedChildren, index]);
             } else {
@@ -47,7 +50,7 @@ const Tab1 = () => {
         <div>
             <h3>Tab 1</h3>
             <ul className="list-group">
-                {data.map((item, index) => (
+                {sportedData.map((item, index) => (
                     <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                         <div className="form-check">
                             <input
@@ -56,13 +59,13 @@ const Tab1 = () => {
                                 id={`checkbox-${index}`}
                                 checked={selectedChildren.includes(index)}
                                 onChange={(event) => handleCheckboxChange(event, index)}
-                                disabled={item.status !== 0}
+                                disabled={item.status !== 'UnAssigned'}
                             />
                             <label className="form-check-label" htmlFor={`checkbox-${index}`}>
                                 {item.firstName} {item.lastName} ({item.dob}) - {item.status}
                             </label>
                         </div>
-                        <button className="btn btn-primary" onClick={() => console.log(item)}>
+                        <button className="btn btn-primary" onClick={() => navigate("/child/" + item.id)}>
                             View Details
                         </button>
                     </li>

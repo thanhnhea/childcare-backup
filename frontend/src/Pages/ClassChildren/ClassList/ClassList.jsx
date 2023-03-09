@@ -1,17 +1,17 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 
-const classList = () => {
+const ClassList = () => {
     return (
         <section className="section">
             <Container>
-            <Row className="justify-content-center m-5">
-                <Col lg={12}>
-                    <h1 className='mb-5 text-danger display-1 text-uppercase'>Our Class</h1>
-                    <h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore. dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</h5>
-                </Col>
-            </Row>
-                <Row className="justify-content-center">               
+                <Row className="justify-content-center m-5">
+                    <Col lg={12}>
+                        <h1 className='mb-5 text-danger display-1 text-uppercase'>Our Class</h1>
+                        <h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore. dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</h5>
+                    </Col>
+                </Row>
+                <Row className="justify-content-center">
                     <Col lg={4} sm={8} >
                         <div className="card-group">
                             <div className="card m-3 rounded border-1 shadow">
@@ -117,25 +117,25 @@ const classList = () => {
                 </Row>
 
                 <Row>
-                <Col lg={4}>
-                </Col>
-                  <Col className="mt-3 mb-3 ml-5">
-                  <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li className="page-item"><a className="page-link" href="!#">Previous</a></li>
-                            <li className="page-item"><a className="page-link" href="!#">1</a></li>
-                            <li className="page-item"><a className="page-link" href="!#">2</a></li>
-                            <li className="page-item"><a className="page-link" href="!#">3</a></li> 
-                            <li className="page-item"><a className="page-link" href="!#">4</a></li> 
-                            <li className="page-item"><a className="page-link" href="!#">5</a></li> 
-                            <li className="page-item"><a className="page-link" href="!#">Next</a></li>                                          
-                        </ul>
-                    </nav>
-                  </Col>
+                    <Col lg={4}>
+                    </Col>
+                    <Col className="mt-3 mb-3 ml-5">
+                        <nav aria-label="Page navigation example">
+                            <ul className="pagination">
+                                <li className="page-item"><a className="page-link" href="!#">Previous</a></li>
+                                <li className="page-item"><a className="page-link" href="!#">1</a></li>
+                                <li className="page-item"><a className="page-link" href="!#">2</a></li>
+                                <li className="page-item"><a className="page-link" href="!#">3</a></li>
+                                <li className="page-item"><a className="page-link" href="!#">4</a></li>
+                                <li className="page-item"><a className="page-link" href="!#">5</a></li>
+                                <li className="page-item"><a className="page-link" href="!#">Next</a></li>
+                            </ul>
+                        </nav>
+                    </Col>
                 </Row>
             </Container>
         </section>
     );
 };
 
-export default classList;
+export default ClassList;
