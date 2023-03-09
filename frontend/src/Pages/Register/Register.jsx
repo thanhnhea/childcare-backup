@@ -57,37 +57,43 @@ const Register = () => {
       let errors = {};
 
       if (!firstName) {
-        errors.firstName = 'First name is required';
+        errors.firstName = '(*)';
+      }else if (!/^[a-zA-Z0-9]+$/.test(firstName)) {
+        errors.firstName = 'Name can not contain special character.';
       }
 
       if (!lastName) {
-        errors.lastName = 'Last name is required';
+        errors.lastName = '(*)';
+      }else if (!/^[a-zA-Z0-9]+$/.test(lastName)) {
+        errors.lastName = 'Name can not contain special character.';
       }
 
       if (!username) {
-        errors.username = 'Username is required';
+        errors.username = '(*)';
+      }else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+        errors.username = 'Name can not contain special character.';
       }
 
       if (!phone) {
-        errors.phone = 'Phone number is required';
+        errors.phone = '(*)';
       } else if (!/^[0-9]+$/.test(phone)) {
         errors.phone = 'Phone number must only contain digits';
       }
 
       if (!email) {
-        errors.email = 'Email is required';
+        errors.email = '(*)';
       } else if (!/\S+@\S+\.\S+/.test(email)) {
         errors.email = 'Email is invalid';
       }
 
       if (!password) {
-        errors.password = 'Password is required';
+        errors.password = '(*)';
       } else if (password.length < 6) {
         errors.password = 'Password must be at least 6 characters';
       }
 
       if (!confirmPassword) {
-        errors.confirmPassword = 'Confirm password is required';
+        errors.confirmPassword = '(*)';
       } else if (password !== confirmPassword) {
         errors.confirmPassword = 'Passwords do not match';
       }
@@ -139,29 +145,22 @@ const Register = () => {
 
                   <div className="row">
 
-                    <div className="col-md-12 mb-4">
+                  <div className="col-md-12 mb-4">
+    <h6 className="mb-2 pb-1">Gender: </h6>
+    <div className="form-check form-check-inline">
+        <input className="form-check-input" type="radio" name="gender" id="femaleGender" value="female" defaultChecked />
+        <label className="form-check-label" htmlFor="femaleGender">Female</label>
+    </div>
+    <div className="form-check form-check-inline">
+        <input className="form-check-input" type="radio" name="gender" id="maleGender" value="male" />
+        <label className="form-check-label" htmlFor="maleGender">Male</label>
+    </div>
+    <div className="form-check form-check-inline">
+        <input className="form-check-input" type="radio" name="gender" id="otherGender" value="other" required />
+        <label className="form-check-label" htmlFor="otherGender">Other</label>
+    </div>
+</div>
 
-                      <h6 className="mb-2 pb-1">Gender: </h6>
-
-                      <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
-                          value="option1" checked />
-                        <label className="form-check-label" for="femaleGender">Female</label>
-                      </div>
-
-                      <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
-                          value="option2" />
-                        <label className="form-check-label" for="maleGender">Male</label>
-                      </div>
-
-                      <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="inlineRadioOptions" id="otherGender"
-                          value="option3" required />
-                        <label className="form-check-label" for="otherGender">Other</label>
-                      </div>
-
-                    </div>
                   </div>
 
                   <div className="row">
