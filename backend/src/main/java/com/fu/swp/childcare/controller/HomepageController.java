@@ -1,10 +1,14 @@
 package com.fu.swp.childcare.controller;
 
 import com.fu.swp.childcare.controller.mapping.ServiceDto;
+import com.fu.swp.childcare.controller.mapping.UserDto;
 import com.fu.swp.childcare.model.Service;
 import com.fu.swp.childcare.services.RegistrationService;
+import com.fu.swp.childcare.services.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,6 +23,9 @@ public class HomepageController {
 
     @Autowired
     RegistrationService registrationService;
+
+    @Autowired
+    UserProfileService userProfileService;
 
     @GetMapping(value = "all-services")
     public ResponseEntity<?> getAllServices() {
@@ -41,6 +48,17 @@ public class HomepageController {
         }
         return service == null ? ResponseEntity.badRequest().body("Service doesn't exist!") : ResponseEntity.ok(service);
 
+    }
+
+    @GetMapping(value = "userInfo")
+    public ResponseEntity<?> getUserDetail(@RequestParam String id) {
+        UserDto user = null;
+        try {
+            user = userProfileService.getUserById(Long.parseLong(id)).toUserDto();
+        } catch (Exception e) {
+            ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return user == null ? ResponseEntity.badRequest().body("User doesn't exist!") : ResponseEntity.ok(user);
     }
 
 
