@@ -2,21 +2,17 @@ package com.fu.swp.childcare.controller;
 
 import com.fu.swp.childcare.controller.mapping.ChildrenInfoDto;
 import com.fu.swp.childcare.controller.mapping.ClassDTO;
-import com.fu.swp.childcare.model.ChildInformation;
-import com.fu.swp.childcare.model.Classes;
-import com.fu.swp.childcare.model.Service;
-import com.fu.swp.childcare.model.User;
+import com.fu.swp.childcare.model.*;
 import com.fu.swp.childcare.payload.AssignClass;
 import com.fu.swp.childcare.payload.ChildProfile;
 import com.fu.swp.childcare.payload.ClassDetail;
 import com.fu.swp.childcare.payload.ServiceRequest;
+import com.fu.swp.childcare.payload.response.BookingServiceListResponse;
 import com.fu.swp.childcare.payload.response.MessageResponse;
 import com.fu.swp.childcare.repositories.ServiceRepository;
-import com.fu.swp.childcare.services.ChildrenService;
-import com.fu.swp.childcare.services.ClassService;
-import com.fu.swp.childcare.services.MailService;
-import com.fu.swp.childcare.services.UserService;
+import com.fu.swp.childcare.services.*;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,7 +29,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RequestMapping("/mod")
+@RequestMapping("/api/mod")
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ManagerController {
@@ -46,6 +42,9 @@ public class ManagerController {
 
     @Autowired
     ServiceRepository serviceRepository;
+
+    @Autowired
+    BookingListService bookingListService;
 
     @Autowired
     ClassService classService;
@@ -176,8 +175,44 @@ public class ManagerController {
         s.setServicePrice(request.getPrice());
         s.setServiceDetail(request.getDetails());
         s.setCreatedDate(LocalDate.now());
-        serviceRepository.save(s);
-        return ResponseEntity.ok(s);
+        try{
+            serviceRepository.save(s);
+            return ResponseEntity.ok(s);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
+    @GetMapping("/booking/all")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<?> getBookingList(){
+        return ResponseEntity.ok().body(bookingListService.getAll().stream().map(ServiceBookingList::toBookingServiceListResponse).toList());
+    }
+
+    @PostMapping("/booking/approve")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<?> approveBooking(@RequestBody BookingServiceListResponse booking){
+        try{
+            System.out.println(booking.getId());
+            ServiceBookingList serviceBookingList = bookingListService.getServiceBookingList(booking.getId());
+            serviceBookingList.setStatus("Approved");
+            bookingListService.save(serviceBookingList);
+            return ResponseEntity.ok().body("Approved");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage()) ;
+        }
+    }
+    @PostMapping("/booking/deny")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<?> denyBooking(@RequestBody BookingServiceListResponse booking){
+        try{
+            ServiceBookingList serviceBookingList = bookingListService.getServiceBookingList(booking.getId());
+            serviceBookingList.setStatus("Denied");
+            bookingListService.save(serviceBookingList);
+            return ResponseEntity.ok().body("Denied");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage()) ;
+        }
+    }
 }

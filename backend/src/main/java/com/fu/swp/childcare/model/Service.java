@@ -16,8 +16,6 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 public class Service {
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -27,6 +25,8 @@ public class Service {
     private LocalDate createdDate;
     private LocalDate updatedDate;
     private String servicePrice;
+
+    @Column(length = 2000)
     private String serviceDetail;
 
     @ManyToOne

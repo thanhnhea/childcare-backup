@@ -1,42 +1,41 @@
 package com.fu.swp.childcare.controller;
 
 import com.fu.swp.childcare.controller.mapping.ServiceDto;
-import com.fu.swp.childcare.controller.mapping.UserDto;
 import com.fu.swp.childcare.model.Service;
+import com.fu.swp.childcare.repositories.ServiceRepository;
 import com.fu.swp.childcare.services.RegistrationService;
-import com.fu.swp.childcare.services.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/")
-public class HomepageController {
-
+@RequestMapping("/api/service")
+public class ServiceController {
 
     @Autowired
     RegistrationService registrationService;
 
     @Autowired
-    UserProfileService userProfileService;
+    ServiceRepository serviceRepository;
 
-    @GetMapping(value = "all-services")
+    @GetMapping("/all-service")
     public ResponseEntity<?> getAllServices() {
         List<ServiceDto> services = new ArrayList<>();
+
         try {
             services = registrationService.getAllServices();
+            services.forEach(System.out::println);
         } catch (Exception e) {
             ResponseEntity.badRequest().body(e.getMessage());
         }
         return services.isEmpty() ? ResponseEntity.badRequest().body("There is no service!") : ResponseEntity.ok(services);
     }
+
+
 
     @GetMapping(value = "service")
     public ResponseEntity<?> getServiceDetail(@RequestParam String id) {
@@ -50,16 +49,15 @@ public class HomepageController {
 
     }
 
-    @GetMapping(value = "userInfo")
-    public ResponseEntity<?> getUserDetail(@RequestParam String id) {
-        UserDto user = null;
-        try {
-            user = userProfileService.getUserById(Long.parseLong(id)).toUserDto();
-        } catch (Exception e) {
-            ResponseEntity.badRequest().body(e.getMessage());
-        }
-        return user == null ? ResponseEntity.badRequest().body("User doesn't exist!") : ResponseEntity.ok(user);
-    }
 
+    @GetMapping("/all")
+    public ResponseEntity<?> getAll(){
+        try{
+            List<ServiceDto> serviceDtoList = serviceRepository.findAll().stream().map(Service::toServiceDto).toList();
+            return ResponseEntity.ok().body(serviceDtoList) ;
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e);
+        }
+    }
 
 }

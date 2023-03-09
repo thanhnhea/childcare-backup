@@ -1,31 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import userService from '../services/user.service';
+
+// {
+//     id: 1,
+//     serviceName: 'Service A',
+//     date: '2023-04-01',
+//     status: 'Pending',
+// },
+// {
+//     id: 2,
+//     serviceName: 'Service B',
+//     date: '2023-04-02',
+//     status: 'Approved',
+// },
+// {
+//     id: 3,
+//     serviceName: 'Service C',
+//     date: '2023-04-03',
+//     status: 'Denied',
+// },
 
 const Tab3 = () => {
-    const [bookedServices, setBookedServices] = useState([
-        {
-            id: 1,
-            serviceName: 'Service A',
-            date: '2023-04-01',
-            status: 'Pending',
-        },
-        {
-            id: 2,
-            serviceName: 'Service B',
-            date: '2023-04-02',
-            status: 'Approved',
-        },
-        {
-            id: 3,
-            serviceName: 'Service C',
-            date: '2023-04-03',
-            status: 'Denied',
-        },
-    ]);
+    const [bookedServices, setBookedServices] = useState([]);
 
-    const handleApprove = (id) => {
+    useEffect(() => {
+        async function fetchData() {
+            const response = await userService.getAllBooking();
+            setBookedServices(response.data);
+        }
+        fetchData();
+    }, [])
+
+
+    const handleApprove = (c) => {
         const updatedServices = bookedServices.map((service) =>
-            service.id === id ? { ...service, status: 'Approved' } : service
+            service.id === c.id ? { ...service, status: 'Approved' } : service
         );
+        userService.postApproveBooking(c)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
         setBookedServices(updatedServices);
     };
 
@@ -37,13 +54,15 @@ const Tab3 = () => {
     };
 
     return (
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-4">
             <h1> Booking Services </h1>
             <table className="table-auto">
                 <thead>
                     <tr>
                         <th className="px-4 py-2">ID</th>
                         <th className="px-4 py-2">Service Name</th>
+                        <th className="px-4 py-2">Account Name</th>
+                        <th className="px-4 py-2">Child Name</th>
                         <th className="px-4 py-2">Date</th>
                         <th className="px-4 py-2">Status</th>
                         <th className="px-4 py-2">Action</th>
@@ -54,6 +73,8 @@ const Tab3 = () => {
                         <tr key={service.id}>
                             <td className="border px-4 py-2">{service.id}</td>
                             <td className="border px-4 py-2">{service.serviceName}</td>
+                            <td className="border px-4 py-2">{service.accountName}</td>
+                            <td className="border px-4 py-2">{service.childName}</td>
                             <td className="border px-4 py-2">{service.date}</td>
                             <td className="border px-4 py-2">{service.status}</td>
                             <td className="border px-4 py-2">
@@ -61,7 +82,7 @@ const Tab3 = () => {
                                     <div>
                                         <button
                                             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
-                                            onClick={() => handleApprove(service.id)}
+                                            onClick={() => handleApprove(service)}
                                         >
                                             Approve
                                         </button>
