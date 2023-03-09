@@ -12,7 +12,6 @@ import NotFound from './Pages/NotFound/NotFound';
 import Service from './Pages/Services/Service/Service';
 import Register from './Pages/Register/Register';
 import ChangePasword from './Pages/ChangePassword/ChangePassword';
-import ResetPassword from './Pages/ResetPassword/resetpassword';
 import UserDetails from './Pages/UserDetails/UserDetails';
 import UserList from './Pages/UserList/UserList';
 import ClassList from './Pages/ClassChildren/ClassList/ClassList';
@@ -45,7 +44,6 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='*' element={<NotFound />} />
-          <Route path='/resetpassword' element={<ResetPassword />} />
           <Route path='/changepasword' element={<ChangePasword />} />
           <Route path='/userDetails' element={<UserDetails />} />
           <Route path='/userList' element={<UserList />} />
