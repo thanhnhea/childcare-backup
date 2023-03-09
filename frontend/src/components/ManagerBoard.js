@@ -10,7 +10,7 @@ const ManageBoard = () => {
     const tabs = [<Tab1 />, <Tab2 />, <Tab3 />];
 
     return (
-        <div className="container-fluid mt-5">
+        <div className="container-fluid mt-5 mb-5">
             <ul className="nav nav-tabs w-100">
                 <li className="nav-item">
                     <a

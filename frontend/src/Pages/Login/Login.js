@@ -9,6 +9,7 @@ import AuthService from "../../services/auth.service";
 import { withRouter } from '../../common/with-router';
 
 class Login extends Component {
+
     constructor(props) {
         super(props);
         this.handleLogin = this.handleLogin.bind(this);
@@ -19,24 +20,65 @@ class Login extends Component {
             username: "",
             password: "",
             loading: false,
-            message: ""
+            message: "",
+            usernameError: "",
+            passwordError: ""
         };
     }
 
     onChangeUsername(e) {
+        const username = e.target.value;
+        const usernameError = this.validateUsername(username);
+
         this.setState({
-            username: e.target.value
+            username: username,
+            usernameError: usernameError
         });
     }
 
     onChangePassword(e) {
+        const password = e.target.value;
+        const passwordError = this.validatePassword(password);
+
         this.setState({
-            password: e.target.value
+            password: password,
+            passwordError: passwordError
         });
+    }
+
+    validateUsername(username) {
+        if (!username) {
+            return "Username is required.";
+        } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+            return "Username should only contain letters and numbers.";
+        } else {
+            return "";
+        }
+    }
+
+    validatePassword(password) {
+        if (!password) {
+            return "Password is required.";
+        } else if (password.length < 5) {
+            return "Password should have at least 5 characters.";
+        } else {
+            return "";
+        }
     }
 
     handleLogin(e) {
         e.preventDefault();
+        const formHeader = document.querySelector("h3");
+        const usernameError = this.validateUsername(this.state.username);
+        const passwordError = this.validatePassword(this.state.password);
+
+        if (usernameError || passwordError) {
+            this.setState({
+                usernameError: usernameError,
+                passwordError: passwordError
+            });
+            return;
+        }
 
         this.setState({
             message: "",
@@ -48,6 +90,8 @@ class Login extends Component {
                 window.location.reload();
             },
             error => {
+                formHeader.textContent = "Login False";
+                formHeader.style.color = "red";
                 const resMessage =
                     (error.response &&
                         error.response.data &&
@@ -77,7 +121,7 @@ class Login extends Component {
                                                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp" className="card-img" alt="logo" />
                                                     <h4 className="mt-1 mb-5 pb-1">We are The Children Care Team</h4>
                                                 </div>
-                                                <p className="d-flex justify-content-start">Please login to your account</p>
+                                                <h3 className="d-flex justify-content-start">Please login to your account</h3>
                                                 <form
                                                     onSubmit={this.handleLogin}
                                                     ref={c => {
@@ -85,23 +129,41 @@ class Login extends Component {
                                                     }}
                                                 >
                                                     <div className="form-outline mb-4">
-                                                        <label htmlFor="username">Username</label>
-                                                        <input
-                                                            type="text" className="form-control"
-                                                            name="username"
-                                                            value={this.state.username}
-                                                            onChange={this.onChangeUsername}
-                                                            required pattern="[a-zA-Z0-9]+" />
-                                                    </div>
+                            <label htmlFor="username">Username</label>
+                            <input
+                              type="text"
+                              className={`form-control ${
+                                this.state.usernameError ? "is-invalid" : ""
+                              }`}
+                              name="username"
+                              value={this.state.username}
+                              onChange={this.onChangeUsername}
+                              validations={["required", "username"]}
+                            />
+                            {this.state.usernameError && (
+                              <div className="invalid-feedback">
+                                Please enter a valid username
+                              </div>
+                            )}
+                          </div>
 
-                                                    <div className="form-outline mb-4">
-                                                        <label htmlFor="password">Password</label>
-                                                        <input
-                                                            type="password"
-                                                            value={this.state.password}
-                                                            onChange={this.onChangePassword}
-                                                            className="form-control"
-                                                            required minLength="8" />
+                          <div className="form-outline mb-4">
+                            <label htmlFor="password">Password</label>
+                            <input
+                              type="password"
+                              className={`form-control ${
+                                this.state.passwordError ? "is-invalid" : ""
+                              }`}
+                              name="password"
+                              value={this.state.password}
+                              onChange={this.onChangePassword}
+                              validations={["required", "password"]}
+                            />
+                            {this.state.passwordError && (
+                              <div className="invalid-feedback">
+                                Please enter a correct password
+                              </div>
+                            )}
                                                     </div>
 
                                                     <div className="text-center pt-1 mb-5 pb-1">
