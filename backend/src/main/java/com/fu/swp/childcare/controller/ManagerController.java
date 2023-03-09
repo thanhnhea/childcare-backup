@@ -1,5 +1,6 @@
 package com.fu.swp.childcare.controller;
 
+import com.fu.swp.childcare.controller.mapping.ChildrenInfoDto;
 import com.fu.swp.childcare.controller.mapping.ClassDTO;
 import com.fu.swp.childcare.model.ChildInformation;
 import com.fu.swp.childcare.model.Classes;
@@ -156,11 +157,12 @@ public class ManagerController {
                                                  @RequestParam(defaultValue = "10") int size) {
         Pageable paging = PageRequest.of(page, size);
         Page<ChildInformation> children = childrenService.getUnassignedChild(paging);
-
+        List<ChildrenInfoDto> childrenInfoDTOs = children.stream().map(ChildInformation::toChildrenInfoDto).collect(Collectors.toList());
+        System.out.println(childrenInfoDTOs);
         if (children.isEmpty())
             return ResponseEntity.badRequest().body("children list is empty");
         else
-            return ResponseEntity.ok(children);
+            return ResponseEntity.ok(childrenInfoDTOs);
     }
 
     @PostMapping("/newService")

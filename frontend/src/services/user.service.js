@@ -32,6 +32,16 @@ class UserService {
         return axios.get(API_URL + 'mod/classes', { headers: authHeader() });
     }
 
+    postAssignClass(childId, classId) {
+        return axios.post(API_URL + 'mod/assignChild', { childId, classId }, { headers: authHeader() })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
     getAdminBoard() {
         return axios.get(API_URL + 'admin', { headers: authHeader() });
     }

@@ -1,6 +1,7 @@
 package com.fu.swp.childcare.model;
 
 import com.fu.swp.childcare.controller.mapping.ChildrenInfoDto;
+import com.fu.swp.childcare.controller.mapping.UserDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
