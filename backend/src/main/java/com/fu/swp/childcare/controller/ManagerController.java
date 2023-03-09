@@ -1,12 +1,16 @@
 package com.fu.swp.childcare.controller;
 
+import com.fu.swp.childcare.controller.mapping.ClassDTO;
 import com.fu.swp.childcare.model.ChildInformation;
 import com.fu.swp.childcare.model.Classes;
+import com.fu.swp.childcare.model.Service;
 import com.fu.swp.childcare.model.User;
 import com.fu.swp.childcare.payload.AssignClass;
 import com.fu.swp.childcare.payload.ChildProfile;
 import com.fu.swp.childcare.payload.ClassDetail;
+import com.fu.swp.childcare.payload.ServiceRequest;
 import com.fu.swp.childcare.payload.response.MessageResponse;
+import com.fu.swp.childcare.repositories.ServiceRepository;
 import com.fu.swp.childcare.services.ChildrenService;
 import com.fu.swp.childcare.services.ClassService;
 import com.fu.swp.childcare.services.MailService;
@@ -24,11 +28,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequestMapping("/mod")
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class ManagerController {
 
     @Autowired
@@ -37,6 +43,8 @@ public class ManagerController {
     @Autowired
     MailService emailService;
 
+    @Autowired
+    ServiceRepository serviceRepository;
 
     @Autowired
     ClassService classService;
@@ -56,18 +64,28 @@ public class ManagerController {
         }
     }
 
-
+    @GetMapping("/class")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> getClassDetails(@RequestParam String id) {
+        try {
+            Classes clas = classService.getClassById(id);
+            ClassDTO classDTO = clas.toClassDTO();
+            return ResponseEntity.ok(classDTO);
+        } catch (Exception ex) {
+            return new ResponseEntity<>("Class Not Found", HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @GetMapping("/classes")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     public ResponseEntity<?> getAllClass(@RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "10") int size) {
         Pageable paging = PageRequest.of(page, size);
-        Page<Classes> pageResult = classService.getAllClass(paging);
+        List<ClassDTO> pageResult = classService.getAllClass();
         if (pageResult.isEmpty()) {
             return ResponseEntity.badRequest().body("Class list is empty");
         } else {
-            return new ResponseEntity<>(pageResult.getContent(), HttpStatus.OK);
+            return new ResponseEntity<>(pageResult, HttpStatus.OK);
         }
     }
 
@@ -90,16 +108,21 @@ public class ManagerController {
                     .getPrincipal();
             User currentUser = userService.getUserDetail(userDetails.getUsername());
 
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate sdate = LocalDate.parse(classDetail.getStartDate(), formatter);
+            LocalDate edate = LocalDate.parse(classDetail.getEndDate(), formatter);
+
             Classes clas = new Classes();
             clas.setCreatedPerson(currentUser);
             clas.setClassName(classDetail.getClassName());
             clas.setDescription(classDetail.getDescription());
-            clas.setStartDate(classDetail.getStartDate());
-            clas.setEndDate(classDetail.getEndDate());
+            clas.setStartDate(sdate);
+            clas.setAgeRange(classDetail.getAgeRange());
+            Service s = serviceRepository.findById(Long.valueOf(classDetail.getService())).orElseThrow();
+            clas.setService(s);
+            clas.setEndDate(edate);
             clas.setCreatedDate(LocalDate.now());
-
             classService.save(clas);
-
             return ResponseEntity.ok(classDetail);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
@@ -137,6 +160,21 @@ public class ManagerController {
             return ResponseEntity.badRequest().body("children list is empty");
         else
             return ResponseEntity.ok(children);
+    }
+
+    @PostMapping("/newService")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<?> newService(@RequestBody ServiceRequest request){
+        if(request == null){
+            return ResponseEntity.badRequest().body("bad request");
+        }
+        Service s = new Service();
+        s.setServiceTitle(request.getTitle());
+        s.setServicePrice(request.getPrice());
+        s.setServiceDetail(request.getDetails());
+        s.setCreatedDate(LocalDate.now());
+        serviceRepository.save(s);
+        return ResponseEntity.ok(s);
     }
 
 }

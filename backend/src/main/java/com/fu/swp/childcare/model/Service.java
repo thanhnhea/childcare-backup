@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -23,11 +24,10 @@ public class Service {
     private Long id;
 
     private String serviceTitle;
-    private Date createdDate;
-    private Date updatedDate;
+    private LocalDate createdDate;
+    private LocalDate updatedDate;
     private String servicePrice;
     private String serviceDetail;
-    private int rateStar;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -41,7 +41,6 @@ public class Service {
                 this.updatedDate,
                 this.servicePrice,
                 this.serviceDetail,
-                this.rateStar,
                 this.category.getName()
         );
     }

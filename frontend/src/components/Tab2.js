@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import userService from "../services/user.service";
 
-const classes = [
-    { id: 1, name: "Class A", ageRange: "2-4", service: "Full Time", numChildren: 15 },
-    { id: 2, name: "Class B", ageRange: "4-6", service: "Full Time", numChildren: 10 },
-    { id: 3, name: "Class C", ageRange: "2-4", service: "Part Time", numChildren: 20 },
-    { id: 4, name: "Class D", ageRange: "4-6", service: "Part Time", numChildren: 18 },
-];
+// const classes = [
+//     { id: 1, name: "Class A", ageRange: "2-4", service: "Full Time", numChildren: 15 },
+//     { id: 2, name: "Class B", ageRange: "4-6", service: "Full Time", numChildren: 10 },
+//     { id: 3, name: "Class C", ageRange: "2-4", service: "Part Time", numChildren: 20 },
+//     { id: 4, name: "Class D", ageRange: "4-6", service: "Part Time", numChildren: 18 },
+// ];
 
 const children = [
     { id: 1, firstName: "Alice", lastName: "Smith", dob: "2018-01-01", status: "Active" },
@@ -17,6 +18,19 @@ const children = [
 ];
 
 const Tab2 = () => {
+
+    const [classes, setClasses] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await userService.getAllClassesMod();
+            setClasses(response.data);
+        }
+        fetchData();
+    }, []);
+
+
+
     const [ageRangeFilter, setAgeRangeFilter] = useState("");
     const [serviceFilter, setServiceFilter] = useState("");
     const [numChildrenFilter, setNumChildrenFilter] = useState("");

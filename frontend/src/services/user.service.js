@@ -24,6 +24,10 @@ class UserService {
         return axios.get(API_URL + 'mod/children', { headers: authHeader() });
     }
 
+    getAllClassesMod() {
+        return axios.get(API_URL + 'mod/classes', { headers: authHeader() });
+    }
+
     getAdminBoard() {
         return axios.get(API_URL + 'admin', { headers: authHeader() });
     }

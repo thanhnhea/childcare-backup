@@ -1,5 +1,6 @@
 package com.fu.swp.childcare.services;
 
+import com.fu.swp.childcare.controller.mapping.ClassDTO;
 import com.fu.swp.childcare.model.ChildInformation;
 import com.fu.swp.childcare.model.Classes;
 import com.fu.swp.childcare.repositories.ClassRepository;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ClassService {
@@ -28,8 +30,9 @@ public class ClassService {
         return classRepository.findById(Long.parseLong(id)).orElseThrow(() -> new ObjectNotFoundException("Not found", new Object()));
     }
 
-    public Page<Classes> getAllClass(Pageable pageable) {
-        return classRepository.findAll(pageable);
+    public List<ClassDTO> getAllClass() {
+        List<Classes> clas =  classRepository.findAll() ;
+        return clas.stream().map(Classes::toClassDTO).collect(Collectors.toList());
     }
 
     public List<Classes> getAllAvailableClass() {
