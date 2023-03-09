@@ -156,6 +156,7 @@ public class ManagerController {
                                                  @RequestParam(defaultValue = "10") int size) {
         Pageable paging = PageRequest.of(page, size);
         Page<ChildInformation> children = childrenService.getUnassignedChild(paging);
+
         if (children.isEmpty())
             return ResponseEntity.badRequest().body("children list is empty");
         else

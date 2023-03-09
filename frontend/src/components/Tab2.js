@@ -21,6 +21,8 @@ const Tab2 = () => {
 
     const [classes, setClasses] = useState([]);
 
+    // const [children, setChildren] = useState([]);
+
     useEffect(() => {
         async function fetchData() {
             const response = await userService.getAllClassesMod();
@@ -28,6 +30,14 @@ const Tab2 = () => {
         }
         fetchData();
     }, []);
+
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         const response2 = await userService.getUnassignedChildMod();
+    //         setChildren(response2.data);
+    //     }
+    //     fetchData();
+    // }, []);
 
 
 
@@ -170,7 +180,7 @@ const Tab2 = () => {
                             <td>{c.dob}</td>
                             <td>{c.status}</td>
                             <td>
-                                {c.status === "Inactive" ? (
+                                {c.status === "False" ? (
                                     <div>
                                         <input type="checkbox" onChange={() => handleSelectChild(c)} />
                                         <button

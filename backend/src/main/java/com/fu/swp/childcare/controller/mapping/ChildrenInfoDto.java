@@ -18,7 +18,7 @@ public class ChildrenInfoDto {
     String needs;
     String note;
     private UserDto user;
-    private boolean status = false;
+    private String status;
 
     public ChildrenInfoDto() {
     }
@@ -42,7 +42,7 @@ public class ChildrenInfoDto {
         this.needs = needs;
         this.note = note;
         this.user = user;
-        this.status = status;
+        this.status = String.valueOf(status);
     }
 
     public ChildrenInfoDto(
@@ -66,6 +66,6 @@ public class ChildrenInfoDto {
         this.needs = needs;
         this.note = note;
         this.user = user;
-        this.status = status;
+        this.status = String.valueOf(status);
     }
 }

@@ -24,6 +24,10 @@ class UserService {
         return axios.get(API_URL + 'mod/children', { headers: authHeader() });
     }
 
+    getUnassignedChildMod() {
+        return axios.get(API_URL + 'mod/unassignedChild', { headers: authHeader() });
+    };
+
     getAllClassesMod() {
         return axios.get(API_URL + 'mod/classes', { headers: authHeader() });
     }

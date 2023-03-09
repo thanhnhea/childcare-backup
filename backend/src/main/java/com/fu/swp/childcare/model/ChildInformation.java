@@ -31,8 +31,6 @@ public class ChildInformation {
     @ManyToOne(fetch = FetchType.LAZY)
     User user;
 
-
-
     boolean status = false;
 
     public ChildInformation() {
