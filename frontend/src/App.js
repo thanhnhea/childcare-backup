@@ -12,6 +12,7 @@ import NotFound from './Pages/NotFound/NotFound';
 import Service from './Pages/Services/Service/Service';
 import Register from './Pages/Register/Register';
 import ChangePasword from './Pages/ChangePassword/ChangePassword';
+import ResetPassword from './Pages/ResetPassword/ResetPassword';
 import UserDetails from './Pages/UserDetails/UserDetails';
 import UserList from './Pages/UserList/UserList';
 import ClassList from './Pages/ClassChildren/ClassList/ClassList';
@@ -26,6 +27,7 @@ import AddChild from './Pages/Booking/AddChildren/AddChildren';
 import ManageBoard from './components/ManagerBoard';
 import ChildProfile from './components/ChildProfile';
 import BoardParent from './Pages/board-parent.component';
+import ForgetPassword from './Pages/ForgetPassword/ForgetPassword';
 
 
 function App() {
@@ -44,6 +46,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='*' element={<NotFound />} />
+          <Route path='/resetpassword' element={<ResetPassword />} />
+          <Route path='/forgetpassword' element={<ForgetPassword />} />
           <Route path='/changepasword' element={<ChangePasword />} />
           <Route path='/userDetails' element={<UserDetails />} />
           <Route path='/userList' element={<UserList />} />
