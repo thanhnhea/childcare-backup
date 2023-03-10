@@ -108,7 +108,7 @@ class Login extends Component {
                                                         <div type="submit" className="theme-btn btn-fill" onClick={this.handleLogin}>
                                                             <span>Login</span>
                                                         </div>
-                                                        <a className="text-muted text-decoration-none" href="ChangePasword">Forgot password?</a>
+                                                        <a className="text-muted text-decoration-none" href="/forgetPassword">Forgot password?</a>
                                                     </div>
 
                                                     <div className="d-flex align-items-center justify-content-center pb-4">

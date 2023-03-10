@@ -81,7 +81,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
-        System.out.println("payload: "+registerRequest.toString());
+        System.out.println("payload: " + registerRequest.toString());
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
         }
@@ -153,6 +153,9 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Token expired"));
         }
         User user = passToken.getUser();
+        if(encoder.matches(request.getPassword(), user.getPassword())){
+            return ResponseEntity.badRequest().body((new MessageResponse("Password are matches with previous")));
+        }
         user.setPassword(encoder.encode(request.getPassword()));
         userRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("password save successfully!"));

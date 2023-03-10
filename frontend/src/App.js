@@ -27,6 +27,7 @@ import AddChild from './Pages/Booking/AddChildren/AddChildren';
 import ManageBoard from './components/ManagerBoard';
 import ChildProfile from './components/ChildProfile';
 import BoardParent from './Pages/board-parent.component';
+import ForgetPassword from './Pages/ForgetPassword/ForgetPassword';
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='*' element={<NotFound />} />
           <Route path='/resetpassword' element={<ResetPassword />} />
+          <Route path='/forgetpassword' element={<ForgetPassword />} />
           <Route path='/changepasword' element={<ChangePasword />} />
           <Route path='/userDetails' element={<UserDetails />} />
           <Route path='/userList' element={<UserList />} />

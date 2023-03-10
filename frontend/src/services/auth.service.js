@@ -18,6 +18,24 @@ class AuthService {
             });
     }
 
+    forgotPassword(email) {
+        return axios
+            .post(API_URL + "forgot_password",
+                email, {
+                headers: {
+                    'Content-Type': 'text/plain'
+                }
+            }
+            )
+    }
+
+    resetPassword(token,password){
+        return axios.post(API_URL + "reset-password",{
+            token,
+            password
+        });
+    }
+
     logout() {
         localStorage.removeItem("user");
     }
