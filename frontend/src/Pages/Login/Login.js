@@ -90,7 +90,7 @@ class Login extends Component {
                 window.location.reload();
             },
             error => {
-                formHeader.textContent = "Login False";
+                formHeader.textContent = "Login Failed";
                 formHeader.style.color = "red";
                 const resMessage =
                     (error.response &&
