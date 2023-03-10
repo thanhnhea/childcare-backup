@@ -21,19 +21,28 @@ class UserService {
     }
 
     getModeratorBoard() {
-        return axios.get(API_URL + 'mod/children', { headers: authHeader() });
+        return axios.get(API_URL + 'api/mod/children', { headers: authHeader() });
     }
 
     getUnassignedChildMod() {
-        return axios.get(API_URL + 'mod/unassignedChild', { headers: authHeader() });
+        return axios.get(API_URL + 'api/mod/unassignedChild', { headers: authHeader() });
     };
 
     getAllClassesMod() {
-        return axios.get(API_URL + 'mod/classes', { headers: authHeader() });
+        return axios.get(API_URL + 'api/mod/classes', { headers: authHeader() });
+    }
+
+    getAllBooking() {
+        return axios.get(API_URL + 'api/mod/booking/all', { headers: authHeader() });
     }
 
     postAssignClass(childId, classId) {
-        return axios.post(API_URL + 'mod/assignChild', { childId, classId }, { headers: authHeader() })
+        return axios.post(API_URL + 'api/mod/assignChild', { childId, classId }, { headers: authHeader() });
+    }
+
+    postApproveBooking(bookingId) {
+        console.log(bookingId);
+        return axios.post(API_URL + 'api/mod/booking/approve', bookingId, { headers: authHeader() })
             .then(response => {
                 console.log(response);
             })
@@ -64,7 +73,6 @@ class UserService {
         gender,
         interest,
         needs) {
-        console.log(dob);
         dob = formatDate(dob);
 
         return axios.post(API_URL + 'account/submit_children', {
@@ -74,6 +82,15 @@ class UserService {
             interest,
             needs
         }, { headers: authHeader() });
+    }
+
+
+    getAllService() {
+        return axios.get(API_URL + "api/service/all", { headers: authHeader() });
+    }
+
+    postSubmitService(id, childId) {
+        return axios.post(API_URL + 'account/booknow', { id, childId }, { headers: authHeader() })
     }
 }
 

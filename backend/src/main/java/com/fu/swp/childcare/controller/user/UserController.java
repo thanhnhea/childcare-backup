@@ -5,11 +5,13 @@ import com.fu.swp.childcare.controller.mapping.UserDto;
 import com.fu.swp.childcare.model.ChildInformation;
 import com.fu.swp.childcare.model.Reservation;
 import com.fu.swp.childcare.model.User;
+import com.fu.swp.childcare.payload.BookingRequest;
 import com.fu.swp.childcare.payload.ChildProfile;
 import com.fu.swp.childcare.payload.RequestChangePassword;
 import com.fu.swp.childcare.payload.SubmitChildrenInfoRequest;
 import com.fu.swp.childcare.payload.response.MessageResponse;
 import com.fu.swp.childcare.repositories.UserRepository;
+import com.fu.swp.childcare.services.BookingListService;
 import com.fu.swp.childcare.services.ChildrenService;
 import com.fu.swp.childcare.services.UserProfileService;
 import com.fu.swp.childcare.services.UserService;
@@ -44,6 +46,9 @@ public class UserController {
 
     @Autowired
     private ChildrenService childrenService;
+
+    @Autowired
+    private BookingListService bookingListService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -158,5 +163,18 @@ public class UserController {
         return ResponseEntity.ok("");
     }
 
+
+    @PostMapping("/booknow")
+    public ResponseEntity<?> bookingService(@RequestBody @Valid BookingRequest request){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = userDetails.getUsername();
+        try{
+            bookingListService.save(request,username);
+            return ResponseEntity.ok().body("Booking Recorded");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage()) ;
+        }
+    }
 
 }

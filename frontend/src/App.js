@@ -22,7 +22,7 @@ import Profile from './Pages/profile'
 import BoardAdmin from './Pages/board-admin.component'
 // import BoardModerator from './Pages/board-moderator.component'
 import BoardUser from './Pages/board-user.component'
-import Booking from './Pages/Booking/BookingForm/Booking';
+import Booking from './Pages/Booking/BookingRequest';
 import AddChild from './Pages/Booking/AddChildren/AddChildren';
 import ManageBoard from './components/ManagerBoard';
 import ChildProfile from './components/ChildProfile';
@@ -58,13 +58,14 @@ function App() {
           <Route path='/userdetails' element={<UserDetails />} />
           <Route path='/users' element={<UserList />} />
           <Route path='/profile' element={<Profile />} />
-          <Route path='/booking' element={<Booking />} />
           <Route path="/admin" element={<BoardAdmin />} />
           <Route path="/user" element={<BoardUser />} />
           <Route path="/addchild" element={<AddChild />} />
           <Route path="/child/:id" element={<ChildProfile />} />
           <Route path="/class/:id" element={<ClassDetails />} />
+          <Route path="/booking/:id" element={<Booking />} />
           <Route path="/parent" element={<BoardParent />} />
+
         </Routes>
         <Footer />
       </Router>

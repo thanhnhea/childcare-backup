@@ -35,7 +35,7 @@ const BoardParent = () => {
                 ))}
             </Row>
             <Row>
-                <Col className="d-flex justify-content-center">
+                <Col className="d-flex justify-content-center mt-3">
                     <Button variant="primary" href="/addchild">Add Child</Button>
                 </Col>
             </Row>
