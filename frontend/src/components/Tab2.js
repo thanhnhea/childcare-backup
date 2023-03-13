@@ -28,6 +28,7 @@ const Tab2 = () => {
         }
         fetchData();
     }, []);
+
     const [children, setChildren] = useState([]);
     useEffect(() => {
         async function fetchData() {
@@ -37,12 +38,11 @@ const Tab2 = () => {
         fetchData();
     }, []);
 
-
-
     const [ageRangeFilter, setAgeRangeFilter] = useState("");
     const [serviceFilter, setServiceFilter] = useState("");
     const [numChildrenFilter, setNumChildrenFilter] = useState("");
-    const [filteredClasses, setFilteredClasses] = useState(classes);
+    const [filteredClasses, setFilteredClasses] = useState([classes]);
+
     const [selectedChild, setSelectedChild] = useState(null);
 
     const handleAgeRangeFilterChange = (e) => {

@@ -44,6 +44,14 @@ public class Classes {
     Set<ChildInformation> childInformation;
 
     public ClassDTO toClassDTO(){
-;        return new ClassDTO(this.getId().toString(),this.className,this.createdDate,this.startDate,this.description,this.service.getServiceTitle(),this.ageRange,this.getCreatedPerson().getUsername()) ;
+;        return new ClassDTO(
+                this.getId().toString(),
+                this.className,
+                this.createdDate,
+                this.startDate,
+                this.description,
+                this.ageRange,
+                this.service.getServiceTitle(),
+                this.getCreatedPerson().getUsername()) ;
     }
 }

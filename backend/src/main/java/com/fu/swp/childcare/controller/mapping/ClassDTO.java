@@ -19,4 +19,6 @@ public class ClassDTO {
     private String service;
     private String createdAccount;
 
+
+
 }

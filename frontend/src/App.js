@@ -17,7 +17,6 @@ import UserDetails from './Pages/UserDetails/UserDetails';
 import UserList from './Pages/UserList/UserList';
 import ClassList from './Pages/ClassChildren/ClassList/ClassList';
 import ClassDetails from './Pages/ClassChildren/ClassDetails/ClassDetails';
-import Children from './Pages/ClassChildren/Children/Children';
 import Profile from './Pages/profile'
 import BoardAdmin from './Pages/board-admin.component'
 // import BoardModerator from './Pages/board-moderator.component'
@@ -28,6 +27,7 @@ import ManageBoard from './components/ManagerBoard';
 import ChildProfile from './components/ChildProfile';
 import BoardParent from './Pages/board-parent.component';
 import ForgetPassword from './Pages/ForgetPassword/ForgetPassword';
+import CreateClassPage from './components/managers/CreateClassPage';
 
 
 function App() {
@@ -65,7 +65,7 @@ function App() {
           <Route path="/class/:id" element={<ClassDetails />} />
           <Route path="/booking/:id" element={<Booking />} />
           <Route path="/parent" element={<BoardParent />} />
-
+          <Route path="/newclass" element={<CreateClassPage />} />
         </Routes>
         <Footer />
       </Router>
