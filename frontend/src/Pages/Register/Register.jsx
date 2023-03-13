@@ -57,43 +57,43 @@ const Register = () => {
       let errors = {};
 
       if (!firstName) {
-        errors.firstName = '(*)';
+        errors.firstName = '';
       }else if (!/^[a-zA-Z0-9]+$/.test(firstName)) {
         errors.firstName = 'Name can not contain special character.';
       }
 
       if (!lastName) {
-        errors.lastName = '(*)';
+        errors.lastName = '';
       }else if (!/^[a-zA-Z0-9]+$/.test(lastName)) {
         errors.lastName = 'Name can not contain special character.';
       }
 
       if (!username) {
-        errors.username = '(*)';
+        errors.username = '';
       }else if (!/^[a-zA-Z0-9]+$/.test(username)) {
         errors.username = 'Name can not contain special character.';
       }
 
       if (!phone) {
-        errors.phone = '(*)';
+        errors.phone = '';
       } else if (!/^[0-9]+$/.test(phone)) {
         errors.phone = 'Phone number must only contain digits';
       }
 
       if (!email) {
-        errors.email = '(*)';
+        errors.email = '';
       } else if (!/\S+@\S+\.\S+/.test(email)) {
         errors.email = 'Email is invalid';
       }
 
       if (!password) {
-        errors.password = '(*)';
+        errors.password = '';
       } else if (password.length < 6) {
         errors.password = 'Password must be at least 6 characters';
       }
 
       if (!confirmPassword) {
-        errors.confirmPassword = '(*)';
+        errors.confirmPassword = '';
       } else if (password !== confirmPassword) {
         errors.confirmPassword = 'Passwords do not match';
       }
