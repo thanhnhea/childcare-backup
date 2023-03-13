@@ -27,38 +27,38 @@ const AddChild = () => {
         });
     };
 
-    
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // Perform form submission logic here
-    
+
         console.log("handle submit here");
         userService.submitChildren(
-          firstName,
-          lastName,
-          dob,
-          gender,
-          notes,
-          interest,
-          needs
+            firstName,
+            lastName,
+            dob,
+            gender,
+            notes,
+            interest,
+            needs
         ).then(
             response => {
                 // This function will execute when the Promise is resolved with a successful response
                 formHeader.textContent = "Form submitted successfully";
                 formHeader.style.color = "green";
                 console.log(response);
-              },
-              error => {
+            },
+            error => {
                 // This function will execute when the Promise is rejected with an error response
                 formHeader.textContent = "Form submission failed";
                 formHeader.style.color = "red";
                 console.error(error);
-              }
+            }
         );
-      };
+    };
 
-      const formHeader = document.querySelector("h1");
+    const formHeader = document.querySelector("h1");
 
     const {
         firstName,
@@ -113,28 +113,28 @@ const AddChild = () => {
                                 </div>
                             </div>
 
-                            <Col lg={12}>
-                        <div className='form-outline mb-4'>
-                            <label>
-                                Please tell us about your child's likes some notes*
-                            </label>
-                            <textarea
-                                className='form-control'
-                                rows='4'
-                                required
-                                name='notes'
-                                value={notes}
-                                onChange={handleChange}
-                            ></textarea>
-                        </div>
-                    </Col>
+                            <Col lg={12} >
+                                <div className='form-outline mb-4'>
+                                    <label className="mb-1">
+                                        Please give us some notes about your child*
+                                    </label>
+                                    <textarea
+                                        className='form-control'
+                                        rows='4'
+                                        required
+                                        name='notes'
+                                        value={notes}
+                                        onChange={handleChange}
+                                    ></textarea>
+                                </div>
+                            </Col>
 
                             <Row>
                                 <Col>
                                     <div className='row mb-4'>
                                         <div className='col'>
                                             <div className='form-outline'>
-                                                <label>Date of Birth*</label>
+                                                <label className="mb-1">Date of Birth*</label>
                                                 <input
                                                     type='date'
                                                     id='form6Example1'
@@ -149,7 +149,7 @@ const AddChild = () => {
                                         </div>
                                         <div className='col'>
                                             <div className='form-outline'>
-                                                <label>Gender*</label>
+                                                <label className="mb-1">Gender*</label>
                                                 <div className='form-check'>
                                                     <input
                                                         className='form-check-input'
@@ -182,49 +182,48 @@ const AddChild = () => {
                                         </div>
                                     </div>
                                 </Col>
-                                                                                                                    
-                    <Col lg={12}>
-                        <div className='form-outline mb-4'>
-                            <label>
-                                Please tell us about your child's likes, dislikes, and
-                                interests.*
-                            </label>
-                            <textarea
-                                className='form-control'
-                                rows='4'
-                                required
-                                name='interest'
-                                value={interest}
-                                onChange={handleChange}
-                            ></textarea>
-                        </div>
+
+                                <Col lg={12}>
+                                    <div className='form-outline mb-4'>
+                                        <label className="mb-1">
+                                            Please tell us about your child's interests.*
+                                        </label>
+                                        <textarea
+                                            className='form-control'
+                                            rows='4'
+                                            required
+                                            name='interest'
+                                            value={interest}
+                                            onChange={handleChange}
+                                        ></textarea>
+                                    </div>
+                                </Col>
+                                <Col lg={12}>
+                                    <div className='form-outline mb-4'>
+                                        <label htmlFor='' className="mb-1">
+                                            Please share any routines or schedules you want to share
+                                            with your caregiver.
+                                        </label>
+                                        <textarea
+                                            className='form-control'
+                                            rows='4'
+                                            required
+                                            name='needs'
+                                            value={needs}
+                                            onChange={handleChange}
+                                        ></textarea>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <button type='submit' className='btn btn-primary btn-block mb-4 px-4 py-2'>
+                                Submit
+                            </button>
+                        </form>
                     </Col>
-                    <Col lg={12}>
-                        <div className='form-outline mb-4'>
-                            <label htmlFor=''>
-                                Please share any routines or schedules you want to share
-                                with your caregiver.
-                            </label>
-                            <textarea
-                                className='form-control'
-                                rows='4'
-                                required
-                                name='needs'
-                                value={needs}
-                                onChange={handleChange}
-                            ></textarea>
-                        </div>
-                    </Col>
-                 </Row>
-                <button type='submit' className='btn btn-primary btn-block mb-4'>
-                    Submit
-                </button>
-            </form>
-        </Col>
-     </Row >
-   </Container >
-</section >
-);
+                </Row >
+            </Container >
+        </section >
+    );
 };
 
 export default AddChild;

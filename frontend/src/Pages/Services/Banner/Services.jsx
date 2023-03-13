@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 
-const Services = React.createClass({
-    render: function() {
+class Services extends Component{
+    render() {
       return (
         <div>
           <meta charSet="UTF-8" />
@@ -56,6 +56,6 @@ const Services = React.createClass({
         </div>
       );
     }
-  });
+  }
 
   export default Services;

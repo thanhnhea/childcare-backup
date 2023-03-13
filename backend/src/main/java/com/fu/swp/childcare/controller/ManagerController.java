@@ -9,6 +9,7 @@ import com.fu.swp.childcare.payload.ClassDetail;
 import com.fu.swp.childcare.payload.ServiceRequest;
 import com.fu.swp.childcare.payload.response.BookingServiceListResponse;
 import com.fu.swp.childcare.payload.response.MessageResponse;
+import com.fu.swp.childcare.repositories.RoleRepository;
 import com.fu.swp.childcare.repositories.ServiceRepository;
 import com.fu.swp.childcare.services.*;
 import jakarta.validation.Valid;
@@ -33,6 +34,9 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ManagerController {
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @Autowired
     ChildrenService childrenService;
@@ -182,6 +186,17 @@ public class ManagerController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
+    }
+
+    /**
+     * get all roles available for manager to pick
+     * @return roles list
+     */
+    @GetMapping(value = "role/all")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<?> getAllRoles(){
+        List<Role> roles = roleRepository.findAll();
+        return roles.isEmpty() ?  ResponseEntity.badRequest().body("There is no roles") :  ResponseEntity.ok(roles);
     }
 
     @GetMapping("/booking/all")
