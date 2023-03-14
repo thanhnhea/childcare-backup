@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link, useParams } from 'react-router-dom';
 
-const Child = ({ firstName, lastName, dob, status, gender, interest, needs, allergies, medications }) => {
+const Child = ({ id, firstName, lastName, dob, status, gender, interest, needs, allergies, medications }) => {
 
     const age = calculateAge(dob);
 
@@ -8,7 +9,6 @@ const Child = ({ firstName, lastName, dob, status, gender, interest, needs, alle
         <div className="border rounded-lg p-4">
             <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold">{firstName} {lastName}</h2>
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit Profile</button>
             </div>
             <p className="text-gray-600">{dob} (Age: {age})</p>
             <p>Status: {status}</p>
@@ -19,6 +19,8 @@ const Child = ({ firstName, lastName, dob, status, gender, interest, needs, alle
             <h3 className="text-lg font-bold mt-4">Medical Information</h3>
             <p>Allergies: {allergies}</p>
             <p>Medications: {medications}</p>
+
+            <Link to={`/edit/${id}`} className="link-button">Edit child</Link>
         </div>
     );
 };

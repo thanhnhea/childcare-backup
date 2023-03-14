@@ -1,8 +1,8 @@
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import authService from "../../services/auth.service";
 import userService from "../../services/user.service";
+import { Link } from 'react-router-dom';
 
 const ServiceDetail = () => {
 
@@ -40,11 +40,11 @@ const ServiceDetail = () => {
                 <p className="ml-2">{service.createdDate}</p>
             </div>
 
-            {isUser && (
-                <Link to={`/booking/${service.id}`} className="link-button">Book this Service</Link>
-            )}
-
-
+            <div>
+                {isUser && (
+                    <Link to={`/booking/${service.id}`} className="link-button">Book this Service</Link>
+                )}
+            </div>
         </div>
     );
 };
