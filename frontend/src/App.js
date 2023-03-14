@@ -31,6 +31,7 @@ import ForgetPassword from './Pages/ForgetPassword/ForgetPassword';
 import CreateServices from './Pages/Manager/CreateServices/CreateServices';
 import EditUser from './Pages/Manager/EditUser/EditUser';
 import AddUser from './Pages/Manager/AddUser/AddUser';
+import UserTable from './Pages/Manager/UserDetail/UserDetail';
 
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
           <Route path='/createServices' element={<CreateServices />} />
           <Route path='/editUser' element={<EditUser />} />
           <Route path='/addUser' element={<AddUser />} />
+          <Route path='/userTable' element={<UserTable />} />
           
 
         </Routes>
