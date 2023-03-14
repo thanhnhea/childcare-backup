@@ -16,10 +16,9 @@ public class SubmitChildrenInfoRequest {
     String lastName;
     String dob;
     boolean gender;
-    String note;
     String interest;
     String needs;
-    String notes;
+    String note;
 
     @Override
     public String toString() {
@@ -31,7 +30,6 @@ public class SubmitChildrenInfoRequest {
                 ", note='" + note + '\'' +
                 ", interest='" + interest + '\'' +
                 ", needs='" + needs + '\'' +
-                ", notes='" + notes + '\'' +
                 '}';
     }
 }
