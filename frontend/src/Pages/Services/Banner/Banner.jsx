@@ -12,7 +12,7 @@ const Banner = () => {
                 <Row className="align-items-center">
                     <Col md={6} lg={6} sm={12}>
                         <div className="section-title">
-                            <h1>Our Services</h1>
+                        <h1 href="/" className="text-decoration-none text-white ml-2">Our Service</h1>
                         </div>
                     </Col>
                     <Col md={6} lg={6} sm={12}>

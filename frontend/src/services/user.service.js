@@ -60,7 +60,11 @@ class UserService {
     }
 
     getClassDetails(id) {
-        return axios.get(API_URL + 'account/class?id=' + id, { headers: authHeader() });
+        return axios.get(API_URL + 'api/mod/class?id=' + id, { headers: authHeader() });
+    }
+
+    getChildrenFromClass(id) {
+        return axios.get(API_URL + 'api/mod/class/children?id=' + id, { headers: authHeader() });
     }
 
     getChildInfo(id) {
@@ -72,7 +76,8 @@ class UserService {
         dob,
         gender,
         interest,
-        needs) {
+        needs,
+        note) {
         dob = formatDate(dob);
 
         return axios.post(API_URL + 'account/submit_children', {
@@ -80,7 +85,8 @@ class UserService {
             lastName, dob,
             gender,
             interest,
-            needs
+            needs,
+            note
         }, { headers: authHeader() });
     }
 

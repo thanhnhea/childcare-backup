@@ -34,11 +34,14 @@ public class ServiceBookingList {
     @JoinColumn(name = "mod_id")
     User mod;
 
-    String status = "Pending";
+    String status = PENDING;
 
     LocalDate createDate;
 
-    public BookingServiceListResponse toBookingServiceListResponse(){
-        return new BookingServiceListResponse(this.id.toString(),this.serviceId.getServiceTitle(), this.customer.getUsername(),this.childID.getLastName() , this.createDate,this.status);
+    public BookingServiceListResponse toBookingServiceListResponse() {
+        return new BookingServiceListResponse(this.id.toString(), this.serviceId.getServiceTitle(), this.customer.getUsername(), this.childID.getLastName(), this.createDate, this.status);
     }
+    public static final String PENDING = "Pending";
+    public static final String APPROVED = "Approve";
+    public static final String DENIED = "Denied";
 }
