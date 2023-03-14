@@ -19,7 +19,7 @@ const UserList = () => {
           <div className="card">
             <div className="card-body">
               <h5 className="card-title text-uppercase mb-0">Users</h5>
-              <button type="button" className="btn btn-primary mt-3">Add New User</button>
+             <a href="/addUser"> <button type="button" className="btn btn-primary mt-3">Add New User</button></a>
             </div>
             <div className="table-responsive">
               <table className="table  table-bordered no-wrap user-table m-3">
