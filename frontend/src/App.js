@@ -17,7 +17,6 @@ import UserDetails from './Pages/UserDetails/UserDetails';
 import UserList from './Pages/UserList/UserList';
 import ClassList from './Pages/ClassChildren/ClassList/ClassList';
 import ClassDetails from './Pages/ClassChildren/ClassDetails/ClassDetails';
-import Children from './Pages/ClassChildren/Children/Children';
 import Profile from './Pages/profile'
 import BoardAdmin from './Pages/board-admin.component'
 // import BoardModerator from './Pages/board-moderator.component'
@@ -28,6 +27,8 @@ import ManageBoard from './components/ManagerBoard';
 import ChildProfile from './components/ChildProfile';
 import BoardParent from './Pages/board-parent.component';
 import ForgetPassword from './Pages/ForgetPassword/ForgetPassword';
+import CreateClassPage from './components/managers/CreateClassPage';
+import ServiceDetail from './Pages/Services/servicedetail';
 import CreateServices from './Pages/Manager/CreateServices/CreateServices';
 import EditUser from './Pages/Manager/EditUser/EditUser';
 import AddUser from './Pages/Manager/AddUser/AddUser';
@@ -69,7 +70,9 @@ function App() {
           <Route path="/child/:id" element={<ChildProfile />} />
           <Route path="/class/:id" element={<ClassDetails />} />
           <Route path="/booking/:id" element={<Booking />} />
+          <Route path="/service/:id" element={<ServiceDetail />} />
           <Route path="/parent" element={<BoardParent />} />
+          <Route path="/newclass" element={<CreateClassPage />} />
           <Route path='/createServices' element={<CreateServices />} />
           <Route path='/editUser' element={<EditUser />} />
           <Route path='/addUser' element={<AddUser />} />
@@ -78,7 +81,6 @@ function App() {
         </Routes>
         <Footer />
       </Router>
-
     </div>
   );
 }

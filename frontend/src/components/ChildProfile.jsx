@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import userService from '../services/user.service';
 import Child from './Child';
 
@@ -33,17 +33,22 @@ const ChildProfile = () => {
 
 
     return (
-        <Child
-            firstName={childInfo.firstName}
-            lastName={childInfo.lastName}
-            dob={childInfo.dob}
-            status={childInfo.status}
-            gender={childInfo.gender}
-            interest={childInfo.interest}
-            needs={childInfo.needs}
-            allergies={childInfo.allergies}
-            medications={childInfo.medications}
-        />
+        <div>
+            <Child
+                id={childInfo.id}
+                firstName={childInfo.firstName}
+                lastName={childInfo.lastName}
+                dob={childInfo.dob}
+                status={childInfo.status}
+                gender={childInfo.gender}
+                interest={childInfo.interest}
+                needs={childInfo.needs}
+                allergies={childInfo.allergies}
+                medications={childInfo.medications}
+            />
+
+        </div>
+
     );
 }
 

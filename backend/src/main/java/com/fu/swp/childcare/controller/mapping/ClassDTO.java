@@ -19,6 +19,7 @@ public class ClassDTO {
     private String service;
     private String createdAccount;
 
+
     public ClassDTO() {
     }
 
@@ -53,4 +54,5 @@ public class ClassDTO {
                 ", createdAccount='" + createdAccount + '\'' +
                 '}';
     }
+
 }

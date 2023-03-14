@@ -14,8 +14,9 @@ const Doctor = () => {
                     <Col lg={6}>
                         <div className="expertDentist-txt mt-5 mt-lg-0">
                             <h2>Experienced Doctor</h2>
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, ducimus? Fuga similique ducimus deleniti, quas beatae incidunt repellendus dolorem ex dolore sit sunt quaerat dicta quia non? Sapiente, ab iure?</p>
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero quae adipisci quam voluptatem! Fugit, deserunt? Aspernatur inventore, ex ipsam perspiciatis vero, nobis facilis, fugiat explicabo cupiditate dolor nihil sunt nisi.</p>
+                            <p>
+                                A pediatrician is a doctor who specializes in treating infants, children, adolescents, and young adults. A pediatrician understands the unique physical, emotional, and developmental needs of your child at different stages of life. A pediatrician can prevent, diagnose, and manage a wide range of health issues that affect children, such as infections, injuries, diseases, dysfunctions, developmental delays, behavioral problems, and more.
+                            </p>
                         </div>
                     </Col>
                 </Row>

@@ -43,6 +43,7 @@ public class Classes {
     @JoinColumn(name = "child_information_id")
     Set<ChildInformation> childInformation;
 
+
     public ClassDTO toClassDTO() {
         return new ClassDTO(
                 this.getId().toString(),
@@ -50,11 +51,15 @@ public class Classes {
                 this.createdDate,
                 this.startDate,
                 this.description,
+
+                this.ageRange,
+                this.service.getServiceTitle(),
+                this.getCreatedPerson().getUsername()) ;
                 this.service.getServiceTitle(),
                 this.ageRange,
                 this.getCreatedPerson().getUsername());
     }
-
+    
     @Override
     public String toString() {
         return "Classes{" +

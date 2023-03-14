@@ -41,8 +41,17 @@ class UserService {
     }
 
     postApproveBooking(bookingId) {
-        console.log(bookingId);
         return axios.post(API_URL + 'api/mod/booking/approve', bookingId, { headers: authHeader() })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    postDeniedBooking(bookingId) {
+        return axios.post(API_URL + 'api/mod/booking/deny', bookingId, { headers: authHeader() })
             .then(response => {
                 console.log(response);
             })
@@ -93,6 +102,10 @@ class UserService {
 
     getAllService() {
         return axios.get(API_URL + "api/service/all", { headers: authHeader() });
+    }
+
+    getServiceDetail(id) {
+        return axios.get(API_URL + "api/service/service?id=" + id, { headers: authHeader() });
     }
 
     postSubmitService(id, childId) {
