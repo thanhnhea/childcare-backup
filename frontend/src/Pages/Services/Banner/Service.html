@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Services.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <title>Choose Service</title>
+</head>
+
+<body>
+    <br>
+    <h1 style="color: rgb(50, 113, 239);text-align: center;">Our Services</h1>
+    <br>
+    <div class="row image ">
+
+        <div class="col-md-4 border" style="text-align: center;">
+            <h2>Medical</h2>
+            <img src="https://www.childrensomaha.org/wp-content/uploads/2020/01/2388777_s-e1579283726922.jpg" class="img-responsive" width="250" height="250" />
+
+            <p></p>
+            <button onclick="myFunction1()"class="btn btn-secondary" type="submit">Detail</button>
+            <p id="run1"></p>
+            <p id="run2"></p>
+            <p id="run3"></p>
+            <script>
+                function myFunction1() {
+                  document.getElementById("run1").innerHTML = "Periodic check-ups";
+                  document.getElementById("run2").innerHTML = "Physical therapy";
+                  document.getElementById("run3").innerHTML = "Psychology";
+                }
+                </script>
+            <button onclick="button1()"class="btn btn-primary" type="submit">Choose Service</button>
+            <p id="demo1"></p>
+            <script>
+                function button1() {
+                  document.getElementById("demo1").innerHTML = "Choose service successful!";
+                }
+                </script>
+        </div>
+
+        <div class="col-md-4 border" style="text-align: center;">
+            <h2>Activity</h2>
+            <img src="https://raisingchildren.net.au/__data/assets/image/0028/48727/activities-for-school-kids-2narrow.jpg" class="img-responsive" width="250" height="250" />
+
+            <p></p>
+            <button onclick="myFunction2()"class="btn btn-secondary" type="submit">Detail</button>
+            
+            <p id="run4"></p>
+            <p id="run5"></p>
+            <script>
+                function myFunction2() {
+                  document.getElementById("run4").innerHTML = "Picnic";
+                  document.getElementById("run5").innerHTML = "Sign up for a sports class";
+                }
+                </script>
+            <button onclick="button2()"class="btn btn-primary" type="submit">Choose Service</button>
+            <p id="demo2"></p>
+            <script>
+                function button2() {
+                  document.getElementById("demo2").innerHTML = "Choose service successful!";
+                }
+                </script>
+        </div>
+
+
+        <div class="col-md-4 border" style="text-align: center;">
+            <h2>Education</h2>
+            <img src="https://media-whichmedia.s3.ap-southeast-1.amazonaws.com/media/large/6/0/60b53e92575d.jpeg" class="img-responsive" width="250" height="250" />
+
+            <p></p>
+            <button onclick="myFunction3()"class="btn btn-secondary" type="submit">Detail</button>
+            <p id="run6"></p>
+            <p id="run7"></p>
+            <p id="run8"></p>
+            <p id="run9"></p>
+
+            <script>
+                function myFunction3() {
+                  document.getElementById("run6").innerHTML = "Learn English";
+                  document.getElementById("run7").innerHTML = "Freedom and Independence Learning Methods";
+                  document.getElementById("run8").innerHTML = "Discover your potential";
+                  document.getElementById("run9").innerHTML = "Problem solving and critical thinking skills";
+                }
+                </script>
+            <button onclick="button3()"class="btn btn-primary" type="submit">Choose Service</button>
+            <p id="demo3"></p>
+            <script>
+                function button3() {
+                  document.getElementById("demo3").innerHTML = "Choose service successful!";
+                }
+                </script>
+        </div>
+ 
+        <div class="col-md-12" style="text-align: center;">
+            <br>
+            <button class="btn btn-info" type="submit">Save</button>
+        </div>
+        
+    </div>
+    
+
+</body>
+
+</html>
