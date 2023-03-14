@@ -39,4 +39,12 @@ public class ChildrenService {
         return childrenRepository.loadUnassignedChildren(pageable);
     }
 
+    public List<ChildInformation> getUnassignedChild(){
+        return childrenRepository.loadUnassignedChildren();
+    }
+
+    public List<ChildInformation> getChildrenFromClass(long id){
+        return childrenRepository.loadChildrenFromClass(id);
+    }
+
 }

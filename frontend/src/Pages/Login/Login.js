@@ -7,6 +7,7 @@ import './Login.css';
 
 import AuthService from "../../services/auth.service";
 import { withRouter } from '../../common/with-router';
+import { Circles, ColorRing, ThreeDots } from 'react-loader-spinner';
 
 class Login extends Component {
 
@@ -84,12 +85,13 @@ class Login extends Component {
             message: "",
             loading: true
         });
-        AuthService.login(this.state.username, this.state.password).then(
-            () => {
+
+        AuthService.login(this.state.username, this.state.password)
+            .then(() => {
                 this.props.router.navigate("/profile");
                 window.location.reload();
-            },
-            error => {
+            })
+            .catch((error) => {
                 formHeader.textContent = "Login Failed";
                 formHeader.style.color = "red";
                 const resMessage =
@@ -101,11 +103,11 @@ class Login extends Component {
 
                 this.setState({
                     loading: false,
-                    message: resMessage
+                    message: resMessage,
                 });
-            }
-        );
+            });
     }
+
     render() {
         return (
             <div>
@@ -129,43 +131,48 @@ class Login extends Component {
                                                     }}
                                                 >
                                                     <div className="form-outline mb-4">
-                            <label htmlFor="username">Username</label>
-                            <input
-                              type="text"
-                              className={`form-control ${
-                                this.state.usernameError ? "is-invalid" : ""
-                              }`}
-                              name="username"
-                              value={this.state.username}
-                              onChange={this.onChangeUsername}
-                              validations={["required", "username"]}
-                            />
-                            {this.state.usernameError && (
-                              <div className="invalid-feedback">
-                                Please enter a valid username
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="form-outline mb-4">
-                            <label htmlFor="password">Password</label>
-                            <input
-                              type="password"
-                              className={`form-control ${
-                                this.state.passwordError ? "is-invalid" : ""
-                              }`}
-                              name="password"
-                              value={this.state.password}
-                              onChange={this.onChangePassword}
-                              validations={["required", "password"]}
-                            />
-                            {this.state.passwordError && (
-                              <div className="invalid-feedback">
-                                Please enter a correct password
-                              </div>
-                            )}
+                                                        <label htmlFor="username">Username</label>
+                                                        <input
+                                                            type="text"
+                                                            className={`form-control ${this.state.usernameError ? "is-invalid" : ""
+                                                                }`}
+                                                            name="username"
+                                                            value={this.state.username}
+                                                            onChange={this.onChangeUsername}
+                                                            validations={["required", "username"]}
+                                                        />
+                                                        {this.state.usernameError && (
+                                                            <div className="invalid-feedback">
+                                                                Please enter a valid username
+                                                            </div>
+                                                        )}
                                                     </div>
 
+                                                    <div className="form-outline mb-4">
+                                                        <label htmlFor="password">Password</label>
+                                                        <input
+                                                            type="password"
+                                                            className={`form-control ${this.state.passwordError ? "is-invalid" : ""
+                                                                }`}
+                                                            name="password"
+                                                            value={this.state.password}
+                                                            onChange={this.onChangePassword}
+                                                            validations={["required", "password"]}
+                                                        />
+                                                        {this.state.passwordError && (
+                                                            <div className="invalid-feedback">
+                                                                Please enter a correct password
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                    <div className="d-flex justify-content-center mt-3">
+                                                        <ThreeDots
+                                                            height="80"
+                                                            width="80"
+                                                            radius="9"
+                                                            color="#008CBA"
+                                                            visible={this.state.loading} />
+                                                    </div>
                                                     <div className="text-center pt-1 mb-5 pb-1">
                                                         <div type="submit" className="theme-btn btn-fill" onClick={this.handleLogin}>
                                                             <span>Login</span>
@@ -217,8 +224,7 @@ class Login extends Component {
             </div>
         )
     }
-
 };
 
 
-export default withRouter(Login); 
+export default withRouter(Login);
