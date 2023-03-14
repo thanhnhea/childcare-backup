@@ -29,6 +29,8 @@ import ChildProfile from './components/ChildProfile';
 import BoardParent from './Pages/board-parent.component';
 import ForgetPassword from './Pages/ForgetPassword/ForgetPassword';
 import CreateServices from './Pages/Manager/CreateServices/CreateServices';
+import EditUser from './Pages/Manager/EditUser/EditUser';
+import AddUser from './Pages/Manager/AddUser/AddUser';
 
 
 function App() {
@@ -67,6 +69,9 @@ function App() {
           <Route path="/booking/:id" element={<Booking />} />
           <Route path="/parent" element={<BoardParent />} />
           <Route path='/createServices' element={<CreateServices />} />
+          <Route path='/editUser' element={<EditUser />} />
+          <Route path='/addUser' element={<AddUser />} />
+          
 
         </Routes>
         <Footer />
