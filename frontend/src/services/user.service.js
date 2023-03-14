@@ -63,6 +63,10 @@ class UserService {
         return axios.get(API_URL + 'api/mod/class?id=' + id, { headers: authHeader() });
     }
 
+    getChildrenFromClass(id) {
+        return axios.get(API_URL + 'api/mod/class/children?id=' + id, { headers: authHeader() });
+    }
+
     getChildInfo(id) {
         return axios.get(API_URL + 'account/users/child?id=' + id, { headers: authHeader() });
     }
