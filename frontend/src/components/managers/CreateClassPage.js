@@ -48,7 +48,7 @@ const CreateClassPage = () => {
     return (
         <div>
             <h1>Create a New Class</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='m-5'>
                 <div className="form-group">
                     <label htmlFor="className">Class Name</label>
                     <input
@@ -117,7 +117,7 @@ const CreateClassPage = () => {
                         ))}
                     </select>
                 </div>
-                <button type="submit" className="btn btn-primary"></button>
+                <button type="submit" className="btn btn-primary mt-3">Save</button>
             </form>
         </div>
     );

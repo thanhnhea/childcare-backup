@@ -41,7 +41,7 @@ const Tab2 = () => {
     const [ageRangeFilter, setAgeRangeFilter] = useState("");
     const [serviceFilter, setServiceFilter] = useState("");
     const [numChildrenFilter, setNumChildrenFilter] = useState("");
-    const [filteredClasses, setFilteredClasses] = useState([classes]);
+    const [filteredClasses, setFilteredClasses] = useState(classes);
 
     const [selectedChild, setSelectedChild] = useState(null);
 
@@ -138,6 +138,9 @@ const Tab2 = () => {
                         <option value="18">18</option>
                         <option value="20">20</option>
                     </select>
+                </div>
+                <div className="col-sm-3">
+                    <button type="submit" className="btn btn-primary mt-3">Add new Class</button>
                 </div>
             </div>
             <div className="row">
