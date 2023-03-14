@@ -48,11 +48,15 @@ class AuthService {
         localStorage.removeItem("user");
     }
 
-    register(username, email, password,) {
+    register( firstName, lastName, username, phone, email, password, address) {
         return axios.post(API_URL + "signup", {
-            username,
-            email,
-            password
+            firstName, lastName, username, phone, email, password, address
+        });
+    }
+
+    addUser2( firstName, lastName, username, phone, email, address, password,role) {
+        return axios.post(API_URL + "signup", {
+            firstName, lastName, username, phone, email, password, address,role
         });
     }
 
@@ -68,6 +72,7 @@ class AuthService {
             firstName, lastName, username, phone, email,address
         });
     }
+ 
 
     createServices(serviceTitle,
         createdDate ,

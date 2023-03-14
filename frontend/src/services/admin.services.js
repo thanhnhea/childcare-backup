@@ -9,6 +9,11 @@ class AdminService {
     getUserList() {
         return axios.get(API_URL + 'admin/userList', { headers: authHeader() });
     }
+
+    deleteUser(id) {
+        return axios.post(API_URL + 'admin/deleteUser?id=' + id, { headers: authHeader() });
+    }
+
 }
 
 export default new AdminService();
