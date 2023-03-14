@@ -8,9 +8,9 @@ const AddChild = () => {
         lastName: '',
         dob: '',
         gender: '',
-        notes: '',
         interest: '',
         needs: '',
+        note: '',
     });
 
     const handleChange = (e) => {
@@ -39,9 +39,9 @@ const AddChild = () => {
             lastName,
             dob,
             gender,
-            notes,
             interest,
-            needs
+            needs,
+            note
         ).then(
             response => {
                 // This function will execute when the Promise is resolved with a successful response
@@ -64,10 +64,10 @@ const AddChild = () => {
         firstName,
         lastName,
         dob,
-        notes,
         gender,
         interest,
         needs,
+        note,
     } = childData;
 
     return (
@@ -116,14 +116,14 @@ const AddChild = () => {
                             <Col lg={12} >
                                 <div className='form-outline mb-4'>
                                     <label className="mb-1">
-                                        Please give us some notes about your child*
+                                        Please give us some note about your child*
                                     </label>
                                     <textarea
                                         className='form-control'
                                         rows='4'
                                         required
-                                        name='notes'
-                                        value={notes}
+                                        name='note'
+                                        value={note}
                                         onChange={handleChange}
                                     ></textarea>
                                 </div>

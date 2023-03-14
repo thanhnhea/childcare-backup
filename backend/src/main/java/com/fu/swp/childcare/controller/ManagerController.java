@@ -142,7 +142,7 @@ public class ManagerController {
             ChildInformation child = childrenService.getChildById(childID);
             User parents = child.getUser();
             String msg = "Saved " + assignClass.getChildId() + " into " + assignClass.getClassId();
-            System.out.println("line 127: EMAIL "+parents.getEmail());
+            System.out.println("line 127: EMAIL " + parents.getEmail());
 
             emailService.sendHtmlMessage(
                     parents.getEmail(),
@@ -168,10 +168,20 @@ public class ManagerController {
             return ResponseEntity.ok(childrenInfoDTOs);
     }
 
+    @GetMapping(value = "/class/children")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<?> getALlChildrenFromClass(@RequestParam long id) {
+        List<ChildInformation> children = childrenService.getChildrenFromClass(id);
+        System.out.println(children);
+        return children.isEmpty()
+                ? ResponseEntity.badRequest().body("Class haven't had any children")
+                : ResponseEntity.ok(children.stream().map(ChildInformation::toChildrenInfoDto).collect(Collectors.toList()));
+    }
+
     @PostMapping("/newService")
     @PreAuthorize("hasRole('MANAGER')")
-    public ResponseEntity<?> newService(@RequestBody ServiceRequest request){
-        if(request == null){
+    public ResponseEntity<?> newService(@RequestBody ServiceRequest request) {
+        if (request == null) {
             return ResponseEntity.badRequest().body("bad request");
         }
         Service s = new Service();
@@ -179,10 +189,10 @@ public class ManagerController {
         s.setServicePrice(request.getPrice());
         s.setServiceDetail(request.getDetails());
         s.setCreatedDate(LocalDate.now());
-        try{
+        try {
             serviceRepository.save(s);
             return ResponseEntity.ok(s);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
@@ -190,44 +200,46 @@ public class ManagerController {
 
     /**
      * get all roles available for manager to pick
+     *
      * @return roles list
      */
     @GetMapping(value = "role/all")
     @PreAuthorize("hasRole('MANAGER')")
-    public ResponseEntity<?> getAllRoles(){
+    public ResponseEntity<?> getAllRoles() {
         List<Role> roles = roleRepository.findAll();
-        return roles.isEmpty() ?  ResponseEntity.badRequest().body("There is no roles") :  ResponseEntity.ok(roles);
+        return roles.isEmpty() ? ResponseEntity.badRequest().body("There is no roles") : ResponseEntity.ok(roles);
     }
 
     @GetMapping("/booking/all")
     @PreAuthorize("hasRole('MANAGER')")
-    public ResponseEntity<?> getBookingList(){
+    public ResponseEntity<?> getBookingList() {
         return ResponseEntity.ok().body(bookingListService.getAll().stream().map(ServiceBookingList::toBookingServiceListResponse).toList());
     }
 
     @PostMapping("/booking/approve")
     @PreAuthorize("hasRole('MANAGER')")
-    public ResponseEntity<?> approveBooking(@RequestBody BookingServiceListResponse booking){
-        try{
+    public ResponseEntity<?> approveBooking(@RequestBody BookingServiceListResponse booking) {
+        try {
             System.out.println(booking.getId());
             ServiceBookingList serviceBookingList = bookingListService.getServiceBookingList(booking.getId());
             serviceBookingList.setStatus("Approved");
             bookingListService.save(serviceBookingList);
             return ResponseEntity.ok().body("Approved");
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage()) ;
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
     @PostMapping("/booking/deny")
     @PreAuthorize("hasRole('MANAGER')")
-    public ResponseEntity<?> denyBooking(@RequestBody BookingServiceListResponse booking){
-        try{
+    public ResponseEntity<?> denyBooking(@RequestBody BookingServiceListResponse booking) {
+        try {
             ServiceBookingList serviceBookingList = bookingListService.getServiceBookingList(booking.getId());
             serviceBookingList.setStatus("Denied");
             bookingListService.save(serviceBookingList);
             return ResponseEntity.ok().body("Denied");
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage()) ;
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

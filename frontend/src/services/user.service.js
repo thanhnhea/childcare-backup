@@ -72,7 +72,8 @@ class UserService {
         dob,
         gender,
         interest,
-        needs) {
+        needs,
+        note) {
         dob = formatDate(dob);
 
         return axios.post(API_URL + 'account/submit_children', {
@@ -80,7 +81,8 @@ class UserService {
             lastName, dob,
             gender,
             interest,
-            needs
+            needs,
+            note
         }, { headers: authHeader() });
     }
 

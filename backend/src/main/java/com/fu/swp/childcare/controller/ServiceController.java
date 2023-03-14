@@ -25,7 +25,6 @@ public class ServiceController {
     @GetMapping("/all-service")
     public ResponseEntity<?> getAllServices() {
         List<ServiceDto> services = new ArrayList<>();
-
         try {
             services = registrationService.getAllServices();
             services.forEach(System.out::println);
