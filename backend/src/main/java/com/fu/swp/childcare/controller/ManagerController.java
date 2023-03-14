@@ -74,6 +74,7 @@ public class ManagerController {
         try {
             Classes clas = classService.getClassById(id);
             ClassDTO classDTO = clas.toClassDTO();
+            System.out.println(classDTO.toString());
             return ResponseEntity.ok(classDTO);
         } catch (Exception ex) {
             return new ResponseEntity<>("Class Not Found", HttpStatus.BAD_REQUEST);
