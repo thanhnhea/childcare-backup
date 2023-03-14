@@ -41,7 +41,7 @@ const CreateClassPage = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        console.log(services)
         // TODO: Send form data to server to create a new class
     };
 
@@ -117,7 +117,7 @@ const CreateClassPage = () => {
                         ))}
                     </select>
                 </div>
-                <button type="submit" className="btn btn-primary mt-3">Save</button>
+                <button type="submit" className="btn btn-primary mt-3" >Save</button>
             </form>
         </div>
     );

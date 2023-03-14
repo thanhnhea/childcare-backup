@@ -89,6 +89,10 @@ class UserService {
         return axios.get(API_URL + "api/service/all", { headers: authHeader() });
     }
 
+    getServiceDetail(id) {
+        return axios.get(API_URL + "api/service/service?id=" + id, { headers: authHeader() });
+    }
+
     postSubmitService(id, childId) {
         return axios.post(API_URL + 'account/booknow', { id, childId }, { headers: authHeader() })
     }
