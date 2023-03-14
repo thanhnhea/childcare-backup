@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-
+import adminServices from "../../services/admin.services";
 const UserList = () => {
 
   const [users, setUsers] = useState([]);
-
   // Fetch user data from API
   useEffect(() => {
-    fetch("https://example.com/users")
-      .then((response) => response.json())
-      .then((data) => setUsers(data));
+    async function fetchData() {
+      const response = await adminServices.getUserList();
+      setUsers(response.data);
+    }
+    fetchData();
   }, []);
+
   return (
-    <div classNameName="container p-2 m-5">
+    <div className="container p-2 m-5">
       <div className="row">
         <div className="col-md-12">
           <div className="card">
@@ -61,7 +63,7 @@ const UserList = () => {
                       </td>
                       
                       <td>
-                        <button type="button" className="btn btn-outline-info btn-circle btn-lg btn-circle"><a href="!#"><i className="fa fa-eye" aria-hidden="true"></i></a> </button>
+                        <button type="button" className="btn btn-outline-info btn-circle btn-lg btn-circle"><i className="fa fa-eye" aria-hidden="true"></i></button>
                         <button type="button" className="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><a href="!#"><i className="fa fa-trash"></i></a> </button>
                         <button type="button" className="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><a href="!#"><i className="fa fa-edit"></i></a> </button>
                       </td>
