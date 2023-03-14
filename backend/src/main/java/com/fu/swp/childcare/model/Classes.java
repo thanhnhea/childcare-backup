@@ -22,7 +22,7 @@ public class Classes {
     @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column( name = "id" , unique = true )
+    @Column(name = "id", unique = true)
     private Long id;
     @Column(unique = true)
     String className;
@@ -43,7 +43,31 @@ public class Classes {
     @JoinColumn(name = "child_information_id")
     Set<ChildInformation> childInformation;
 
-    public ClassDTO toClassDTO(){
-;        return new ClassDTO(this.getId().toString(),this.className,this.createdDate,this.startDate,this.description,this.service.getServiceTitle(),this.ageRange,this.getCreatedPerson().getUsername()) ;
+    public ClassDTO toClassDTO() {
+        return new ClassDTO(
+                this.getId().toString(),
+                this.className,
+                this.createdDate,
+                this.startDate,
+                this.description,
+                this.service.getServiceTitle(),
+                this.ageRange,
+                this.getCreatedPerson().getUsername());
+    }
+
+    @Override
+    public String toString() {
+        return "Classes{" +
+                "id=" + id +
+                ", className='" + className + '\'' +
+                ", createdDate=" + createdDate +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", description='" + description + '\'' +
+                ", ageRange='" + ageRange + '\'' +
+                ", service=" + service +
+                ", createdPerson=" + createdPerson +
+                ", childInformation=" + childInformation +
+                '}';
     }
 }

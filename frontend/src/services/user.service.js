@@ -60,7 +60,7 @@ class UserService {
     }
 
     getClassDetails(id) {
-        return axios.get(API_URL + 'account/class?id=' + id, { headers: authHeader() });
+        return axios.get(API_URL + 'api/mod/class?id=' + id, { headers: authHeader() });
     }
 
     getChildInfo(id) {

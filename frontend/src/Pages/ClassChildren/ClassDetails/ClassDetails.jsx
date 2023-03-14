@@ -27,8 +27,8 @@ const ClassDetails = ({ }) => {
           </Col>
           <Col lg={6} md={7}>
             <div className="my-5 text-center text-xl-start">
-              <h1 className="display-5 fw-bolder text-warning mb-2">{classInfo.className}</h1>
-              <p className="lead fw-normal mb-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ratione eos sapiente voluptate perspiciatis eum minus distinctio, a quaerat, odit, totam delectus dolores. Officiis ullam odit laboriosam, sint eius molestias aliquid.</p>
+              <h1 className="display-5 fw-bolder text-warning mb-2">{classInfo.name}</h1>
+              <p className="lead fw-normal mb-4">{classInfo.description}</p>
               <div className="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                 <a className="btn btn-primary btn-lg px-4 me-sm-3" href="/Children">Students In Class</a>
               </div>
