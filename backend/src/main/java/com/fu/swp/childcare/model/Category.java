@@ -17,4 +17,12 @@ public class Category {
     private Long id;
 
     String name;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

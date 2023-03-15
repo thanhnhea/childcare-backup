@@ -99,7 +99,20 @@ public class AuthController {
             userRole = roleRepository.findByName(ERole.valueOf(registerRequest.getRole()))
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
         }
-
+        if (!userRole.getName().equals(ERole.ROLE_USER)) {
+            try {
+                emailService.sendHtmlMessage(registerRequest.getEmail(),
+                        "create Account successful", "Dear mr " +
+                                registerRequest.getFirstName() + ",\n" +
+                                "your internal account of children_care have been created," +
+                                "\nplease login with username:  " +
+                                registerRequest.getUsername() +
+                                " and password is " +
+                                registerRequest.getPassword());
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+        }
         roles.add(userRole);
         User user = new User(registerRequest.getUsername(),
                 registerRequest.getEmail(),
@@ -160,7 +173,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Token expired"));
         }
         User user = passToken.getUser();
-        if(encoder.matches(request.getPassword(), user.getPassword())){
+        if (encoder.matches(request.getPassword(), user.getPassword())) {
             return ResponseEntity.badRequest().body((new MessageResponse("Password are matches with previous")));
         }
         user.setPassword(encoder.encode(request.getPassword()));
