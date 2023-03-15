@@ -51,10 +51,6 @@ public class Classes {
                 this.createdDate,
                 this.startDate,
                 this.description,
-
-                this.ageRange,
-                this.service.getServiceTitle(),
-                this.getCreatedPerson().getUsername()) ;
                 this.service.getServiceTitle(),
                 this.ageRange,
                 this.getCreatedPerson().getUsername());

@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequestMapping("/api/mod")
@@ -46,6 +48,9 @@ public class ManagerController {
 
     @Autowired
     ServiceRepository serviceRepository;
+
+    @Autowired
+    CategoryService categoryService;
 
     @Autowired
     BookingListService bookingListService;
@@ -200,11 +205,16 @@ public class ManagerController {
         if (request == null) {
             return ResponseEntity.badRequest().body("bad request");
         }
+        Optional<Category> categories = categoryService.getAllCategory().stream().filter(category -> Objects.equals(category.getName(), request.getCategory())).findFirst();
+        Category selectedCategory = categories.orElse(null);
+        System.out.println(categories);
+        System.out.println(request);
         Service s = new Service();
         s.setServiceTitle(request.getTitle());
         s.setServicePrice(request.getPrice());
         s.setServiceDetail(request.getDetails());
         s.setCreatedDate(LocalDate.now());
+        s.setCategory(selectedCategory);
         try {
             serviceRepository.save(s);
             return ResponseEntity.ok(s);
@@ -258,14 +268,15 @@ public class ManagerController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
     @GetMapping("/booking")
-    public ResponseEntity<?> getBookingDetails(@RequestParam String id){
-        try{
+    public ResponseEntity<?> getBookingDetails(@RequestParam String id) {
+        try {
             ServiceBookingList serviceBookingList = bookingListService.getServiceBookingList(id);
             BookingServiceListResponse bookingDetail = serviceBookingList.toBookingServiceListResponse();
-            return ResponseEntity.ok(bookingDetail) ;
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage()) ;
+            return ResponseEntity.ok(bookingDetail);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }
