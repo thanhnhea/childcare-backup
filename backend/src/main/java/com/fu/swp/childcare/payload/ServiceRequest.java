@@ -9,4 +9,6 @@ public class ServiceRequest {
     private String title;
     private String price;
     private String details;
+
+    private String category;
 }

@@ -169,6 +169,21 @@ public class ManagerController {
             return ResponseEntity.ok(childrenInfoDTOs);
     }
 
+    @GetMapping(value = "/assignedChild")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<?> assignedChildList(@RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "10") int size) {
+        List<ChildInformation> children = childrenService.getAssignedChild();
+        System.out.println(children);
+        List<ChildrenInfoDto> childrenInfoDTOs = children.stream().map(ChildInformation::toChildrenInfoDto).collect(Collectors.toList());
+        System.out.println(childrenInfoDTOs);
+        if (children.isEmpty())
+            return ResponseEntity.badRequest().body("children list is empty");
+        else
+            return ResponseEntity.ok(childrenInfoDTOs);
+    }
+
+
     @GetMapping(value = "/class/children")
     @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<?> getALlChildrenFromClass(@RequestParam long id) {
