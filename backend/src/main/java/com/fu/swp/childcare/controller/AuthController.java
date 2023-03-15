@@ -124,7 +124,7 @@ public class AuthController {
         }
         String generatedToken = "";
         int length = 4;
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        String characters = "0123456789";
 
         for (int i = 0; i < length; i++) {
             int randomIndex = (int) Math.floor(Math.random() * characters.length());
