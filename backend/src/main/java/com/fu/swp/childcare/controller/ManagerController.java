@@ -258,4 +258,14 @@ public class ManagerController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @GetMapping("/booking")
+    public ResponseEntity<?> getBookingDetails(@RequestParam String id){
+        try{
+            ServiceBookingList serviceBookingList = bookingListService.getServiceBookingList(id);
+            BookingServiceListResponse bookingDetail = serviceBookingList.toBookingServiceListResponse();
+            return ResponseEntity.ok(bookingDetail) ;
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage()) ;
+        }
+    }
 }

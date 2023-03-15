@@ -28,6 +28,7 @@ const Tab2 = () => {
         }
         fetchData();
     }, []);
+
     const [children, setChildren] = useState([]);
     useEffect(() => {
         async function fetchData() {
@@ -37,12 +38,11 @@ const Tab2 = () => {
         fetchData();
     }, []);
 
-
-
     const [ageRangeFilter, setAgeRangeFilter] = useState("");
     const [serviceFilter, setServiceFilter] = useState("");
     const [numChildrenFilter, setNumChildrenFilter] = useState("");
     const [filteredClasses, setFilteredClasses] = useState(classes);
+
     const [selectedChild, setSelectedChild] = useState(null);
 
     const handleAgeRangeFilterChange = (e) => {
@@ -138,6 +138,9 @@ const Tab2 = () => {
                         <option value="18">18</option>
                         <option value="20">20</option>
                     </select>
+                </div>
+                <div className="col-sm-3">
+                    <button type="submit" className="btn btn-primary mt-3">Add new Class</button>
                 </div>
             </div>
             <div className="row">

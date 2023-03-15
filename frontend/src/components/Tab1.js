@@ -48,19 +48,12 @@ const Tab1 = () => {
 
     return (
         <div>
-            <h3>Tab 1</h3>
+            <h3>Children List</h3>
             <ul className="list-group">
                 {sportedData.map((item, index) => (
                     <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                         <div className="form-check">
-                            <input
-                                type="checkbox"
-                                className="form-check-input"
-                                id={`checkbox-${index}`}
-                                checked={selectedChildren.includes(index)}
-                                onChange={(event) => handleCheckboxChange(event, index)}
-                                disabled={item.status !== 'UnAssigned'}
-                            />
+
                             <label className="form-check-label" htmlFor={`checkbox-${index}`}>
                                 {item.firstName} {item.lastName} ({item.dob}) - {item.status}
                             </label>
@@ -71,12 +64,24 @@ const Tab1 = () => {
                     </li>
                 ))}
             </ul>
-            <div className="mt-3 mb-4">
-                <button className="btn btn-success" onClick={handleAssignChildren} disabled={!selectedChildren.length}>
-                    Assign Children
-                </button>
-            </div>
+
         </div>
     );
 };
 export default Tab1;
+
+
+// <div className="mt-3 mb-4">
+//     <button className="btn btn-success" onClick={handleAssignChildren} disabled={!selectedChildren.length}>
+//         Assign Children
+//     </button>
+// </div>
+
+// <input
+//     type="checkbox"
+//     className="form-check-input"
+//     id={`checkbox-${index}`}
+//     checked={selectedChildren.includes(index)}
+//     onChange={(event) => handleCheckboxChange(event, index)}
+//     disabled={item.status !== 'UnAssigned'}
+// />

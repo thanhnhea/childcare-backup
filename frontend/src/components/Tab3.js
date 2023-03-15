@@ -50,6 +50,13 @@ const Tab3 = () => {
         const updatedServices = bookedServices.map((service) =>
             service.id === id ? { ...service, status: 'Denied' } : service
         );
+        userService.postApproveBooking(id)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
         setBookedServices(updatedServices);
     };
 

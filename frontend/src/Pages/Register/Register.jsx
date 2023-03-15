@@ -10,12 +10,14 @@ const Register = () => {
     username: '',
     phone: '',
     email: '',
+    address:'',
     password: '',
-    confirmPassword: '',
+    confirmPassword: ''
+
   });
   const [errors, setErrors] = useState({});
 
-  const { firstName, lastName, username, phone, email, password, confirmPassword } = formData;
+  const { firstName, lastName, username, phone, email, password, confirmPassword, address } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,9 +32,7 @@ const Register = () => {
 
     console.log("handle submit here");
     AuthService.register(
-      username,
-      email,
-      password
+      firstName, lastName, username, phone, email, password, address
     ).then(
       response => {
         setMessage(response.data.message);
@@ -58,19 +58,19 @@ const Register = () => {
 
       if (!firstName) {
         errors.firstName = '';
-      }else if (!/^[a-zA-Z0-9]+$/.test(firstName)) {
+      } else if (!/^[a-zA-Z0-9]+$/.test(firstName)) {
         errors.firstName = 'Name can not contain special character.';
       }
 
       if (!lastName) {
         errors.lastName = '';
-      }else if (!/^[a-zA-Z0-9]+$/.test(lastName)) {
+      } else if (!/^[a-zA-Z0-9]+$/.test(lastName)) {
         errors.lastName = 'Name can not contain special character.';
       }
 
       if (!username) {
         errors.username = '';
-      }else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+      } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
         errors.username = 'Name can not contain special character.';
       }
 
@@ -96,6 +96,12 @@ const Register = () => {
         errors.confirmPassword = '';
       } else if (password !== confirmPassword) {
         errors.confirmPassword = 'Passwords do not match';
+      }
+
+      if (!address) {
+        errors.address = '';
+      } else if (!/^[a-zA-Z0-9\s]+$/.test(address)) {
+        errors.address = 'Address can not contain special character.';
       }
 
       setErrors(errors);
@@ -137,7 +143,7 @@ const Register = () => {
 
                       <div className="form-outline">
                         {errors.username && <span>{errors.username}</span>}
-                        <input name="username" value={username} onChange={handleChange} placeholder="Username Name" type="text" id="username" className="form-control form-control-lg" required />
+                        <input name="username" value={username} onChange={handleChange} placeholder="Username" type="text" id="username" className="form-control form-control-lg" required />
                       </div>
 
                     </div>
@@ -145,21 +151,21 @@ const Register = () => {
 
                   <div className="row">
 
-                  <div className="col-md-12 mb-4">
-    <h6 className="mb-2 pb-1">Gender: </h6>
-    <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="gender" id="femaleGender" value="female" defaultChecked />
-        <label className="form-check-label" htmlFor="femaleGender">Female</label>
-    </div>
-    <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="gender" id="maleGender" value="male" />
-        <label className="form-check-label" htmlFor="maleGender">Male</label>
-    </div>
-    <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="gender" id="otherGender" value="other" required />
-        <label className="form-check-label" htmlFor="otherGender">Other</label>
-    </div>
-</div>
+                    <div className="col-md-12 mb-4">
+                      <h6 className="mb-2 pb-1">Gender: </h6>
+                      <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" name="gender" id="femaleGender" value="female" defaultChecked />
+                        <label className="form-check-label" htmlFor="femaleGender">Female</label>
+                      </div>
+                      <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" name="gender" id="maleGender" value="male" />
+                        <label className="form-check-label" htmlFor="maleGender">Male</label>
+                      </div>
+                      <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" name="gender" id="otherGender" value="other" required />
+                        <label className="form-check-label" htmlFor="otherGender">Other</label>
+                      </div>
+                    </div>
 
                   </div>
 
@@ -179,6 +185,15 @@ const Register = () => {
                         <input placeholder="Phone Number" name="phone" value={phone} onChange={handleChange} type="tel" id="phoneNumber" className="form-control form-control-lg" required />
                       </div>
                     </div>
+                  </div>
+
+                  <div className="col-md-12 mb-4">
+
+                    <div className="form-outline">
+                      {errors.address && <span>{errors.address}</span>}
+                      <input name="address" value={address} onChange={handleChange} placeholder="Address" type="text" id="address" className="form-control form-control-lg" required />
+                    </div>
+
                   </div>
 
                   <div className="row">
