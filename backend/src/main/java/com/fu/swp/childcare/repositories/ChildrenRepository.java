@@ -31,6 +31,10 @@ public interface ChildrenRepository extends JpaRepository<ChildInformation, Long
     @Query(value = "SELECT * FROM childinfo WHERE child_information_id = :id",
             nativeQuery = true)
     List<ChildInformation> loadChildrenFromClass(@Param("id") Long id);
+    @Query(value = "SELECT COUNT(*) FROM `childinfo` WHERE child_information_id = :id",
+            nativeQuery = true)
+    int countChildrenInClass(@Param("id") Long id);
+
 
 
 }

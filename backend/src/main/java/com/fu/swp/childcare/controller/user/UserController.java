@@ -1,8 +1,10 @@
 package com.fu.swp.childcare.controller.user;
 
 
+import com.fu.swp.childcare.controller.mapping.ClassDTO;
 import com.fu.swp.childcare.controller.mapping.UserDto;
 import com.fu.swp.childcare.model.ChildInformation;
+import com.fu.swp.childcare.model.Classes;
 import com.fu.swp.childcare.model.Reservation;
 import com.fu.swp.childcare.model.User;
 import com.fu.swp.childcare.payload.BookingRequest;
@@ -11,10 +13,7 @@ import com.fu.swp.childcare.payload.RequestChangePassword;
 import com.fu.swp.childcare.payload.SubmitChildrenInfoRequest;
 import com.fu.swp.childcare.payload.response.MessageResponse;
 import com.fu.swp.childcare.repositories.UserRepository;
-import com.fu.swp.childcare.services.BookingListService;
-import com.fu.swp.childcare.services.ChildrenService;
-import com.fu.swp.childcare.services.UserProfileService;
-import com.fu.swp.childcare.services.UserService;
+import com.fu.swp.childcare.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,6 +33,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -46,6 +48,9 @@ public class UserController {
 
     @Autowired
     private ChildrenService childrenService;
+
+    @Autowired
+    private ClassService classService;
 
     @Autowired
     private BookingListService bookingListService;
@@ -135,12 +140,12 @@ public class UserController {
 
     @GetMapping("/users/child")
     @PreAuthorize("hasRole('USER') or hasRole('ROLE_MANAGER')")
-    public ResponseEntity<?> getChildProfile(@RequestParam String id)  {
-        try{
-            ChildInformation childInfo = childrenService.getChildById(id) ;
-            ChildProfile child = new ChildProfile(childInfo.getFirstName(), childInfo.getLastName(), childInfo.getDob(),childInfo.isGender(),childInfo.getInterest(),childInfo.getNeeds(), childInfo.getNote());
-            return ResponseEntity.ok(child) ;
-        }catch (Exception exc){
+    public ResponseEntity<?> getChildProfile(@RequestParam String id) {
+        try {
+            ChildInformation childInfo = childrenService.getChildById(id);
+            ChildProfile child = new ChildProfile(childInfo.getFirstName(), childInfo.getLastName(), childInfo.getDob(), childInfo.isGender(), childInfo.getInterest(), childInfo.getNeeds(), childInfo.getNote());
+            return ResponseEntity.ok(child);
+        } catch (Exception exc) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Child Not Found", exc);
         }
@@ -148,32 +153,47 @@ public class UserController {
 
     @PostMapping("/users/reservations")
     @PreAuthorize("hasRole('USER') or hasRole('ROLE_MANAGER')")
-    public ResponseEntity<?> reservation(@RequestBody Reservation reservation)  {
+    public ResponseEntity<?> reservation(@RequestBody Reservation reservation) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String username = userDetails.getUsername();
-    try {
-        User user = userService.loadUserByUsername(username);
-        reservation.setUser(user);
+        try {
+            User user = userService.loadUserByUsername(username);
+            reservation.setUser(user);
 
-    }catch (Exception e){
+        } catch (Exception e) {
 
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         return ResponseEntity.ok("");
+    }
+
+    @GetMapping(value = "/getClassFromChild")
+    @PreAuthorize(value = "hasRole('USER') or hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> getClass(@RequestParam String id) {
+        try {
+            ChildInformation child = childrenService.getChildById(id);
+            Optional<ClassDTO> optionalClasses = classService.getAllClass().stream().filter(c -> Objects.equals(c.getId(), child.getChildInformationId().toString())).findFirst();
+//            ClassDTO assignedClass = classes.stream().filter()
+            return optionalClasses.isPresent() ? ResponseEntity.ok(optionalClasses.get()) : ResponseEntity.badRequest().body("Class are unavailable");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("");
+        }
     }
 
 
     @PostMapping("/booknow")
-    public ResponseEntity<?> bookingService(@RequestBody @Valid BookingRequest request){
+    public ResponseEntity<?> bookingService(@RequestBody @Valid BookingRequest request) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String username = userDetails.getUsername();
-        try{
-            bookingListService.save(request,username);
+        try {
+            bookingListService.save(request, username);
             return ResponseEntity.ok().body("Booking Recorded");
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage()) ;
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

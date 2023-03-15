@@ -122,7 +122,14 @@ public class AuthController {
         if (users.isEmpty()) {
             return ResponseEntity.badRequest().body(new MessageResponse("email is not exist"));
         }
-        String generatedToken = UUID.randomUUID().toString();
+        String generatedToken = "";
+        int length = 4;
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        for (int i = 0; i < length; i++) {
+            int randomIndex = (int) Math.floor(Math.random() * characters.length());
+            generatedToken += characters.charAt(randomIndex);
+        }
         User user = users.get(0);
         PasswordResetToken token = new PasswordResetToken(generatedToken, user);
         token.setExpiryDate();

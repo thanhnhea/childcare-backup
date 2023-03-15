@@ -42,6 +42,9 @@ public class ChildrenService {
     public List<ChildInformation> getUnassignedChild(){
         return childrenRepository.loadUnassignedChildren();
     }
+    public List<ChildInformation> getAssignedChild(){
+        return childrenRepository.loadAssignedChildren();
+    }
 
     public List<ChildInformation> getChildrenFromClass(long id){
         return childrenRepository.loadChildrenFromClass(id);

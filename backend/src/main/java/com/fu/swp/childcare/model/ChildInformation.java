@@ -31,6 +31,9 @@ public class ChildInformation {
     String note;
     @ManyToOne(fetch = FetchType.LAZY)
     User user;
+    @Column(name = "child_information_id")
+    private Long childInformationId;
+
 
     boolean status = false;
 
@@ -91,5 +94,22 @@ public class ChildInformation {
         this.needs = needs;
         this.note = note;
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "ChildInformation{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dob=" + dob +
+                ", gender=" + gender +
+                ", interest='" + interest + '\'' +
+                ", needs='" + needs + '\'' +
+                ", note='" + note + '\'' +
+                ", user=" + user +
+                ", childInformationId=" + childInformationId +
+                ", status=" + status +
+                '}';
     }
 }
