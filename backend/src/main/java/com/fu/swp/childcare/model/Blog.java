@@ -1,10 +1,10 @@
 package com.fu.swp.childcare.model;
 
-import lombok.AccessLevel;
+import com.fu.swp.childcare.controller.mapping.BlogDTO;
 import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
 @Table(name = "blogs")
 public class Blog {
 
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -26,7 +24,7 @@ public class Blog {
     private String author;
 
     @Column(nullable = false)
-    private LocalDateTime datePublished;
+    private LocalDate datePublished;
 
     @Column(nullable = false, columnDefinition = "text")
     private String bodyText;
@@ -50,5 +48,9 @@ public class Blog {
                 ", user=" + user +
                 ", category=" + category +
                 '}';
+    }
+
+    public BlogDTO toBlogDTO(){
+        return new BlogDTO(this.id.toString(),this.title,this.datePublished, this.author,this.bodyText);
     }
 }

@@ -111,7 +111,11 @@ class UserService {
     postSubmitService(id, childId) {
         return axios.post(API_URL + 'account/booknow', { id, childId }, { headers: authHeader() })
     }
-    
+
+    postCreatePost(title, content) {
+        return axios.post(API_URL + 'api/post/create', { title, content }, { headers: authHeader() })
+    }
+
 }
 
 export default new UserService();

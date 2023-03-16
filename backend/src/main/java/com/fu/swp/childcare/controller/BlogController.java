@@ -1,5 +1,6 @@
 package com.fu.swp.childcare.controller;
 
+import com.fu.swp.childcare.controller.mapping.BlogDTO;
 import com.fu.swp.childcare.model.Blog;
 import com.fu.swp.childcare.services.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +33,6 @@ public class BlogController {
         }
     }
 
-//    @GetMapping("/blogListByTitle")
-//    public ResponseEntity<?> findBlogsByTitle(@RequestBody String title) {
-//    }
-
- //   @GetMapping("/blogListByAuthor")
-//    public ResponseEntity<?> findBlogsByAuthor(@RequestBody String title) {
-//    }
-
     @GetMapping("/blogDetail")
     public ResponseEntity<?> findBlogByID(@RequestParam String id) {
         Blog bl = blogService.blogDetail(id);
@@ -51,6 +44,8 @@ public class BlogController {
         }
     }
 
-
-
+//    @PostMapping("/newblog")
+//    public ResponseEntity<?> createBlog(@RequestBody BlogDTO blogDTO){
+//
+//    }
 }

@@ -8,7 +8,6 @@ const Service = () => {
     <>
       <Banner />
       <Detail />
-      <Safety />
     </>
   );
 };

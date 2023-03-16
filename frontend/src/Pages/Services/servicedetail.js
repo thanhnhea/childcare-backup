@@ -11,6 +11,7 @@ const ServiceDetail = () => {
     const [service, setService] = useState({});
 
     const [isUser, setIsUser] = useState(false);
+    const [isMod, setIsMod] = useState(false);
     const [currentUser, setCurrentUser] = useState();
 
     useEffect(() => {
@@ -22,8 +23,9 @@ const ServiceDetail = () => {
 
         const user = authService.getCurrentUser();
         if (user) {
-            setIsUser(user.roles.includes("ROLE_USER"));
             setCurrentUser(user)
+            setIsUser(user.roles.includes("ROLE_USER"));
+            setIsMod(user.roles.includes("ROLE_MANAGER"))
         }
     }, []);
 
@@ -43,6 +45,10 @@ const ServiceDetail = () => {
             <div>
                 {isUser && (
                     <Link to={`/booking/${service.id}`} className="link-button">Book this Service</Link>
+                )}
+
+                {isMod && (
+                    <Link to={`/editservice/${service.id}`} className="link-button">Edit Service</Link>
                 )}
             </div>
         </div>

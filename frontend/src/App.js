@@ -34,6 +34,8 @@ import EditUser from './Pages/Manager/EditUser/EditUser';
 import AddUser from './Pages/Manager/AddUser/AddUser';
 import UserTable from './Pages/Manager/UserDetail/UserDetail';
 import Services from './Pages/Services/Banner/Services';
+import EditServiceDetail from './Pages/Services/EditServiceDetail';
+import CreatePost from './Pages/post/CreatePost';
 
 
 function App() {
@@ -78,6 +80,8 @@ function App() {
           <Route path='/addUser' element={<AddUser />} />
           <Route path='/userTable' element={<UserTable />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/editservice/:id" element={<EditServiceDetail />} />
+          <Route path="/newpost" element={<CreatePost />} />
         </Routes>
         <Footer />
       </Router>
