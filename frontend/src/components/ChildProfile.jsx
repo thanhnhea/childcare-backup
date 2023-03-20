@@ -12,6 +12,7 @@ const ChildProfile = () => {
     useEffect(() => {
         async function fetchData() {
             const response = await userService.getChildInfo(id);
+            console.log(response.data)
             setChildInfo(response.data);
         }
         fetchData();
@@ -35,7 +36,7 @@ const ChildProfile = () => {
     return (
         <div>
             <Child
-                id={childInfo.id}
+                id={id}
                 firstName={childInfo.firstName}
                 lastName={childInfo.lastName}
                 dob={childInfo.dob}
@@ -43,8 +44,7 @@ const ChildProfile = () => {
                 gender={childInfo.gender}
                 interest={childInfo.interest}
                 needs={childInfo.needs}
-                allergies={childInfo.allergies}
-                medications={childInfo.medications}
+                note={childInfo.note}
             />
 
         </div>
