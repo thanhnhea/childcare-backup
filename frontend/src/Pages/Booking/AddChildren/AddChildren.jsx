@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import userService from '../../../services/user.service';
+import './AddChildren.css';
 
 const AddChild = () => {
     const [childData, setChildData] = useState({
@@ -71,10 +72,10 @@ const AddChild = () => {
     } = childData;
 
     return (
-        <section>
+        <section className='AddChild'>
             <Container>
                 <Row>
-                    <div className='form-header'>
+                    <div className='form-header text-center'>
                         <h1 className='header display-3 mt-3 mb-3'>Add Child</h1>
                     </div>
                     <hr />
@@ -144,6 +145,7 @@ const AddChild = () => {
                                                     name='dob'
                                                     value={dob}
                                                     onChange={handleChange}
+                                                    max={new Date().toISOString().split("T")[0]} 
                                                 />
                                             </div>
                                         </div>

@@ -28,12 +28,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -173,13 +169,16 @@ public class UserController {
     public ResponseEntity<?> getClass(@RequestParam String id) {
         try {
             ChildInformation child = childrenService.getChildById(id);
-            Optional<ClassDTO> optionalClasses = classService.getAllClass().stream().filter(c -> Objects.equals(c.getId(), child.getChildInformationId().toString())).findFirst();
+            Long classId = child.getChildInformationId();
+            if(classId!=null){
+                Optional<ClassDTO> optionalClasses = classService.getAllClass().stream().filter(c -> Objects.equals(c.getId(), child.getChildInformationId().toString())).findFirst();
 //            ClassDTO assignedClass = classes.stream().filter()
-            return optionalClasses.isPresent() ? ResponseEntity.ok(optionalClasses.get()) : ResponseEntity.badRequest().body("Class are unavailable");
+                return optionalClasses.isPresent() ? ResponseEntity.ok(optionalClasses.get()) : ResponseEntity.ok(null);
+            }else return ResponseEntity.ok(null);
 
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body("");
+            return ResponseEntity.badRequest().body("Error");
         }
     }
 

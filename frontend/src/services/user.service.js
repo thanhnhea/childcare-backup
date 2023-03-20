@@ -80,6 +80,10 @@ class UserService {
         return axios.get(API_URL + 'account/users/child?id=' + id, { headers: authHeader() });
     }
 
+    getClassFromChild(id) {
+        return axios.get(API_URL + 'account/getClassFromChild?id=' + id, { headers: authHeader() });
+    }
+
     submitChildren(firstName,
         lastName,
         dob,

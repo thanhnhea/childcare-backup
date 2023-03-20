@@ -22,6 +22,7 @@ import BoardAdmin from './Pages/board-admin.component'
 // import BoardModerator from './Pages/board-moderator.component'
 import BoardUser from './Pages/board-user.component'
 import Booking from './Pages/Booking/BookingRequest';
+import Checkout from './Pages/Booking/Checkout/Checkout';
 import AddChild from './Pages/Booking/AddChildren/AddChildren';
 import ManageBoard from './components/ManagerBoard';
 import ChildProfile from './components/ChildProfile';
@@ -70,6 +71,7 @@ function App() {
           <Route path="/child/:id" element={<ChildProfile />} />
           <Route path="/class/:id" element={<ClassDetails />} />
           <Route path="/booking/:id" element={<Booking />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/service/:id" element={<ServiceDetail />} />
           <Route path="/parent" element={<BoardParent />} />
           <Route path="/newclass" element={<CreateClassPage />} />

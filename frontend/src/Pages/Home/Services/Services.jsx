@@ -6,7 +6,7 @@ import './Services.css';
 
 const Services = (props) => {
 
-    const {title, description, link, img} = props.treatment;
+    const {serviceTitle, serviceDetail} = props.service;
     useEffect(() => {
         AOS.init({
                 duration: 2000,
@@ -17,12 +17,8 @@ const Services = (props) => {
         <>
             <Col md={6} lg={6} xl={4} xs={12}>
                 <div className="single-service-box" data-aos="flip-left">
-                    <div className="service-icon">
-                        <img src={img} alt="" />
-                    </div>
-                    <h3>{title}</h3>
-                    <p>{description}</p>
-                    <a href=".#">{link}</a>
+                    <h3>{serviceTitle}</h3>
+                    <p>{serviceDetail}</p>
                 </div>
             </Col>
         </>

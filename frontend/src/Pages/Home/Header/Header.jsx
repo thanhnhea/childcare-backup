@@ -57,10 +57,8 @@ class Header extends Component {
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="ms-auto align-items-center">
                                 <Link to="/home" className='list-item text-decoration-none'>Home</Link>
-                                <Link to="/about" className='list-item text-decoration-none'>About</Link>
                                 <Link to="/service" className='list-item text-decoration-none'>Service</Link>
                                 <Link to="/doctor" className='list-item text-decoration-none'>Doctor</Link>
-                                <Link to="/contact" className='list-item text-decoration-none'>Contact</Link>
                                 {showModeratorBoard && (
                                     <Link to={"/mod"} className="list-item text-decoration-none">
                                         Manager Board
