@@ -1,6 +1,7 @@
 package com.fu.swp.childcare.model;
 
 
+import com.fu.swp.childcare.controller.mapping.PostDTO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,4 +30,10 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    public PostDTO toDTO(){
+        return new PostDTO(this.id.toString(),this.title
+        ,this.content,this.createdDate,this.user.toUserDto(),this.comments);
+    }
+
 }

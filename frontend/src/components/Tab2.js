@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import userService from "../services/user.service";
 
-// const classes = [
+// const listClassDemo = [
 //     { id: 1, name: "Class A", ageRange: "2-4", service: "Full Time", numChildren: 15 },
 //     { id: 2, name: "Class B", ageRange: "4-6", service: "Full Time", numChildren: 10 },
 //     { id: 3, name: "Class C", ageRange: "2-4", service: "Part Time", numChildren: 20 },
@@ -20,30 +20,27 @@ import userService from "../services/user.service";
 const Tab2 = () => {
 
     const [classes, setClasses] = useState([]);
-
-    useEffect(() => {
-        async function fetchData() {
-            const response = await userService.getAllClassesMod();
-            setClasses(response.data);
-        }
-        fetchData();
-    }, []);
-
     const [children, setChildren] = useState([]);
-    useEffect(() => {
-        async function fetchData() {
-            const response2 = await userService.getUnassignedChildMod();
-            setChildren(response2.data);
-        }
-        fetchData();
-    }, []);
-
     const [ageRangeFilter, setAgeRangeFilter] = useState("");
     const [serviceFilter, setServiceFilter] = useState("");
     const [numChildrenFilter, setNumChildrenFilter] = useState("");
     const [filteredClasses, setFilteredClasses] = useState(classes);
-
     const [selectedChild, setSelectedChild] = useState(null);
+
+    useEffect(() => {
+        async function fetchData1() {
+            const response2 = await userService.getUnassignedChildMod();
+            setChildren(response2.data);
+        }
+        fetchData1();
+
+        async function fetchData() {
+            const response = await userService.getAllClassesMod();
+            setClasses(response.data);
+            setFilteredClasses(response.data);
+        }
+        fetchData()
+    }, []);
 
     const handleAgeRangeFilterChange = (e) => {
         setAgeRangeFilter(e.target.value);
@@ -185,15 +182,6 @@ const Tab2 = () => {
                                 {c.status === "UnAssigned" ? (
                                     <div>
                                         <input type="checkbox" onChange={() => handleSelectChild(c)} />
-                                        {
-                                            // <button
-                                            //     className="btn btn-sm btn-primary ms-2"
-                                            //     onClick={() => handleSelectChild(c)}
-                                            // >
-                                            //     Assign
-                                            // </button>
-                                        }
-
                                     </div>
                                 ) : (
                                     <span className="text-muted">N/A</span>
