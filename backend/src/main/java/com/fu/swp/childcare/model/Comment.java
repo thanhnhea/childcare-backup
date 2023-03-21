@@ -15,8 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @Table(name = "comment")
 public class Comment {
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -26,13 +25,12 @@ public class Comment {
     private String commentText;
 
     @Column(nullable = false)
-    private LocalDateTime dateTime;
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
 
-    @OneToOne
-    @JoinColumn(name = "blog_id")
-    private Blog blog;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Post post;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 }
