@@ -21,7 +21,7 @@ const EditServiceDetail = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Send PUT request to server with updated service data
+
 
     };
 

@@ -25,7 +25,7 @@ import Booking from './Pages/Booking/BookingRequest';
 import AddChild from './Pages/Booking/AddChildren/AddChildren';
 import ManageBoard from './components/ManagerBoard';
 import ChildProfile from './components/ChildProfile';
-import BoardParent from './Pages/board-parent.component';
+import BoardParent from './Pages/parent-board/board-parent.component';
 import ForgetPassword from './Pages/ForgetPassword/ForgetPassword';
 import CreateClassPage from './components/managers/CreateClassPage';
 import ServiceDetail from './Pages/Services/servicedetail';
@@ -81,7 +81,7 @@ function App() {
           <Route path='/userTable' element={<UserTable />} />
           <Route path="/services" element={<Services />} />
           <Route path="/editservice/:id" element={<EditServiceDetail />} />
-          <Route path="/newpost" element={<CreatePost />} />
+          <Route path="/post/new" element={<CreatePost />} />
         </Routes>
         <Footer />
       </Router>

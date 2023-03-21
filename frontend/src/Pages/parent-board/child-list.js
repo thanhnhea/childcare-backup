@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import userService from "../services/user.service";
-import ChildCard from "./ClassChildren/Children/ChildCard";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import userService from "../../services/user.service";
 
-const BoardParent = () => {
+const ChildlList = () => {
 
     const [children, setChildren] = useState([]);
 
@@ -15,6 +15,7 @@ const BoardParent = () => {
         }
         fetchData();
     }, [])
+
 
     return (
         <Container className="mb-3">
@@ -40,6 +41,7 @@ const BoardParent = () => {
                 </Col>
             </Row>
         </Container>
+
     );
-};
-export default BoardParent;
+}
+export default ChildlList;
