@@ -33,4 +33,17 @@ public class ServiceDto {
         this.serviceDetail = serviceDetail;
         this.category = category;
     }
+
+    @Override
+    public String toString() {
+        return "ServiceDto{" +
+                "id=" + id +
+                ", serviceTitle='" + serviceTitle + '\'' +
+                ", createdDate=" + createdDate +
+                ", updatedDate=" + updatedDate +
+                ", servicePrice='" + servicePrice + '\'' +
+                ", serviceDetail='" + serviceDetail + '\'' +
+                ", category='" + category + '\'' +
+                '}';
+    }
 }

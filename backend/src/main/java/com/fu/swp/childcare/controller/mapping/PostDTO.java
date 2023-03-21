@@ -7,15 +7,17 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
+
 public class PostDTO {
-    private String id;
-    private String title;
-    private String content;
-    private LocalDateTime createdDate;
-    private UserDto user;
-    private List<Comment> comments;
-}
+
+        private String id;
+        private String title;
+        private String content;
+        private LocalDateTime createdDate;
+        private UserDto user;
+        private List<Comment> comments;
+    }
+

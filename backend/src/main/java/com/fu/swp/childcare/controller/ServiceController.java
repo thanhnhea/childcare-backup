@@ -6,6 +6,7 @@ import com.fu.swp.childcare.repositories.ServiceRepository;
 import com.fu.swp.childcare.services.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class ServiceController {
             services = registrationService.getAllServices();
             services.forEach(System.out::println);
         } catch (Exception e) {
+            e.printStackTrace();
             ResponseEntity.badRequest().body(e.getMessage());
         }
         return services.isEmpty() ? ResponseEntity.badRequest().body("There is no service!") : ResponseEntity.ok(services);

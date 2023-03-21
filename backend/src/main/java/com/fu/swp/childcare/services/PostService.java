@@ -37,6 +37,4 @@ public class PostService {
         Post p = findById(request.getId());
         return postRepository.save(p);
     }
-
-
 }

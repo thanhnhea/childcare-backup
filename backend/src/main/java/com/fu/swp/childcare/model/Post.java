@@ -33,7 +33,7 @@ public class Post {
 
     public PostDTO toDTO(){
         return new PostDTO(this.id.toString(),this.title
-        ,this.content,this.createdDate,this.user.toUserDto(),this.comments);
+                ,this.content,this.createdDate,this.user.toUserDto(),this.comments);
     }
 
 }
