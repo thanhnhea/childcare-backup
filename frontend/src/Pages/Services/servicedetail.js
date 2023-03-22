@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import authService from "../../services/auth.service";
 import userService from "../../services/user.service";
 import { Link } from 'react-router-dom';
-import { Col, Container, Row } from "react-bootstrap";
 
 const ServiceDetail = () => {
 
@@ -12,6 +11,7 @@ const ServiceDetail = () => {
     const [service, setService] = useState({});
 
     const [isUser, setIsUser] = useState(false);
+    const [isMod, setIsMod] = useState(false);
     const [currentUser, setCurrentUser] = useState();
 
     useEffect(() => {
@@ -23,35 +23,35 @@ const ServiceDetail = () => {
 
         const user = authService.getCurrentUser();
         if (user) {
-            setIsUser(user.roles.includes("ROLE_USER"));
             setCurrentUser(user)
+            setIsUser(user.roles.includes("ROLE_USER"));
+            setIsMod(user.roles.includes("ROLE_MANAGER"))
         }
     }, []);
 
     return (
-        <Container >
-            <Row className="text-left" >
-                <h1 className="mt-5 mb-5 text-lg font-medium">{service.serviceTitle}</h1></Row>
-            <Row>
-                <Col sm={{ span: 6, offset: 0 }}>
-                    <p style={{ float: 'left' }}>{service.serviceDetail}</p>
-                </Col>
-                <Col>
-                    <div className="mt-2">
-                        <p className="font-medium">Price: ${service.servicePrice}</p>
-                    </div>
-                    <div className="mt-2">
-                        <p className="font-medium">Created Date: {service.createdDate}</p>
-                    </div>
+        <div className="p-4" id={service.id}>
+            <h3 className="text-lg font-medium">{service.serviceTitle}</h3>
+            <p className="text-gray-600">{service.serviceDetail}</p>
+            <div className="mt-2">
+                <p className="font-medium">Price:</p>
+                <p className="ml-2">${service.servicePrice}</p>
+            </div>
+            <div className="mt-2">
+                <p className="font-medium">Created Date:</p>
+                <p className="ml-2">{service.createdDate}</p>
+            </div>
 
-                    <div className="mb-5">
-                        {isUser && (
-                            <Link to={`/booking/${service.id}`} className="link-button">Book this Service</Link>
-                        )}
-                    </div>
-                </Col>
-            </Row>
-        </Container>
+            <div>
+                {isUser && (
+                    <Link to={`/booking/${service.id}`} className="link-button">Book this Service</Link>
+                )}
+
+                {isMod && (
+                    <Link to={`/editservice/${service.id}`} className="link-button">Edit Service</Link>
+                )}
+            </div>
+        </div>
     );
 };
 

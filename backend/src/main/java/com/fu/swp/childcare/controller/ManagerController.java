@@ -110,7 +110,7 @@ public class ManagerController {
         }
     }
 
-    @PostMapping("/newClass")
+    @PostMapping("/class/new")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     public ResponseEntity<?> createNewClass(@RequestBody @Valid ClassDetail classDetail) {
         try {
@@ -136,6 +136,42 @@ public class ManagerController {
             return ResponseEntity.ok(classDetail);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/class/edit")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> editClass(@RequestBody @Valid ClassDetail classDetail){
+        try{
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            Classes clas = classService.getClassById(classDetail.getId());
+            if(!classDetail.getClassName().isEmpty()){
+                clas.setClassName(classDetail.getClassName());
+            }
+            if(classDetail.getStartDate() != null ){
+                LocalDate sdate = LocalDate.parse(classDetail.getStartDate(), formatter);
+                clas.setStartDate(sdate);
+
+            }
+            if(classDetail.getEndDate() != null){
+                LocalDate edate = LocalDate.parse(classDetail.getEndDate(), formatter);
+                clas.setEndDate(edate);
+            }
+            if(classDetail.getAgeRange() != null){
+                clas.setAgeRange(clas.getAgeRange());
+            }
+            if(classDetail.getDescription() != null){
+                clas.setDescription(clas.getDescription());
+            }
+            if(classDetail.getService() != null){
+                Service s = serviceRepository.findById(Long.valueOf(classDetail.getService())).orElseThrow();
+                clas.setService(s);
+            }
+            classService.save(clas);
+            return ResponseEntity.ok(classDetail);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -199,7 +235,7 @@ public class ManagerController {
                 : ResponseEntity.ok(children.stream().map(ChildInformation::toChildrenInfoDto).collect(Collectors.toList()));
     }
 
-    @PostMapping("/newService")
+    @PostMapping("/services/new")
     @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<?> newService(@RequestBody ServiceRequest request) {
         if (request == null) {
@@ -289,4 +325,6 @@ public class ManagerController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+
 }

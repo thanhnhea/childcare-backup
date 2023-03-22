@@ -59,73 +59,79 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        System.out.println(loginRequest);
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+       try{
+           Authentication authentication = authenticationManager.authenticate(
+                   new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+           SecurityContextHolder.getContext().setAuthentication(authentication);
+           String jwt = jwtUtils.generateJwtToken(authentication);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
+           UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+           List<String> roles = userDetails.getAuthorities().stream()
+                   .map(GrantedAuthority::getAuthority)
+                   .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                roles));
+           return ResponseEntity.ok(new JwtResponse(jwt,
+                   userDetails.getId(),
+                   userDetails.getUsername(),
+                   userDetails.getEmail(),
+                   roles));
+       }catch (Exception e){
+           return ResponseEntity.badRequest().body(e.getMessage());
+       }
     }
 
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
-        System.out.println("payload: " + registerRequest.toString());
-        if (userRepository.existsByUsername(registerRequest.getUsername())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
-        }
-        if (userRepository.existsByEmail(registerRequest.getEmail())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
-        }
-
-        Set<Role> roles = new HashSet<>();
-        String requestedRole = registerRequest.getRole();
-        Role userRole;
-        if (requestedRole == null) {
-            userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        } else {
-            userRole = roleRepository.findByName(ERole.valueOf(registerRequest.getRole()))
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        }
-        if (!userRole.getName().equals(ERole.ROLE_USER)) {
-            try {
-                emailService.sendHtmlMessage(registerRequest.getEmail(),
-                        "create Account successful", "Dear mr " +
-                                registerRequest.getFirstName() + ",\n" +
-                                "your internal account of children_care have been created," +
-                                "\nplease login with username:  " +
-                                registerRequest.getUsername() +
-                                " and password is " +
-                                registerRequest.getPassword());
-            } catch (MessagingException e) {
-                e.printStackTrace();
+        try{
+            if (userRepository.existsByUsername(registerRequest.getUsername())) {
+                return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
             }
+            if (userRepository.existsByEmail(registerRequest.getEmail())) {
+                return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+            }
+
+            Set<Role> roles = new HashSet<>();
+            String requestedRole = registerRequest.getRole();
+            Role userRole;
+            if (requestedRole == null) {
+                userRole = roleRepository.findByName(ERole.ROLE_USER)
+                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            } else {
+                userRole = roleRepository.findByName(ERole.valueOf(registerRequest.getRole()))
+                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            }
+            if (!userRole.getName().equals(ERole.ROLE_USER)) {
+                try {
+                    emailService.sendHtmlMessage(registerRequest.getEmail(),
+                            "create Account successful", "Dear mr " +
+                                    registerRequest.getFirstName() + ",\n" +
+                                    "your internal account of children_care have been created," +
+                                    "\nplease login with username:  " +
+                                    registerRequest.getUsername() +
+                                    " and password is " +
+                                    registerRequest.getPassword());
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+            }
+            roles.add(userRole);
+            User user = new User(registerRequest.getUsername(),
+                    registerRequest.getEmail(),
+                    registerRequest.getFirstName(),
+                    registerRequest.getLastName(),
+                    registerRequest.getPhone(),
+                    registerRequest.getAddress(),
+                    encoder.encode(registerRequest.getPassword()),
+                    roles
+            );
+            userRepository.save(user);
+            System.out.println("saved");
+            return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        roles.add(userRole);
-        User user = new User(registerRequest.getUsername(),
-                registerRequest.getEmail(),
-                registerRequest.getFirstName(),
-                registerRequest.getLastName(),
-                registerRequest.getPhone(),
-                registerRequest.getAddress(),
-                encoder.encode(registerRequest.getPassword()),
-                roles
-        );
-        userRepository.save(user);
-        System.out.println("saved");
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
 

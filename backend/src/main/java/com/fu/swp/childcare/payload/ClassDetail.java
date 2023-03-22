@@ -21,6 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassDetail {
+    private String id;
     @NotNull
     @Size(min = 2, max = 20)
     private String className;
