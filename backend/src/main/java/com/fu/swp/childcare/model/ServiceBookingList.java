@@ -41,7 +41,21 @@ public class ServiceBookingList {
     public BookingServiceListResponse toBookingServiceListResponse() {
         return new BookingServiceListResponse(this.id.toString(), this.serviceId.getServiceTitle(), this.customer.getUsername(), this.childID.getLastName(), this.createDate, this.status);
     }
+
+    @Override
+    public String toString() {
+        return "ServiceBookingList{" +
+                "id=" + id +
+                ", customer=" + customer +
+                ", serviceId=" + serviceId +
+                ", childID=" + childID +
+                ", mod=" + mod +
+                ", status='" + status + '\'' +
+                ", createDate=" + createDate +
+                '}';
+    }
+
     public static final String PENDING = "Pending";
-    public static final String APPROVED = "Approve";
+    public static final String APPROVED = "Approved";
     public static final String DENIED = "Denied";
 }
