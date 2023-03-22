@@ -1,22 +1,36 @@
 package com.fu.swp.childcare.services;
 
+import com.fu.swp.childcare.bucket.BucketName;
 import com.fu.swp.childcare.controller.mapping.PostDTO;
 import com.fu.swp.childcare.exception.ResourceNotFoundException;
+import com.fu.swp.childcare.files.FileStore;
 import com.fu.swp.childcare.model.Post;
+import com.fu.swp.childcare.model.User;
 import com.fu.swp.childcare.payload.PostRequest;
 import com.fu.swp.childcare.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.*;
+
+import static org.springframework.http.MediaType.*;
 
 @Service
 public class PostService {
 
-    @Autowired
-    PostRepository postRepository;
 
+    private final PostRepository postRepository;
+
+    private final FileStore fileStore;
+
+    @Autowired
+    public PostService(PostRepository postRepository, FileStore fileStore) {
+        this.postRepository = postRepository;
+        this.fileStore = fileStore;
+    }
 
     /**
      *
@@ -25,16 +39,45 @@ public class PostService {
      * grab metadata from file if any
      * store image in s3 and update database with s3 link
      *
-     * @param postId
-     * @param file
-     * @return
+     * @param title
+     * @param content
+     *
      */
-    public Post createPost(String postId, MultipartFile file) {
-        Post createPost = new Post();
-//        createPost.setTitle(request.getTitle());
-//        createPost.setContent(request.getContent());
-        createPost.setCreatedDate(LocalDateTime.now());
-        return postRepository.save(createPost);
+    public void savePost(String title, String content, MultipartFile file , User u) {
+        Post post = new Post();
+        post.setTitle(title);
+        post.setContent(content);
+        post.setCreatedDate(LocalDateTime.now());
+        post.setUser(u);
+
+        isFileEmpty(file.isEmpty(), "Cannot upload empty file ");
+//        isFileEmpty(!Arrays.asList(IMAGE_JPEG.get, IMAGE_PNG.getSubtype(), IMAGE_GIF.getSubtype()).contains(file.getContentType()), "File must be an image " + file.getContentType());
+        //Grab metadata from file
+        Map<String, String> metaData = extractMetadata(file);
+
+        //set file name and path in s3 bucket
+        String path = String.format("%s/%s" , BucketName.PROFILE_IMAGE.getBucketName() , u.getUsername());
+        String fileName = String.format("%s-%s" , file.getOriginalFilename() , UUID.randomUUID());
+        try {
+            fileStore.save(path,fileName,Optional.of(metaData),file.getInputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        post.setImageLink(fileName);
+        postRepository.save(post);
+    }
+
+    private Map<String, String> extractMetadata(MultipartFile file) {
+        Map<String,String> metaData = new HashMap<>( );
+        metaData.put("Content-Type", file.getContentType()) ;
+        metaData.put("Content-Length" , String.valueOf(file.getSize())) ;
+        return metaData;
+    }
+
+    private void isFileEmpty(boolean file, String Cannot_upload_empty_file_) {
+        if(file){
+            throw new IllegalStateException(Cannot_upload_empty_file_);
+        }
     }
 
     public Post findById(String id){
@@ -49,5 +92,14 @@ public class PostService {
     public Post editPost(PostRequest request){
         Post p = findById(request.getId());
         return postRepository.save(p);
+    }
+
+    public byte[] downloadPostImage(User u, Post post){
+        String fullPath = String.format("/%s/%s",BucketName.PROFILE_IMAGE.getBucketName() , u.getUsername());
+        if(!post.getImageLink().isEmpty()){
+            return fileStore.download(fullPath, post.getImageLink());
+        }else{
+            return new byte[0];
+        }
     }
 }

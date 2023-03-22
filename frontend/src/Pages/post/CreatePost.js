@@ -167,7 +167,8 @@ const CreatePost = () => {
                 setFiles(acceptedFiles.map(file => Object.assign(file, {
                     preview: URL.createObjectURL(file)
                 })));
-            }
+            },
+            maxSize: 10485760
         });
 
     const style = useMemo(() => ({

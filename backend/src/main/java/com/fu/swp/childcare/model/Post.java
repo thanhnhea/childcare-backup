@@ -18,7 +18,6 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
     private String title;
     private String content;
     private LocalDateTime createdDate;
