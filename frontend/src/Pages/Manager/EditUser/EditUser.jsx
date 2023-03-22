@@ -55,19 +55,19 @@ const EditUser = () => {
 
             if (!firstName) {
                 errors.firstName = '';
-            } else if (!/^[a-zA-Z0-9]+$/.test(firstName)) {
+            } else if (!/^[a-zA-Z0-9\s]+$/.test(firstName)) {
                 errors.firstName = 'Name can not contain special character.';
             }
 
             if (!lastName) {
                 errors.lastName = '';
-            } else if (!/^[a-zA-Z0-9]+$/.test(lastName)) {
+            } else if (!/^[a-zA-Z0-9\s]+$/.test(lastName)) {
                 errors.lastName = 'Name can not contain special character.';
             }
 
             if (!username) {
                 errors.username = '';
-            } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+            } else if (!/^[a-zA-Z0-9\s]+$/.test(username)) {
                 errors.username = 'Name can not contain special character.';
             }
 
