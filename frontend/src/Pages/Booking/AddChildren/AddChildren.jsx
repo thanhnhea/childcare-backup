@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import userService from '../../../services/user.service';
 import './AddChildren.css';
@@ -14,6 +14,7 @@ const AddChild = () => {
         note: '',
     });
 
+
     const handleChange = (e) => {
         setChildData({
             ...childData,
@@ -28,7 +29,48 @@ const AddChild = () => {
         });
     };
 
+    const [errors, setErrors] = useState({});
 
+  
+    useEffect(() => {
+        const validateForm = () => {
+          let errors = {};
+    
+          if (!firstName) {
+            errors.firstName = '';
+          } else if (!/^[a-zA-Z0-9]+$/.test(firstName)) {
+            errors.firstName = 'Name can not contain special character.';
+          }
+    
+          if (!lastName) {
+            errors.lastName = '';
+          } else if (!/^[a-zA-Z0-9]+$/.test(lastName)) {
+            errors.lastName = 'Name can not contain special character.';
+          }   
+    
+          if (!interest) {
+            errors.interest = '';
+          } else if (!/^[a-zA-Z0-9\s]+$/.test(interest)) {
+            errors.interest = 'Interest can not contain special character.';
+          }
+
+          if (!needs) {
+            errors.needs = '';
+          } else if (!/^[a-zA-Z0-9\s]+$/.test(needs)) {
+            errors.needs = 'Needs can not contain special character.';
+          }
+
+          if (!note) {
+            errors.note = '';
+          } else if (!/^[a-zA-Z0-9\s]+$/.test(note)) {
+            errors.note = 'Needs can not contain special character.';
+          }
+    
+          setErrors(errors);
+        };
+    
+        validateForm();
+      }, [childData]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -85,7 +127,8 @@ const AddChild = () => {
                         <form onSubmit={handleSubmit}>
                             <div className='row mb-4'>
                                 <div className='col'>
-                                    <div className='form-outline'>
+                                    <div className='form-outline'><br/>
+                                    {errors.firstName && <span style={{color:"red"}}>{errors.firstName}</span>}
                                         <input
                                             type='text'
                                             id='form6Example1'
@@ -99,7 +142,8 @@ const AddChild = () => {
                                     </div>
                                 </div>
                                 <div className='col'>
-                                    <div className='form-outline'>
+                                    <div className='form-outline'><br/>
+                                    {errors.lastName && <span style={{color:"red"}}>{errors.lastName}</span>}
                                         <input
                                             type='text'
                                             id='form6Example2'
@@ -118,7 +162,8 @@ const AddChild = () => {
                                 <div className='form-outline mb-4'>
                                     <label className="mb-1">
                                         Please give us some note about your child*
-                                    </label>
+                                    </label><br/>
+                                    {errors.note && <span style={{color:"red"}}>{errors.note}</span>}
                                     <textarea
                                         className='form-control'
                                         rows='4'
@@ -136,6 +181,7 @@ const AddChild = () => {
                                         <div className='col'>
                                             <div className='form-outline'>
                                                 <label className="mb-1">Date of Birth*</label>
+                                                
                                                 <input
                                                     type='date'
                                                     id='form6Example1'
@@ -189,7 +235,8 @@ const AddChild = () => {
                                     <div className='form-outline mb-4'>
                                         <label className="mb-1">
                                             Please tell us about your child's interests.*
-                                        </label>
+                                        </label><br/>
+                                        {errors.interest && <span style={{color:"red"}}>{errors.interest}</span>}
                                         <textarea
                                             className='form-control'
                                             rows='4'
@@ -205,7 +252,8 @@ const AddChild = () => {
                                         <label htmlFor='' className="mb-1">
                                             Please share any routines or schedules you want to share
                                             with your caregiver.
-                                        </label>
+                                        </label><br/>
+                                        {errors.needs && <span style={{color:"red"}}>{errors.needs}</span>}
                                         <textarea
                                             className='form-control'
                                             rows='4'

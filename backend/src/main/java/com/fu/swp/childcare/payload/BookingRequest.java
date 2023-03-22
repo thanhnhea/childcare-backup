@@ -11,4 +11,6 @@ public class BookingRequest {
     String id;
     @NotNull
     String childId;
+    @NotNull
+    Boolean isPaid;
 }

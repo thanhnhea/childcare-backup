@@ -8,6 +8,7 @@ import com.fu.swp.childcare.payload.response.BookingServiceListResponse;
 import com.fu.swp.childcare.repositories.ServiceBookingRepository;
 import com.fu.swp.childcare.repositories.ServiceRepository;
 import com.fu.swp.childcare.repositories.UserRepository;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class BookingListService {
     ServiceBookingRepository serviceBookingRepository;
 
     @Autowired
-    ServiceRepository serviceRepository ;
+    ServiceRepository serviceRepository;
 
     @Autowired
     ChildrenService childrenService;
@@ -30,23 +31,48 @@ public class BookingListService {
     @Autowired
     UserService userService;
 
-    public List<ServiceBookingList> getAll(){
+    @Autowired
+    MailService emailService;
+
+    public List<ServiceBookingList> getAll() {
         return serviceBookingRepository.findAll();
     }
 
-    public void save(BookingRequest bookingRequest , String username){
+    public void save(BookingRequest bookingRequest, String username) {
         User u = userService.getUserDetail(username);
         ServiceBookingList bookingList = new ServiceBookingList();
         com.fu.swp.childcare.model.Service s = serviceRepository.findById(Long.valueOf(bookingRequest.getId())).orElseThrow();
         bookingList.setServiceId(s);
         ChildInformation childInformation = childrenService.getChildById(bookingRequest.getChildId());
+        Boolean isPaid = bookingRequest.getIsPaid();
+        String status = isPaid ? ServiceBookingList.APPROVED : ServiceBookingList.PENDING;
         bookingList.setChildID(childInformation);
+        bookingList.setStatus(status);
         bookingList.setCustomer(u);
         bookingList.setCreateDate(LocalDate.now());
+        System.out.println(bookingList);
         serviceBookingRepository.save(bookingList);
+        try {
+            if (isPaid) {
+                String emailMessage =
+                        "Service " + s.getServiceTitle() +
+                                " has booked successful\n" +
+                                " at " + bookingList.getCreateDate() + "\n" +
+                                " for child " + childInformation.getFirstName() + " " + childInformation.getLastName() + "\n" +
+                                " with service price is " + s.getServicePrice() + "\n" +
+                                " status :" + status;
+                emailService.sendHtmlMessage(
+                        u.getEmail(),
+                        "Service booking successfully!",emailMessage
+                );
+                System.out.println(emailMessage);
+            }
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 
-    public ServiceBookingList getServiceBookingList(String Id){
+    public ServiceBookingList getServiceBookingList(String Id) {
         return serviceBookingRepository.findById(Id).orElseThrow();
     }
 

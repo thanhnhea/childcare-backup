@@ -284,9 +284,19 @@ public class ManagerController {
         try {
             System.out.println(booking.getId());
             ServiceBookingList serviceBookingList = bookingListService.getServiceBookingList(booking.getId());
-            serviceBookingList.setStatus("Approved");
+            serviceBookingList.setStatus(ServiceBookingList.APPROVED);
             bookingListService.save(serviceBookingList);
-            return ResponseEntity.ok().body("Approved");
+            try {
+                emailService.sendHtmlMessage(serviceBookingList.getCustomer().getEmail(), "Service Booking successfully!",
+                        "Service " + serviceBookingList.getServiceId().getServiceTitle() + " booking have been approved"+
+                                " has booked successful\n" +
+                                " at " + serviceBookingList.getCreateDate() + "\n" +
+                                " for child " + serviceBookingList.getChildID().getFirstName() + " " + serviceBookingList.getChildID().getLastName() + "\n" +
+                                "with service price is " + serviceBookingList.getServiceId().getServicePrice());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return ResponseEntity.ok().body(ServiceBookingList.APPROVED);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -297,9 +307,9 @@ public class ManagerController {
     public ResponseEntity<?> denyBooking(@RequestBody BookingServiceListResponse booking) {
         try {
             ServiceBookingList serviceBookingList = bookingListService.getServiceBookingList(booking.getId());
-            serviceBookingList.setStatus("Denied");
+            serviceBookingList.setStatus(ServiceBookingList.DENIED);
             bookingListService.save(serviceBookingList);
-            return ResponseEntity.ok().body("Denied");
+            return ResponseEntity.ok().body(ServiceBookingList.DENIED);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
