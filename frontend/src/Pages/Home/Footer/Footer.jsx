@@ -41,11 +41,11 @@ const Footer = () => {
                                 <h2>Services</h2>
                             </div>
                             <div className="widget-content">
-                                <NavLink className="footer-link">Sevice 1</NavLink>
-                                <NavLink className="footer-link">Sevice 2</NavLink>
-                                <NavLink className="footer-link">Sevice 3</NavLink>
-                                <NavLink className="footer-link">Sevice 4</NavLink>
-                                <NavLink className="footer-link">Sevice 5</NavLink>
+                                <NavLink className="footer-link">One Time</NavLink>
+                                <NavLink className="footer-link">Last Minute</NavLink>
+                                <NavLink className="footer-link">Occasional</NavLink>
+                                <NavLink className="footer-link">Part-Time</NavLink>
+                                <NavLink className="footer-link">Full-Time</NavLink>
                             </div>
                         </div>
                     </Col>
