@@ -3,7 +3,6 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import userService from '../../services/user.service';
-import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import './BookingRequest.css';
 
@@ -27,34 +26,6 @@ const Booking = () => {
     }, [])
 
 
-    // const handleSubmit = (e) => {
-    //     confirmAlert({
-    //         title: 'Confirm to submit',
-    //         message: 'Are you sure to do this?',
-    //         buttons: [
-    //             {
-    //                 label: 'Yes',
-    //                 onClick: () => {
-    //                     userService.postSubmitService(id, e.id)
-    //                         .then(
-    //                             response => {
-    //                                 alert("Booking Recorded");
-    //                                 console.log(response);
-    //                             },
-    //                             error => {
-    //                                 alert("Booking Unsuccessfully" + error)
-    //                                 console.error(error);
-    //                             }
-    //                         );
-    //                 }
-    //             },
-    //             {
-    //                 label: 'No',
-    //                 onClick: () => alert('Click No')
-    //             }
-    //         ]
-    //     });
-    // }
 
     const handleSubmit = (child) => {
         navigate("/checkout", {

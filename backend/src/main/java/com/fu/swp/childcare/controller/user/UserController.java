@@ -189,6 +189,7 @@ public class UserController {
                 .getPrincipal();
         String username = userDetails.getUsername();
         try {
+            System.out.println("Request: "+ request.getIsPaid().toString());
             bookingListService.save(request, username);
             return ResponseEntity.ok().body("Booking Recorded");
         } catch (Exception e) {
