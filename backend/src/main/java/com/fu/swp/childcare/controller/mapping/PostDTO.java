@@ -18,6 +18,7 @@ public class PostDTO {
         private String content;
         private LocalDateTime createdDate;
         private UserDto user;
+        private String imageLink;
         private List<Comment> comments;
     }
 

@@ -8,22 +8,28 @@ import com.fu.swp.childcare.services.PostService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("api/post")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class PostController {
     @Autowired
     PostService postService;
 
-    @PostMapping("/create")
+    @PostMapping(
+            path = "/create" ,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE ,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('USER') or hasRole('ROLE_MANAGER') or hasRole('ADMIN')")
-    public ResponseEntity<?> createPost(@RequestBody PostRequest request) {
+    public ResponseEntity<?> createPost(@RequestParam("file") MultipartFile file) {
         try{
-            Post createdPost = postService.createPost(request);
-            return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
+            System.out.println(file.getOriginalFilename());
+            return new ResponseEntity<>(file.getOriginalFilename(), HttpStatus.CREATED);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -7,6 +7,7 @@ import com.fu.swp.childcare.payload.PostRequest;
 import com.fu.swp.childcare.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -16,10 +17,22 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
-    public Post createPost(PostRequest request) {
+
+    /**
+     *
+     * check image not empty
+     * if file is an image
+     * grab metadata from file if any
+     * store image in s3 and update database with s3 link
+     *
+     * @param postId
+     * @param file
+     * @return
+     */
+    public Post createPost(String postId, MultipartFile file) {
         Post createPost = new Post();
-        createPost.setTitle(request.getTitle());
-        createPost.setContent(request.getContent());
+//        createPost.setTitle(request.getTitle());
+//        createPost.setContent(request.getContent());
         createPost.setCreatedDate(LocalDateTime.now());
         return postRepository.save(createPost);
     }

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import userService from '../../services/user.service';
 import { useDropzone } from 'react-dropzone';
 import { useMemo } from 'react';
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
 const baseStyle = {
     flex: 1,
@@ -88,6 +89,7 @@ function Previews(props) {
         isDragAccept,
         isDragReject
     ]);
+
     const thumbs = files.map(file => (
         <div style={thumb} key={file.name}>
             <div style={thumbInner}>
@@ -110,7 +112,8 @@ function Previews(props) {
         <section className="container">
             <div {...getRootProps({ style })}>
                 <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
+                <p>Drag 'n' drop your image here, or click to select files</p>
+                <p>only PNG, JPG, GIF is allowed</p>
             </div>
             <aside style={thumbsContainer}>
                 {thumbs}
@@ -151,34 +154,70 @@ const img = {
 const CreatePost = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [selectedImage, setSelectedImage] = useState();
-    const [response, setResponse] = useState();
+    const { post, handleSubmit } = useForm();
+    const [files, setFiles] = useState([]);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const formData = new FormData();
-        formData.append("image", selectedImage);
-        try {
-            async function fetchData() {
-                const fetchData1 = await userService.postCreatePost(formData);
-                setResponse(fetchData1.data);
+    const { getRootProps, getInputProps, isFocused,
+        isDragAccept,
+        isDragReject } = useDropzone({
+            accept: {
+                'image/*': []
+            },
+            onDrop: acceptedFiles => {
+                setFiles(acceptedFiles.map(file => Object.assign(file, {
+                    preview: URL.createObjectURL(file)
+                })));
             }
-            fetchData();
-        } catch (error) {
-            console.error(error);
-        }
+        });
+
+    const style = useMemo(() => ({
+        ...baseStyle,
+        ...(isFocused ? focusedStyle : {}),
+        ...(isDragAccept ? acceptStyle : {}),
+        ...(isDragReject ? rejectStyle : {})
+    }), [
+        isFocused,
+        isDragAccept,
+        isDragReject
+    ]);
+
+    const thumbs = files.map(file => (
+        <div style={thumb} key={file.name}>
+            <div style={thumbInner}>
+                <img
+                    src={file.preview}
+                    style={img}
+                    // Revoke data uri after image is loaded
+                    onLoad={() => { URL.revokeObjectURL(file.preview) }}
+                />
+            </div>
+        </div>
+    ));
+
+    useEffect(() => {
+        // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
+        return () => files.forEach(file => URL.revokeObjectURL(file.preview));
+    }, []);
+
+    const { setValue } = useForm();
+
+    const onSubmit = (data) => {
+        console.log(data);
     };
+
     return (
         <div className="container mb-5 mt-5">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
                     <label htmlFor="title">Title</label>
                     <input
                         type="text"
                         id="title"
                         value={title}
+                        name='title'
                         onChange={(event) => setTitle(event.target.value)}
                         className="form-control"
+                        ref={post}
                     />
                 </div>
                 <div className="form-group">
@@ -186,15 +225,23 @@ const CreatePost = () => {
                     <textarea
                         id="content"
                         value={content}
+                        name='content'
                         onChange={(event) => setContent(event.target.value)}
                         className="form-control"
+                        ref={post}
                     />
                 </div>
-
-
-                <div className="form-group mt-5">
-
-                    <Previews />
+                <div className='form-group mt-5'>
+                    <section className="container">
+                        <div {...getRootProps({ style })}>
+                            <input {...getInputProps()} name='image' ref={post} />
+                            <p>Drag 'n' drop your image here, or click to select files</p>
+                            <p>only PNG, JPG, GIF is allowed</p>
+                        </div>
+                        <aside style={thumbsContainer}>
+                            {thumbs}
+                        </aside>
+                    </section>
                 </div>
                 <button type="submit" className="btn btn-primary mt-5">Create Post</button>
             </form>

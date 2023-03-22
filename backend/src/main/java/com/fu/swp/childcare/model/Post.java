@@ -20,11 +20,11 @@ public class Post {
     private Long id;
 
     private String title;
-
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 
+    private String imageLink; //s3 key
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
@@ -33,7 +33,7 @@ public class Post {
 
     public PostDTO toDTO(){
         return new PostDTO(this.id.toString(),this.title
-                ,this.content,this.createdDate,this.user.toUserDto(),this.comments);
+                ,this.content,this.createdDate,this.user.toUserDto(),this.imageLink,this.comments);
     }
 
 }
