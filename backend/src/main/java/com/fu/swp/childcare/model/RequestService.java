@@ -4,6 +4,4 @@ import jakarta.persistence.ManyToMany;
 
 public class RequestService {
 
-    @ManyToMany
-    Service service;
 }

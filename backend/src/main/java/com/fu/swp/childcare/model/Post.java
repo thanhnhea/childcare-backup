@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -19,6 +21,8 @@ public class Post {
     @Column(name = "id", nullable = false)
     private Long id;
     private String title;
+
+    @Column(length = 2000)
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
@@ -32,7 +36,7 @@ public class Post {
 
     public PostDTO toDTO(){
         return new PostDTO(this.id.toString(),this.title
-                ,this.content,this.createdDate,this.user.toUserDto(),this.imageLink,this.comments);
+                ,this.content,this.createdDate,this.user.toUserDto(),this.imageLink,this.comments.stream().map(Comment::toDTO).collect(Collectors.toList()));
     }
 
 }

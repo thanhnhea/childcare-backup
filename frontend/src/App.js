@@ -36,9 +36,10 @@ import AddUser from './Pages/Manager/AddUser/AddUser';
 import UserTable from './Pages/Manager/UserDetail/UserDetail';
 import Services from './Pages/Services/Banner/Services';
 import EditServiceDetail from './Pages/Services/EditServiceDetail';
-import CreatePost from './Pages/post/CreatePost';
+import Post from './Pages/post/Post';
 import NewPost from './Pages/post/NewPost';
-
+import PostList from './Pages/post/PostList';
+import PostView from './Pages/post/PostView';
 
 function App() {
   return (
@@ -84,7 +85,9 @@ function App() {
           <Route path='/userTable' element={<UserTable />} />
           <Route path="/services" element={<Services />} />
           <Route path="/editservice/:id" element={<EditServiceDetail />} />
-          <Route path="/post/new" element={<NewPost />} />
+          <Route path="/post/submit" element={<NewPost />} />
+          <Route path="/post/:id" element={<PostView />} />
+          <Route path="/posts" element={<PostList />} />
         </Routes>
         <Footer />
       </Router>
