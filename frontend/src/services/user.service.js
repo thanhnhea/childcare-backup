@@ -121,9 +121,16 @@ class UserService {
     }
 
     getPostDetails(id) {
-        return axios.get(API_URL + 'api/post/view')
+        return axios.get(API_URL + 'api/post?id=' + id, { headers: authHeader() });
     }
 
+    getPostImage(id) {
+        return axios.get(API_URL + 'api/post/image?id=' + id, { headers: authHeader() });
+    }
+
+    getAllPost() {
+        return axios.get(API_URL + 'api/post/all', { headers: authHeader() });
+    }
 }
 
 export default new UserService();

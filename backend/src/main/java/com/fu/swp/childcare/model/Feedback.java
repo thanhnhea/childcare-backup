@@ -33,8 +33,4 @@ public class Feedback {
     @Column(nullable = false)
     private String reviewText;
 
-    @ManyToOne
-    @JoinColumn(name = "booking_id")
-    private Booking booking;
-
 }

@@ -38,41 +38,53 @@ public class PostController {
 
     @PostMapping("/create")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> createPost(  @RequestParam("title") String title,
-                                          @RequestParam("content") String content,
-                                          @RequestParam(required = false) MultipartFile images) {
-        try{
+    public ResponseEntity<?> createPost(@RequestParam("title") String title,
+                                        @RequestParam("content") String content,
+                                        @RequestParam(required = false) MultipartFile images) {
+        try {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
             User currentUser = userService.getUserDetail(userDetails.getUsername());
 
-            postService.savePost(title,content,images,currentUser);
+            postService.savePost(title, content, images, currentUser);
 
             return new ResponseEntity<>("Post created", HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    @GetMapping()
-    public ResponseEntity<?> viewPost(@RequestParam String id){
-        try{
+
+    @GetMapping("")
+    public ResponseEntity<?> viewPost(@RequestParam String id) {
+        try {
+            System.out.println("post detail controller here");
             PostDTO postDTO = postService.getPostDetail(id);
             return ResponseEntity.ok().body(postDTO);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @PostMapping("/edit")
     @PreAuthorize("hasRole('USER') or hasRole('ROLE_MANAGER') or hasRole('ADMIN')")
-    public ResponseEntity<?> editPost(@RequestBody PostRequest request){
-        try{
+    public ResponseEntity<?> editPost(@RequestBody PostRequest request) {
+        try {
             Post createdPost = postService.editPost(request);
             return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+    @GetMapping("/image")
+    public byte[] downloadPostImage(@RequestParam String id) {
+        Post p = postService.findById(id);
+        return postService.downloadPostImage(p);
+    }
 
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllPost(){
+        List<PostDTO> postDTO = postService.getALlPost();
+        return ResponseEntity.ok().body(postDTO);
+    }
 }

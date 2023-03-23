@@ -27,9 +27,8 @@ const NewPost = () => {
             const response = await axios.post('http://localhost:8080/api/post/create', formData, { headers: authHeader() });
             setSuccessMessage('Form submitted successfully!');
             setErrorMessage(null);
-
             setTimeout(() => {
-                navigate('/posted');
+                navigate('/posts');
             }, 2000);
 
         } catch (error) {

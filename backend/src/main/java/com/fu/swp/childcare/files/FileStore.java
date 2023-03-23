@@ -49,4 +49,8 @@ public class FileStore {
             throw new RuntimeException(e);
         }
     }
+
+    public String getObjectUrl(String bucketName, String objectKey) {
+        return String.format("https://s3-%s.amazonaws.com/%s/%s", s3.getRegionName(), bucketName, objectKey);
+    }
 }

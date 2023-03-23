@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.*;
 
@@ -56,6 +57,7 @@ public class PostService {
         Map<String, String> metaData = extractMetadata(file);
 
         //set file name and path in s3 bucket
+
         String path = String.format("%s/%s" , BucketName.PROFILE_IMAGE.getBucketName() , u.getUsername());
         String fileName = String.format("%s-%s" , file.getOriginalFilename() , UUID.randomUUID());
         try {
@@ -80,6 +82,13 @@ public class PostService {
         }
     }
 
+    public List<PostDTO> getALlPost(){
+        List<Post> posts = postRepository.findAll();
+        return posts.stream().map(Post::toDTO).collect(Collectors.toList());
+    }
+
+    //return clas.stream().map(Classes::toClassDTO).collect(Collectors.toList());
+
     public Post findById(String id){
         return postRepository.findById(Long.valueOf(id)).orElseThrow(()-> new ResourceNotFoundException("Post Not Found"));
     }
@@ -94,7 +103,8 @@ public class PostService {
         return postRepository.save(p);
     }
 
-    public byte[] downloadPostImage(User u, Post post){
+    public byte[] downloadPostImage(Post post){
+        User u = post.getUser();
         String fullPath = String.format("/%s/%s",BucketName.PROFILE_IMAGE.getBucketName() , u.getUsername());
         if(!post.getImageLink().isEmpty()){
             return fileStore.download(fullPath, post.getImageLink());

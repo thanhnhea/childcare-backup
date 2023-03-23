@@ -5,10 +5,9 @@ import { useParams } from 'react-router-dom';
 import authHeader from '../../services/auth-header';
 import userService from '../../services/user.service';
 import './Post.css';
-import { Card, Form, Button } from "react-bootstrap";
 
+function Post() {
 
-function PostView() {
     const id = useParams();
     const [post, setPost] = useState([]);
     const [imageUrl, setImageUrl] = useState("");
@@ -34,6 +33,10 @@ function PostView() {
         fetPostData();
     }, [post]);
 
+    if (!post) {
+        return <div>Loading...</div>
+    }
+
     const onSubmit = (event) => {
         try {
             const content = event.comment;
@@ -49,46 +52,44 @@ function PostView() {
             console.log(error.response.data.message)
         }
     };
+
     return (
-        <Card className="my-4">
+        <div className="container">
             {errorMessage && <p className="alert alert-danger">{errorMessage}</p>}
             {successMessage && <p className="alert alert-success">{successMessage}</p>}
-
-            <Card.Body>
-                <div className="d-flex align-items-center">
-                    <img src={post.userProfilePic} alt={post.username} className="rounded-circle mr-3" width="50" height="50" />
-                    <div>
-                        <h5>{post.username}</h5>
-                        <p className="text-muted">{post.title}</p>
+            {postExist ? (
+                <div className="card-body">
+                    <div className="post">
+                        <div className="img">
+                            <img src={`http://localhost:8080/api/post/image?id=${id.id}`} className="card-img-top" alt="Post" />
+                        </div>
+                        <div className={imageUrl ? "col-md-8" : "col"}>
+                            <h5>{post.title}</h5>
+                            <p>{post.content}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <h5 className="card-subtitle mb-2 text-muted">{post.comments.length} Comments</h5>
+                    <div className="comments">
+                        {post.comments.length === 0 && <p>No comments yet.</p>}
+                        {post.comments.map((comment, index) => (
+                            <div key={index} className="comment">
+                                <p className=''>{comment.userDto.username}:</p>
+                                <p className=''>{comment.content}</p>
+                            </div>
+                        ))}
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <div className="form-group">
+                                <label htmlFor="text">Text:</label>
+                                <textarea {...register('comment', { required: true })} className="form-control"></textarea>
+                            </div>
+                            <button type="submit" className="btn btn-primary mt-4">Add comment</button>
+                        </form>
                     </div>
                 </div>
-                <hr />
-                <div>
-                    <img src={`http://localhost:8080/api/post/image?id=${id.id}`} alt="" className="img-fluid" />
-                    <p>{post.content}</p>
-                </div>
-                <hr />
-                <h6>Comments</h6>
-                <Form>
-                    <Form.Group className="d-flex align-items-center">
-                        <img src={post.userProfilePic} alt={post.username} className="rounded-circle mr-3" width="30" height="30" />
-                        <Form.Control type="text" placeholder="Add a comment..." />
-                        <Button variant="primary" type="submit" className="ml-2">Submit</Button>
-                    </Form.Group>
-                </Form>
-                <div>
-                    {post.comments.map((comment, index) => (
-                        <div className="d-flex align-items-center my-3" key={index}>
-                            <img src={comment.userProfilePic} alt={comment.userDto.username} className="rounded-circle mr-3" width="30" height="30" />
-                            <div>
-                                <h6>{comment.userDto.username}</h6>
-                                <p>{comment.content}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </Card.Body>
-        </Card>
+            ) : (<div className="alert alert-danger">
+                Post not found</div>)}
+        </div>
     );
 }
-export default PostView;
+export default Post;
