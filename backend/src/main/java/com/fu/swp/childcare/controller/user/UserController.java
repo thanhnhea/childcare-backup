@@ -24,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
@@ -198,20 +199,45 @@ public class UserController {
 
     @GetMapping("/detail")
     public ResponseEntity<?> getUserDetail(){
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        String username = userDetails.getUsername();
-        return ResponseEntity.ok().body(userService.getUserInfo(username));
-    }
-
-    @PostMapping("/edit")
-    public ResponseEntity<?> editUser(@RequestBody EditProfileRequest request){
+        System.out.println("User Detail here: ");
         try{
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User u = userService.loadUserByUsername(userDetails.getUsername());
-            return ResponseEntity.ok().body(userService.edit(u,request));
-        }catch (Exception e){
+            return ResponseEntity.ok().body(userService.getUserInfo(userDetails.getUsername()));
+        }catch (Exception e)    {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @PutMapping("update")
+    public ResponseEntity<?> updateUser(@RequestParam( value = "image" ,  required = false) MultipartFile[] image,
+                                           @RequestParam("firstName") String firstName,
+                                           @RequestParam("lastName") String lastName,
+                                           @RequestParam("phone_number") String phoneNumber,
+                                           @RequestParam("email") String email,
+                                           @RequestParam("address") String address) {
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            EditProfileRequest user = new EditProfileRequest(userDetails.getUsername());
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setPhone(phoneNumber);
+            user.setEmail(email);
+            user.setAddress(address);
+            if (image != null) {
+                user.setImage(image[0]);
+            }
+            userService.updateUser(user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/image")
+    public byte[] getPfpImage(@RequestParam String id){
+        User u = userService.getUserById(Long.valueOf(id));
+        return userService.downloadPfpImage(u);
     }
 }

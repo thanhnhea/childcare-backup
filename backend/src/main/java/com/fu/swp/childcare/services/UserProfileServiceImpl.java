@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -62,49 +64,53 @@ public class UserProfileServiceImpl implements UserProfileService {
         return userRepository.findByUsername(username).orElseThrow(()->new IllegalStateException("User not found")).toUserDto();
     }
 
-    @Override
-    public User edit(User u, EditProfileRequest request) {
-        if(!request.getFirstName().isEmpty()){
-            if(!request.getFirstName().equals(u.getFirstName())){
-                u.setFirstName(request.getFirstName());
-            }
-        }
-        if(!request.getLastName().isEmpty()){
-            if(request.getLastName().equals(u.getLastName())){
-                u.setLastName(request.getLastName());
-            }
-        }
-
-        if(null != request.getDob()){
-            u.setDob(request.getDob());
-        }
-
-        if(!request.getAddress().isEmpty()){
-            u.setAddress(request.getAddress());
-        }
-
-        if(request.getImage() != null){
-            // grab metadata from
-            Map<String, String> metaData = extractMetadata(request.getImage());
-            //set file name and path in s3 bucket
-            String path = String.format("%s/%s" , BucketName.PROFILE_IMAGE.getBucketName() , u.getId());
-            String fileName = String.format("%s-%s" , request.getImage().getOriginalFilename() , UUID.randomUUID());
-
-            try {
-                fileStore.save(path,fileName, Optional.of(metaData),request.getImage().getInputStream());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            u.setPfpImgLink(fileName);
-        }
-
-        return userRepository.save(u);
-    }
-
     private Map<String, String> extractMetadata(MultipartFile file) {
         Map<String,String> metaData = new HashMap<>( );
         metaData.put("Content-Type", file.getContentType()) ;
         metaData.put("Content-Length" , String.valueOf(file.getSize())) ;
         return metaData;
+    }
+
+    @Override
+    public User updateUser(EditProfileRequest userDto) {
+        try {
+            Optional<User> optionalUser = userRepository.findByUsername(userDto.getUsername());
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                user.setFirstName(userDto.getFirstName());
+                user.setLastName(userDto.getLastName());
+                user.setPhone(userDto.getPhone());
+                user.setEmail(userDto.getEmail());
+                user.setAddress(userDto.getAddress());
+                if (userDto.getImage() != null) {
+                    Map<String, String> metaData = extractMetadata(userDto.getImage());
+                    //set file name and path in s3 bucket
+                    String path = String.format("%s/%s" , BucketName.PROFILE_IMAGE.getBucketName() , user.getId());
+                    String fileName = String.format("%s-%s" , userDto.getImage().getOriginalFilename() , UUID.randomUUID());
+                    try {
+                        fileStore.save(path,fileName, Optional.of(metaData),userDto.getImage().getInputStream());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    user.setPfpImgLink(fileName);
+                }
+                return userRepository.save(user);
+            } else {
+                throw new Exception("User not found");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public byte[] downloadPfpImage(User u){
+        String fullPath = String.format("/%s/%s",BucketName.PROFILE_IMAGE.getBucketName() , u.getId());
+        if(!u.getPfpImgLink().isEmpty()){
+            return fileStore.download(fullPath, u.getPfpImgLink());
+        }else{
+            return new byte[0];
+        }
     }
 }

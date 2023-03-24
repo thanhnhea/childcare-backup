@@ -78,6 +78,11 @@ class Header extends Component {
                                 {currentUser ? (
                                     <div className="navbar-nav ml-auto">
                                         <li className="nav-item">
+                                            <div className="list-item text-decoration-none">
+                                                <img src='http://localhost:8080/account/image?id=6' alt="Profile" className="profile-picture" />
+                                            </div>
+                                        </li>
+                                        <li className="nav-item">
                                             <Link to={"/profile"} className="list-item text-decoration-none">
                                                 {currentUser.username}
                                             </Link>

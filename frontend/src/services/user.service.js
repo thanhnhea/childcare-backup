@@ -135,6 +135,14 @@ class UserService {
     getUserInfo() {
         return axios.get(API_URL + 'account/detail', { headers: authHeader() });
     }
+
+    updateUserInfo(formData) {
+        return axios.put(API_URL + 'account/update', formData, { headers: authHeader() });
+    }
+
+    getUserPfp(id) {
+        return axios.get(API_URL + 'account/image?id=' + id, { headers: authHeader() });
+    }
 }
 
 export default new UserService();

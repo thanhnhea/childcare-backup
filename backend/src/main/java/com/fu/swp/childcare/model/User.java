@@ -90,6 +90,7 @@ public class User {
         toUser.setFirstName(firstName);
         toUser.setLastName(lastName);
         toUser.setRole(roles);
+        toUser.setPfpImageLink(pfpImgLink);
         return toUser;
     }
 }

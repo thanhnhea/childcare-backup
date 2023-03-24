@@ -20,7 +20,23 @@ public class UserDto {
     private String lastName;
     private String phone;
     private String address;
+
+    private String pfpImageLink;
     private Set<Role> role;
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }
 
 

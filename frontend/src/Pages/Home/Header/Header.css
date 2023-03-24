@@ -50,26 +50,41 @@
     font-family: Raleway-SemiBold;
     font-size: 18px;
     font-weight: bold;
-    color: #fc5185 ;
+    color: #fc5185;
     letter-spacing: 1px;
     line-height: 15px;
-    border: 2px solid #fc5185 ;
+    border: 2px solid #fc5185;
     border-radius: 40px;
     background: transparent;
     transition: all 0.3s ease 0s;
-  }
-  
-  .btn-danger:hover {
+}
+
+.btn-danger:hover {
     color: #FFF;
-    background: #fc5185 ;
-    border: 2px solid #fc5185 ;
-  }
+    background: #fc5185;
+    border: 2px solid #fc5185;
+}
 
+.profile-picture {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+}
 
+.profile-picture-container {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #007bff;
+}
 
-  /* for mobile responsive */
+/* for mobile responsive */
 
 @media (max-width: 992px) {
+
     /* 2: Navbar */
     .btn {
         margin-left: 57px;

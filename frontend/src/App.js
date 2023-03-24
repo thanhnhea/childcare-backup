@@ -65,9 +65,8 @@ function App() {
           <Route path='/classpetails' element={<ClassDetails />} />
           <Route path='/mod' element={<ManageBoard />} />
           <Route path='/changepasword' element={<ChangePasword />} />
-          <Route path='/userdetails' element={<UserDetails />} />
           <Route path='/users' element={<UserList />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile' element={<UserDetails />} />
           <Route path="/admin" element={<BoardAdmin />} />
           <Route path="/user" element={<BoardUser />} />
           <Route path="/addchild" element={<AddChild />} />
