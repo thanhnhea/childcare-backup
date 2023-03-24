@@ -1,23 +1,34 @@
 package com.fu.swp.childcare.services;
 
+import com.fu.swp.childcare.bucket.BucketName;
 import com.fu.swp.childcare.controller.mapping.UserDto;
+import com.fu.swp.childcare.files.FileStore;
 import com.fu.swp.childcare.model.User;
+import com.fu.swp.childcare.payload.EditProfileRequest;
 import com.fu.swp.childcare.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
 
+    private final UserRepository userRepository;
+
+    private final FileStore fileStore;
 
     @Autowired
-    private UserRepository userRepository;
+    public UserProfileServiceImpl(UserRepository userRepository, FileStore fileStore) {
+        this.userRepository = userRepository;
+        this.fileStore = fileStore;
+    }
 
     @Override
     public User getUserById(Long id) {
@@ -46,6 +57,54 @@ public class UserProfileServiceImpl implements UserProfileService {
         return userRepository.findAll().stream().map(User::toUserDto).collect(Collectors.toList());
     }
 
+    @Override
+    public UserDto getUserInfo(String username) {
+        return userRepository.findByUsername(username).orElseThrow(()->new IllegalStateException("User not found")).toUserDto();
+    }
 
+    @Override
+    public User edit(User u, EditProfileRequest request) {
+        if(!request.getFirstName().isEmpty()){
+            if(!request.getFirstName().equals(u.getFirstName())){
+                u.setFirstName(request.getFirstName());
+            }
+        }
+        if(!request.getLastName().isEmpty()){
+            if(request.getLastName().equals(u.getLastName())){
+                u.setLastName(request.getLastName());
+            }
+        }
 
+        if(null != request.getDob()){
+            u.setDob(request.getDob());
+        }
+
+        if(!request.getAddress().isEmpty()){
+            u.setAddress(request.getAddress());
+        }
+
+        if(request.getImage() != null){
+            // grab metadata from
+            Map<String, String> metaData = extractMetadata(request.getImage());
+            //set file name and path in s3 bucket
+            String path = String.format("%s/%s" , BucketName.PROFILE_IMAGE.getBucketName() , u.getId());
+            String fileName = String.format("%s-%s" , request.getImage().getOriginalFilename() , UUID.randomUUID());
+
+            try {
+                fileStore.save(path,fileName, Optional.of(metaData),request.getImage().getInputStream());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            u.setPfpImgLink(fileName);
+        }
+
+        return userRepository.save(u);
+    }
+
+    private Map<String, String> extractMetadata(MultipartFile file) {
+        Map<String,String> metaData = new HashMap<>( );
+        metaData.put("Content-Type", file.getContentType()) ;
+        metaData.put("Content-Length" , String.valueOf(file.getSize())) ;
+        return metaData;
+    }
 }

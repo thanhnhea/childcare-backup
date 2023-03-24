@@ -131,6 +131,10 @@ class UserService {
     getAllPost() {
         return axios.get(API_URL + 'api/post/all', { headers: authHeader() });
     }
+
+    getUserInfo() {
+        return axios.get(API_URL + 'account/detail', { headers: authHeader() });
+    }
 }
 
 export default new UserService();

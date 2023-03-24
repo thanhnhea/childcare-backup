@@ -49,7 +49,7 @@ public class PostService {
         post.setTitle(title);
         post.setContent(content);
         post.setCreatedDate(LocalDateTime.now());
-        post.setUser(u);
+        post.setUser(u);    
 
         isFileEmpty(file.isEmpty(), "Cannot upload empty file ");
 //        isFileEmpty(!Arrays.asList(IMAGE_JPEG.get, IMAGE_PNG.getSubtype(), IMAGE_GIF.getSubtype()).contains(file.getContentType()), "File must be an image " + file.getContentType());
@@ -86,8 +86,6 @@ public class PostService {
         List<Post> posts = postRepository.findAll();
         return posts.stream().map(Post::toDTO).collect(Collectors.toList());
     }
-
-    //return clas.stream().map(Classes::toClassDTO).collect(Collectors.toList());
 
     public Post findById(String id){
         return postRepository.findById(Long.valueOf(id)).orElseThrow(()-> new ResourceNotFoundException("Post Not Found"));

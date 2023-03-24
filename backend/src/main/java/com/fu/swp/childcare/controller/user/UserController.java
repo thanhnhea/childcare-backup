@@ -1,19 +1,18 @@
 package com.fu.swp.childcare.controller.user;
 
 
+import com.amazonaws.services.identitymanagement.model.UserDetail;
 import com.fu.swp.childcare.controller.mapping.ClassDTO;
 import com.fu.swp.childcare.controller.mapping.UserDto;
 import com.fu.swp.childcare.model.ChildInformation;
 import com.fu.swp.childcare.model.Classes;
 import com.fu.swp.childcare.model.Reservation;
 import com.fu.swp.childcare.model.User;
-import com.fu.swp.childcare.payload.BookingRequest;
-import com.fu.swp.childcare.payload.ChildProfile;
-import com.fu.swp.childcare.payload.RequestChangePassword;
-import com.fu.swp.childcare.payload.SubmitChildrenInfoRequest;
+import com.fu.swp.childcare.payload.*;
 import com.fu.swp.childcare.payload.response.MessageResponse;
 import com.fu.swp.childcare.repositories.UserRepository;
 import com.fu.swp.childcare.services.*;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -197,4 +196,22 @@ public class UserController {
         }
     }
 
+    @GetMapping("/detail")
+    public ResponseEntity<?> getUserDetail(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = userDetails.getUsername();
+        return ResponseEntity.ok().body(userService.getUserInfo(username));
+    }
+
+    @PostMapping("/edit")
+    public ResponseEntity<?> editUser(@RequestBody EditProfileRequest request){
+        try{
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User u = userService.loadUserByUsername(userDetails.getUsername());
+            return ResponseEntity.ok().body(userService.edit(u,request));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

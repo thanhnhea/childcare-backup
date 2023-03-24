@@ -9,9 +9,9 @@ import { useNavigate } from 'react-router-dom';
 const NewPost = () => {
     const navigate = useNavigate();
     const [previews, setPreviews] = useState([]);
-    const [errorMessage, setErrorMessage] = useState(null);
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [successMessage, setSuccessMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
     const [sizeError, setSizeError] = useState('')
 
     const onSubmit = async (data) => {
