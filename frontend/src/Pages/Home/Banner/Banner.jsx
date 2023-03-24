@@ -23,7 +23,6 @@ const Banner = () => {
         }
     }, []);
 
-    console.log(isUser);
     return (
         <section className="single-hero-slide text-white d-flex justify-content-center align-items-center">
             <Container>
@@ -36,7 +35,7 @@ const Banner = () => {
                                 Our experts are working very hard to see the smile on your child's face that you deserve!
                                 We are dedicated to our mission.</p>
                             <div className="banner-btn m-sm-auto">
-                                {isUser && (
+                                {!isUser && (
                                     <Link to="/login"><button className="theme-btn btn-fill">Join Now</button></Link>
                                 )}
                                 <button className='theme-btn bth-blank'>Learn More</button>
