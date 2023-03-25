@@ -10,35 +10,37 @@ import { Card, Form, Button } from "react-bootstrap";
 
 function PostView() {
     const id = useParams();
+
     const [post, setPost] = useState([]);
     const [imageUrl, setImageUrl] = useState("");
     const [comments, setComments] = useState([]);
     const [postExist, setPostExist] = useState(false);
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
-
+    const [currentUser, setCurrentUser] = useState(null);
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
     const fetPostData = async () => {
         const response = await userService.getPostDetails(id.id);
-        const data = response.data;
-        setPost(data);
+        setPost(response.data);
         setPostExist(true);
 
         const response2 = await userService.getPostImage(id.id);
-        const data2 = response2.data;
-        setImageUrl(data2);
+        setImageUrl(response2.data);
+
+        const response3 = await userService.getUserInfo(id.id);
+        setCurrentUser(response3.data);
     };
 
     useEffect(() => {
         fetPostData();
-    }, [post]);
+    }, []);
 
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         try {
             const content = event.comment;
             const postId = id.id;
-            const response = axios.post('http://localhost:8080/api/post/comments/submit', { postId, content }, { headers: authHeader() });
+            const response = await axios.post('http://localhost:8080/api/post/comments/submit', { postId, content }, { headers: authHeader() });
             const data = response.data;
             setSuccessMessage('Comment Successfully!');
             setComments(data);
@@ -56,36 +58,38 @@ function PostView() {
 
             <Card.Body>
                 <div className="d-flex align-items-center">
-                    <img src={post.userProfilePic} alt={post.username} className="rounded-circle mr-3" width="50" height="50" />
-                    <div>
-                        <h5>{post.username}</h5>
+                    <img src={userService.getUserPfpLink(post?.user?.id)} alt="" className="rounded-circle mr-3" width="50" height="50" />
+                    <div className='ml-5'>
+                        <h5>{post?.user?.username}</h5>
                         <p className="text-muted">{post.title}</p>
                     </div>
                 </div>
                 <hr />
                 <div>
-                    <img src={`http://localhost:8080/api/post/image?id=${id.id}`} alt="" className="img-fluid" />
+                    <img src={userService.getImagePostLink(id.id)} alt="" className="img-fluid" />
                     <p>{post.content}</p>
                 </div>
                 <hr />
                 <h6>Comments</h6>
-                <Form>
+                <Form onSubmit={handleSubmit(onSubmit)}>
                     <Form.Group className="d-flex align-items-center">
-                        <img src={post.userProfilePic} alt={post.username} className="rounded-circle mr-3" width="30" height="30" />
-                        <Form.Control type="text" placeholder="Add a comment..." />
+                        <img src={userService.getUserPfpLink(currentUser.id)} alt={post?.user?.username} className="rounded-circle mr-3" width="30" height="30" />
+                        <Form.Control type="text" placeholder="Add a comment..." className='ml-2' />
                         <Button variant="primary" type="submit" className="ml-2">Submit</Button>
                     </Form.Group>
                 </Form>
                 <div>
-                    {post.comments.map((comment, index) => (
-                        <div className="d-flex align-items-center my-3" key={index}>
-                            <img src={comment.userProfilePic} alt={comment.userDto.username} className="rounded-circle mr-3" width="30" height="30" />
-                            <div>
-                                <h6>{comment.userDto.username}</h6>
-                                <p>{comment.content}</p>
+                    {
+                        post.comments.map((comment, index) => (
+                            <div className="d-flex align-items-center my-3" key={index}>
+                                <img src={userService.getUserPfpLink(comment.userDto.id)} alt={comment.userDto.username} className="rounded-circle mr-3" width="30" height="30" />
+                                <div className='ml-5'>
+                                    <h6>{comment.userDto.username}</h6>
+                                    <p>{comment.content}</p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    }
                 </div>
             </Card.Body>
         </Card>

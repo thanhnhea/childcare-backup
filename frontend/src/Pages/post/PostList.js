@@ -4,40 +4,68 @@ import { useNavigate } from 'react-router-dom';
 import userService from '../../services/user.service';
 
 const PostList = () => {
-    // const posts = [
-    //     { id: 1, title: 'First Post', author: 'John Doe', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', imageUrl: 'https://api.api-ninjas.com/v1/randomimage' },
-    //     { id: 2, title: 'Second Post', author: 'Jane Smith', content: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem.', imageUrl: 'https://api.api-ninjas.com/v1/randomimage' },
-    //     { id: 3, title: 'Third Post', author: 'Mark Johnson', content: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis.', imageUrl: 'https://api.api-ninjas.com/v1/randomimage' },
-    // ];
 
-    const [posts, setPost] = useState([]);
+    const [posts, setPosts] = useState([]);
+    const [page, setPage] = useState(0);
+    const [size, setSize] = useState(10);
     const navigate = useNavigate();
 
-    useState(async () => {
-        const data = await userService.getAllPost();
-        setPost(data.data);
-    }, []);
+    useState(() => {
+        const fetchData = async () => {
+            const data = await userService.getAllPost(page, size);
+            setPosts(data.content);
+        };
+        fetchData();
+    }, [page, size]);
 
 
     const handleClick = (id) => {
-        console.log(id);
-        navigate('/post/' + id, { replace: true })
+        navigate(`/post/${id}`, { replace: true });
     }
 
     return (
         <Container>
             <Row>
                 <Col md={{ span: 8, offset: 2 }}>
-                    {posts.map(post => (
+                    {posts.map((post) => (
                         <Card key={post.id} className="mb-3">
-                            <Card.Header>{post.title}</Card.Header>
-                            <Card.Body>
-                                <Card.Subtitle className="mb-2 text-muted">{post.user.username}</Card.Subtitle>
-                                <Card.Text>{post.content}</Card.Text>
-                                <Button variant="primary" onClick={() => handleClick(post.id)}>Read More</Button>
-                            </Card.Body>
+                            <Row>
+                                <Col md={4}>
+                                    <Image src={post.thumbnailUrl} thumbnail />
+                                </Col>
+                                <Col md={8}>
+                                    <Card.Header>{post.title}</Card.Header>
+                                    <Card.Body>
+                                        <Card.Subtitle className="mb-2 text-muted">
+                                            {post.user.username}
+                                        </Card.Subtitle>
+                                        <Card.Text>{post.content}</Card.Text>
+                                        <Button variant="primary" onClick={() => handleClick(post.id)}>
+                                            Read More
+                                        </Button>
+                                    </Card.Body>
+                                </Col>
+                            </Row>
                         </Card>
                     ))}
+                </Col>
+            </Row>
+            <Row>
+                <Col md={{ span: 8, offset: 2 }}>
+                    <Button
+                        variant="primary"
+                        disabled={page === 0}
+                        onClick={() => setPage(page - 1)}
+                    >
+                        Previous
+                    </Button>
+                    <Button
+                        variant="primary"
+                        disabled={posts.length < size}
+                        onClick={() => setPage(page + 1)}
+                    >
+                        Next
+                    </Button>
                 </Col>
             </Row>
         </Container>

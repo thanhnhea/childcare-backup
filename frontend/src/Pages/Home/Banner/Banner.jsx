@@ -1,14 +1,28 @@
 import "@fontsource/josefin-sans";
+import { useEffect, useState } from "react";
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import doctorfinding from '../../../Images/doctorfinding.c2532ac3.png';
 import heroTeeth from '../../../Images/hero-theeth.54c2c4e9.png';
 import womanbrush from '../../../Images/woman-brush.c4158ac5.png';
+import authService from "../../../services/auth.service";
 import './Banner.css';
 
 
 
 const Banner = () => {
+
+    const [isUser, setIsUser] = useState(false);
+    const [currentUser, setCurrentUser] = useState();
+
+    useEffect(() => {
+        const user = authService.getCurrentUser();
+        if (user) {
+            setIsUser(user.roles.includes("ROLE_USER"));
+            setCurrentUser(user)
+        }
+    }, []);
+
     return (
         <section className="single-hero-slide text-white d-flex justify-content-center align-items-center">
             <Container>
@@ -21,7 +35,9 @@ const Banner = () => {
                                 Our experts are working very hard to see the smile on your child's face that you deserve!
                                 We are dedicated to our mission.</p>
                             <div className="banner-btn m-sm-auto">
-                                <Link to="/login"><button className="theme-btn btn-fill">Join Now</button></Link>
+                                {!isUser && (
+                                    <Link to="/login"><button className="theme-btn btn-fill">Join Now</button></Link>
+                                )}
                                 <button className='theme-btn bth-blank'>Learn More</button>
                             </div>
                         </div>

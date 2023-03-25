@@ -9,6 +9,10 @@ import com.fu.swp.childcare.model.User;
 import com.fu.swp.childcare.payload.PostRequest;
 import com.fu.swp.childcare.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,7 +53,7 @@ public class PostService {
         post.setTitle(title);
         post.setContent(content);
         post.setCreatedDate(LocalDateTime.now());
-        post.setUser(u);
+        post.setUser(u);    
 
         isFileEmpty(file.isEmpty(), "Cannot upload empty file ");
 //        isFileEmpty(!Arrays.asList(IMAGE_JPEG.get, IMAGE_PNG.getSubtype(), IMAGE_GIF.getSubtype()).contains(file.getContentType()), "File must be an image " + file.getContentType());
@@ -87,8 +91,6 @@ public class PostService {
         return posts.stream().map(Post::toDTO).collect(Collectors.toList());
     }
 
-    //return clas.stream().map(Classes::toClassDTO).collect(Collectors.toList());
-
     public Post findById(String id){
         return postRepository.findById(Long.valueOf(id)).orElseThrow(()-> new ResourceNotFoundException("Post Not Found"));
     }
@@ -106,10 +108,15 @@ public class PostService {
     public byte[] downloadPostImage(Post post){
         User u = post.getUser();
         String fullPath = String.format("/%s/%s",BucketName.PROFILE_IMAGE.getBucketName() , u.getUsername());
-        if(!post.getImageLink().isEmpty()){
+        if(null != post.getImageLink()){
             return fileStore.download(fullPath, post.getImageLink());
         }else{
             return new byte[0];
         }
+    }
+
+    public Page<Post> getAllPosts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        return postRepository.findAll(pageable);
     }
 }

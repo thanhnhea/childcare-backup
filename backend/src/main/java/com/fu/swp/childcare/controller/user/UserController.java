@@ -1,19 +1,18 @@
 package com.fu.swp.childcare.controller.user;
 
 
+import com.amazonaws.services.identitymanagement.model.UserDetail;
 import com.fu.swp.childcare.controller.mapping.ClassDTO;
 import com.fu.swp.childcare.controller.mapping.UserDto;
 import com.fu.swp.childcare.model.ChildInformation;
 import com.fu.swp.childcare.model.Classes;
 import com.fu.swp.childcare.model.Reservation;
 import com.fu.swp.childcare.model.User;
-import com.fu.swp.childcare.payload.BookingRequest;
-import com.fu.swp.childcare.payload.ChildProfile;
-import com.fu.swp.childcare.payload.RequestChangePassword;
-import com.fu.swp.childcare.payload.SubmitChildrenInfoRequest;
+import com.fu.swp.childcare.payload.*;
 import com.fu.swp.childcare.payload.response.MessageResponse;
 import com.fu.swp.childcare.repositories.UserRepository;
 import com.fu.swp.childcare.services.*;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
@@ -37,6 +37,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/account")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
     @Autowired
@@ -197,4 +198,47 @@ public class UserController {
         }
     }
 
+    @GetMapping("/detail")
+    public ResponseEntity<?> getUserDetail(){
+        System.out.println("User Detail here: ");
+        try{
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return ResponseEntity.ok().body(userService.getUserInfo(userDetails.getUsername()));
+        }catch (Exception e)    {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("update")
+    public ResponseEntity<?> updateUser(@RequestParam( value = "image" ,  required = false) MultipartFile[] image,
+                                           @RequestParam("firstName") String firstName,
+                                           @RequestParam("lastName") String lastName,
+                                           @RequestParam("phone_number") String phoneNumber,
+                                           @RequestParam("email") String email,
+                                           @RequestParam("address") String address) {
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            EditProfileRequest user = new EditProfileRequest(userDetails.getUsername());
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setPhone(phoneNumber);
+            user.setEmail(email);
+            user.setAddress(address);
+            if (image != null) {
+                user.setImage(image[0]);
+            }
+            userService.updateUser(user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/image")
+    public byte[] getPfpImage(@RequestParam String id){
+        User u = userService.getUserById(Long.valueOf(id));
+        return userService.downloadPfpImage(u);
+    }
 }
