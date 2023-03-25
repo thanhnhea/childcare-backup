@@ -6,32 +6,18 @@ const Footer = () => {
     return (
         <div className="footer-bg">
             <Container>
-                <Row className="text-white">
+                <Row className="justify-content-center text-white">
                     <Col xs={6} md={3}>
                         <div className="single-footer-widget">
                             <div className="widget-title">
                                 <h2>Practices</h2>
                             </div>
                             <div className="widget-content">
-                                <NavLink className="footer-link">For Patients</NavLink>
+                                <NavLink className="footer-link">For Parent</NavLink>
                                 <NavLink className="footer-link">FAQ's</NavLink>
                                 <NavLink className="footer-link">About</NavLink>
                                 <NavLink className="footer-link">Contact Us</NavLink>
                                 <NavLink className="footer-link">Blog</NavLink>
-                            </div>
-                        </div>
-                    </Col>
-                    <Col xs={6} md={3}>
-                        <div className="single-footer-widget">
-                            <div className="widget-title">
-                                <h2>Resources</h2>
-                            </div>
-                            <div className="widget-content">
-                                <NavLink className="footer-link">New Patients</NavLink>
-                                <NavLink className="footer-link">Meet the Team</NavLink>
-                                <NavLink className="footer-link">Patient Form</NavLink>
-                                <NavLink className="footer-link">Insurance</NavLink>
-                                <NavLink className="footer-link">Account Login</NavLink>
                             </div>
                         </div>
                     </Col>
@@ -55,9 +41,8 @@ const Footer = () => {
                                 <h2>Our Address</h2>
                             </div>
                             <div className="widget-content">
-                                <NavLink className="footer-link">Datobbo Dentistry 5212 Cedar</NavLink>
-                                <NavLink className="footer-link">55 West, 33rd Street, 5th Floor, New York.</NavLink>
-                                <NavLink className="footer-link">Phone: (888) 4421-1238-32</NavLink>
+                                <NavLink className="footer-link">FPT Hoa Lac</NavLink>
+                                <NavLink className="footer-link">Quoc Lo 21</NavLink>
                                 <NavLink className="footer-link">Email: childrencarecenter@gmail.com</NavLink>
                                 <NavLink className="footer-link">Fax: +(09)75 5867 340</NavLink>
                             </div>
