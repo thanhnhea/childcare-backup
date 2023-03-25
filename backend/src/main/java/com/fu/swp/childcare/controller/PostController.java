@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/post")
@@ -90,10 +91,22 @@ public class PostController {
 //    }
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllPosts(
+    public ResponseEntity<List<PostDTO>> getAllPosts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
-        Page<Post> posts = postService.getAllPosts(page, size);
-        return new ResponseEntity<>(posts, HttpStatus.OK);
+        try {
+            List<PostDTO> posts = postService.getAllPosts(page, size)
+                    .stream()
+                    .map(PostDTO::new)
+                    .collect(Collectors.toList());
+
+            if (posts.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(posts, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

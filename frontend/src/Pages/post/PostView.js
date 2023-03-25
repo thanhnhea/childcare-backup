@@ -73,14 +73,14 @@ function PostView() {
                 <h6>Comments</h6>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Form.Group className="d-flex align-items-center">
-                        <img src={userService.getUserPfpLink(currentUser.id)} alt={post?.user?.username} className="rounded-circle mr-3" width="30" height="30" />
+                        <img src={userService.getUserPfpLink(currentUser?.id)} alt={post?.user?.username} className="rounded-circle mr-3" width="30" height="30" />
                         <Form.Control type="text" placeholder="Add a comment..." className='ml-2' />
                         <Button variant="primary" type="submit" className="ml-2">Submit</Button>
                     </Form.Group>
                 </Form>
                 <div>
                     {
-                        post.comments.map((comment, index) => (
+                        post?.comments?.map((comment, index) => (
                             <div className="d-flex align-items-center my-3" key={index}>
                                 <img src={userService.getUserPfpLink(comment.userDto.id)} alt={comment.userDto.username} className="rounded-circle mr-3" width="30" height="30" />
                                 <div className='ml-5'>

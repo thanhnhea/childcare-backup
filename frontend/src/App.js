@@ -86,6 +86,7 @@ function App() {
           <Route path="/post/submit" element={<NewPost />} />
           <Route path="/post/:id" element={<PostView />} />
           <Route path="/posts" element={<PostList />} />
+
         </Routes>
         <Footer />
       </Router>

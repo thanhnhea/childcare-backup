@@ -21,8 +21,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.springframework.http.MediaType.*;
-
 @Service
 public class PostService {
 
@@ -115,8 +113,9 @@ public class PostService {
         }
     }
 
-    public Page<Post> getAllPosts(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
-        return postRepository.findAll(pageable);
+    public List<Post> getAllPosts(int page, int size) {
+        Pageable paging = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Page<Post> pageResult = postRepository.findAll(paging);
+        return pageResult.getContent();
     }
 }

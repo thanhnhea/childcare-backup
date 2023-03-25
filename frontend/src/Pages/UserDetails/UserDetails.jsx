@@ -5,7 +5,6 @@ import userService from "../../services/user.service";
 import { set, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "react-datepicker/dist/react-datepicker.css";
 
 const UserDetails = () => {
 
