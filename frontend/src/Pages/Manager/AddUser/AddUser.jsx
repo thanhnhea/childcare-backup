@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import AuthService from '../../../services/auth.service'
 import { useNavigate } from 'react-router-dom';
-
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-datepicker/dist/react-datepicker.css";
 const AddUser = () => {
     const [formData, setFormData] = useState({
         firstName: '',
@@ -52,11 +54,13 @@ const AddUser = () => {
             firstName, lastName, username, phone, email, address, password, role
         ).then(
             response => {
+                toast.success("Add User successfully!");
                 setMessage(response.data.message);
                 setSuccessful(true);
                 navigate('/userList');
             },
             error => {
+                toast.error("Add User failed!");
                 const resMessage =
                     (error.response &&
                         error.response.data &&
@@ -117,6 +121,7 @@ const AddUser = () => {
     return (
         <section className="vh-100 gradient-custom">
             <div className="container-fluid py-5 h-100">
+            <ToastContainer />
                 <div className="row justify-content-center align-items-center h-100">
                     <div className="col-md-9">
                         <div className="card shadow-2-strong card-registration" >
