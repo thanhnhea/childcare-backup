@@ -68,4 +68,8 @@ public class UserService implements UserDetailsService {
             throw new IllegalStateException("Cannot upload empty file [" + file.getSize() + "]");
         }
     }
+
+    public void deleteUser(String id){
+        userRepository.deleteById(Long.valueOf(id));
+    }
 }

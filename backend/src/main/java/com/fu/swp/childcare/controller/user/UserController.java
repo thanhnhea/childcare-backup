@@ -4,10 +4,7 @@ package com.fu.swp.childcare.controller.user;
 import com.amazonaws.services.identitymanagement.model.UserDetail;
 import com.fu.swp.childcare.controller.mapping.ClassDTO;
 import com.fu.swp.childcare.controller.mapping.UserDto;
-import com.fu.swp.childcare.model.ChildInformation;
-import com.fu.swp.childcare.model.Classes;
-import com.fu.swp.childcare.model.Reservation;
-import com.fu.swp.childcare.model.User;
+import com.fu.swp.childcare.model.*;
 import com.fu.swp.childcare.payload.*;
 import com.fu.swp.childcare.payload.response.MessageResponse;
 import com.fu.swp.childcare.repositories.UserRepository;
@@ -30,6 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -54,7 +52,6 @@ public class UserController {
 
     @Autowired
     PasswordEncoder encoder;
-
 
     @GetMapping(value = "/users")
     @PreAuthorize("hasRole('USER')")
@@ -183,7 +180,6 @@ public class UserController {
         }
     }
 
-
     @PostMapping("/booknow")
     public ResponseEntity<?> bookingService(@RequestBody @Valid BookingRequest request) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
@@ -210,7 +206,7 @@ public class UserController {
     }
 
     @PutMapping("update")
-    public ResponseEntity<?> updateUser(@RequestParam( value = "image" ,  required = false) MultipartFile[] image,
+    public ResponseEntity<?> updateUser(@RequestParam( value = "image" ,  required = false) MultipartFile image,
                                            @RequestParam("firstName") String firstName,
                                            @RequestParam("lastName") String lastName,
                                            @RequestParam("phone_number") String phoneNumber,
@@ -218,7 +214,6 @@ public class UserController {
                                            @RequestParam("address") String address) {
         try {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
             EditProfileRequest user = new EditProfileRequest(userDetails.getUsername());
             user.setFirstName(firstName);
             user.setLastName(lastName);
@@ -226,7 +221,7 @@ public class UserController {
             user.setEmail(email);
             user.setAddress(address);
             if (image != null) {
-                user.setImage(image[0]);
+                user.setImage(image);
             }
             userService.updateUser(user);
             return new ResponseEntity<>(user, HttpStatus.OK);
@@ -235,10 +230,20 @@ public class UserController {
         }
     }
 
-
     @GetMapping("/image")
     public byte[] getPfpImage(@RequestParam String id){
         User u = userService.getUserById(Long.valueOf(id));
         return userService.downloadPfpImage(u);
     }
+
+    @GetMapping("/booked")
+    public ResponseEntity<?> getMyBookingList(@RequestParam String id){
+        try{
+            List<ServiceBookingList> serviceBookingLists = bookingListService.getBookedService(id) ;
+            return ResponseEntity.ok().body(serviceBookingLists);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }

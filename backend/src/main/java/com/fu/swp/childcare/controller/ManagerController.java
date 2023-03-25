@@ -141,38 +141,47 @@ public class ManagerController {
 
     @PostMapping("/class/edit")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
-    public ResponseEntity<?> editClass(@RequestBody @Valid ClassDetail classDetail){
-        try{
+    public ResponseEntity<?> editClass(@RequestBody @Valid ClassDetail classDetail) {
+        try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
             Classes clas = classService.getClassById(classDetail.getId());
-            if(!classDetail.getClassName().isEmpty()){
+            if (!classDetail.getClassName().isEmpty()) {
                 clas.setClassName(classDetail.getClassName());
             }
-            if(classDetail.getStartDate() != null ){
+            if (classDetail.getStartDate() != null) {
                 LocalDate sdate = LocalDate.parse(classDetail.getStartDate(), formatter);
                 clas.setStartDate(sdate);
 
             }
-            if(classDetail.getEndDate() != null){
+            if (classDetail.getEndDate() != null) {
                 LocalDate edate = LocalDate.parse(classDetail.getEndDate(), formatter);
                 clas.setEndDate(edate);
             }
-            if(classDetail.getAgeRange() != null){
+            if (classDetail.getAgeRange() != null) {
                 clas.setAgeRange(clas.getAgeRange());
             }
-            if(classDetail.getDescription() != null){
+            if (classDetail.getDescription() != null) {
                 clas.setDescription(clas.getDescription());
             }
-            if(classDetail.getService() != null){
+            if (classDetail.getService() != null) {
                 Service s = serviceRepository.findById(Long.valueOf(classDetail.getService())).orElseThrow();
                 clas.setService(s);
             }
             classService.save(clas);
             return ResponseEntity.ok(classDetail);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @DeleteMapping("/class/delete")
+    public ResponseEntity<?> deleteClass(@RequestParam String id) {
+        boolean deleted = classService.deleteClass(id);
+        if(deleted){
+            return ResponseEntity.ok().body("Class Deleted");
+        }
+        return ResponseEntity.badRequest().body("Deleted Class Failed");
     }
 
     @PostMapping("/assignChild")
@@ -288,7 +297,7 @@ public class ManagerController {
             bookingListService.save(serviceBookingList);
             try {
                 emailService.sendHtmlMessage(serviceBookingList.getCustomer().getEmail(), "Service Booking successfully!",
-                        "Service " + serviceBookingList.getServiceId().getServiceTitle() + " booking have been approved"+
+                        "Service " + serviceBookingList.getServiceId().getServiceTitle() + " booking have been approved" +
                                 " has booked successful\n" +
                                 " at " + serviceBookingList.getCreateDate() + "\n" +
                                 " for child " + serviceBookingList.getChildID().getFirstName() + " " + serviceBookingList.getChildID().getLastName() + "\n" +

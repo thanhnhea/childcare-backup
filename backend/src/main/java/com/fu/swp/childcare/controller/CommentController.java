@@ -41,4 +41,15 @@ public class CommentController {
            return ResponseEntity.badRequest().body(e.getMessage());
        }
     }
+
+    @DeleteMapping
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> deleteComment(@RequestParam String id){
+        try{
+            commentService.delete(id);
+            return ResponseEntity.ok().body("Comment deleted");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

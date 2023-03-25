@@ -34,9 +34,14 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    private String status = ACTIVE;
+
     public PostDTO toDTO(){
         return new PostDTO(this.id.toString(),this.title
                 ,this.content,this.createdDate,this.user.toUserDto(),this.imageLink,this.comments.stream().map(Comment::toDTO).collect(Collectors.toList()));
     }
+
+    public static final String ACTIVE = "Active";
+    public static final String DEACTIVATED = "DEACTIVATED";
 
 }

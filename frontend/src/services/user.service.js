@@ -36,6 +36,10 @@ class UserService {
         return axios.get(API_URL + 'api/mod/booking/all', { headers: authHeader() });
     }
 
+    getAllBookingByUser(id) {
+        return axios.get(API_URL + 'account/booked?id=' + id, { headers: authHeader() });
+    }
+
     postAssignClass(childId, classId) {
         return axios.post(API_URL + 'api/mod/assignChild', { childId, classId }, { headers: authHeader() });
     }
@@ -74,6 +78,10 @@ class UserService {
 
     getChildrenFromClass(id) {
         return axios.get(API_URL + 'api/mod/class/children?id=' + id, { headers: authHeader() });
+    }
+
+    deleteClass(id) {
+        return axios.delete(API_URL + 'api/mod/class/delete?id=' + id, { headers: authHeader() });
     }
 
     getChildInfo(id) {
@@ -150,6 +158,12 @@ class UserService {
     getUserPfpLink(id) {
         return API_URL + 'account/image?id=' + id;
     }
+
+    deletePost(id) {
+        return axios.delete(API_URL + 'api/post/delete?id=' + id, { headers: authHeader() });
+    }
+
+
 }
 
 export default new UserService();

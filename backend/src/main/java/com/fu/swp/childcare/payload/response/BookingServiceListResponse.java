@@ -14,4 +14,5 @@ public class BookingServiceListResponse {
     private String childName;
     private LocalDate date;
     private String status;
+    private String price;
 }

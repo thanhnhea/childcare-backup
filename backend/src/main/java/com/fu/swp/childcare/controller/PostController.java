@@ -47,8 +47,15 @@ public class PostController {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
             User currentUser = userService.getUserDetail(userDetails.getUsername());
+            PostRequest postDTO = new PostRequest();
+            postDTO.setTitle(title);
+            postDTO.setContent(content);
+            if(images != null) {
+                postDTO.setImages(images);
+            }
+            postDTO.setUser(userService.getUserDetail(currentUser.getUsername()));
 
-            postService.savePost(title, content, images, currentUser);
+            postService.savePost(postDTO);
 
             return new ResponseEntity<>("Post created", HttpStatus.OK);
         } catch (Exception e) {
@@ -56,7 +63,7 @@ public class PostController {
         }
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<?> viewPost(@RequestParam String id) {
         try {
             System.out.println("post detail controller here");
@@ -68,7 +75,7 @@ public class PostController {
     }
 
     @PostMapping("/edit")
-    @PreAuthorize("hasRole('USER') or hasRole('ROLE_MANAGER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ROLE_MANAGER')")
     public ResponseEntity<?> editPost(@RequestBody PostRequest request) {
         try {
             Post createdPost = postService.editPost(request);
@@ -83,12 +90,6 @@ public class PostController {
         Post p = postService.findById(id);
         return postService.downloadPostImage(p);
     }
-
-//    @GetMapping("/all")
-//    public ResponseEntity<?> getAllPost(){
-//        List<PostDTO> postDTO = postService.getALlPost();
-//        return ResponseEntity.ok().body(postDTO);
-//    }
 
     @GetMapping("/all")
     public ResponseEntity<List<PostDTO>> getAllPosts(
@@ -107,6 +108,17 @@ public class PostController {
             return new ResponseEntity<>(posts, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/delete")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> deletePost(@RequestParam String id){
+        try{
+            postService.deletePost(id);
+            return ResponseEntity.ok().body("post deleted");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

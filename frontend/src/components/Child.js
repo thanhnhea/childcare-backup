@@ -67,7 +67,7 @@ const Child = ({ id, firstName, lastName, dob, status, gender, interest, needs, 
             </Row>
             <Row className='text-center mt-4'>
                 <Col md={12} lg={12} sm={12} >
-                    <Link to={`/edit/${id}`} className="link-button">
+                    <Link to={`/editchild/${id}`} className="link-button">
                         Edit child
                     </Link>
                 </Col>

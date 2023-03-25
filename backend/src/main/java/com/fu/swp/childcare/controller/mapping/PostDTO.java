@@ -4,6 +4,7 @@ import com.fu.swp.childcare.model.Comment;
 import com.fu.swp.childcare.model.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class PostDTO {
     private String id;
     private String title;

@@ -30,21 +30,23 @@ const ServiceDetail = () => {
     }, []);
 
     return (
-        <div className="p-4" id={service.id}>
-            <h3 className="text-lg font-medium">{service.serviceTitle}</h3>
-            <p className="text-gray-600">{service.serviceDetail}</p>
-            <div className="mt-2">
-                <p className="font-medium">Price:</p>
-                <p className="ml-2">${service.servicePrice}</p>
-            </div>
-            <div className="mt-2">
-                <p className="font-medium">Created Date:</p>
-                <p className="ml-2">{service.createdDate}</p>
+        <div className="p-4 bg-white rounded-lg shadow-md">
+            <h3 className="text-lg font-medium mb-2">{service.serviceTitle}</h3>
+            <p className="text-gray-600 mb-4">{service.serviceDetail}</p>
+            <div className="flex justify-between items-center mb-4">
+                <div>
+                    <p className="font-medium">Price:</p>
+                    <p className="ml-2">${service.servicePrice}</p>
+                </div>
+                <div>
+                    <p className="font-medium">Created Date:</p>
+                    <p className="ml-2">{service.createdDate}</p>
+                </div>
             </div>
 
-            <div>
+            <div className="flex justify-end">
                 {isUser && (
-                    <Link to={`/booking/${service.id}`} className="link-button">Book this Service</Link>
+                    <Link to={`/booking/${service.id}`} className="link-button mr-4">Book this Service</Link>
                 )}
 
                 {isMod && (
