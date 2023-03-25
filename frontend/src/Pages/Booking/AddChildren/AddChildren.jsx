@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import userService from '../../../services/user.service';
 import './AddChildren.css';
-
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from 'react-router-dom';
 const AddChild = () => {
     const [childData, setChildData] = useState({
         firstName: '',
@@ -14,6 +17,7 @@ const AddChild = () => {
         note: '',
     });
 
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setChildData({
@@ -88,12 +92,15 @@ const AddChild = () => {
         ).then(
             response => {
                 // This function will execute when the Promise is resolved with a successful response
+                toast.success("Add Child successfully!");
                 formHeader.textContent = "Form submitted successfully";
                 formHeader.style.color = "green";
+                navigate('/parent');
                 console.log(response);
             },
             error => {
                 // This function will execute when the Promise is rejected with an error response
+                toast.error("Add Child failed!");
                 formHeader.textContent = "Form submission failed";
                 formHeader.style.color = "red";
                 console.error(error);
@@ -116,6 +123,7 @@ const AddChild = () => {
     return (
         <section className='AddChild'>
             <Container>
+            <ToastContainer />
                 <Row>
                     <div className='form-header text-center'>
                         <h1 className='header display-3 mt-3 mb-3'>Add Child</h1>
