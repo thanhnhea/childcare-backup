@@ -65,7 +65,7 @@ class Header extends Component {
                                     </Link>
                                 )}
                                 {showAdminBoard && (
-                                    <Link to={"/admin"} className="list-item text-decoration-none">
+                                    <Link to={"/userList"} className="list-item text-decoration-none">
                                         Admin Board
                                     </Link>
                                 )}

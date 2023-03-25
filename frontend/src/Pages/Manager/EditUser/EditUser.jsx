@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AuthService from '../../../services/auth.service'
 import { useNavigate } from 'react-router-dom';
 
+
 const EditUser = () => {
     const [formData, setFormData] = useState({
         firstName: '',
