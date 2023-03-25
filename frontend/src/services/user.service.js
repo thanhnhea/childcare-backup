@@ -36,6 +36,10 @@ class UserService {
         return axios.get(API_URL + 'api/mod/booking/all', { headers: authHeader() });
     }
 
+    getAllBookingByUser(id) {
+        return axios.get(API_URL + 'account/booked?id=' + id, { headers: authHeader() });
+    }
+
     postAssignClass(childId, classId) {
         return axios.post(API_URL + 'api/mod/assignChild', { childId, classId }, { headers: authHeader() });
     }
@@ -68,12 +72,17 @@ class UserService {
         return axios.get(API_URL + 'account/current-user-children', { headers: authHeader() });
     }
 
+
     getClassDetails(id) {
         return axios.get(API_URL + 'api/mod/class?id=' + id, { headers: authHeader() });
     }
 
     getChildrenFromClass(id) {
         return axios.get(API_URL + 'api/mod/class/children?id=' + id, { headers: authHeader() });
+    }
+
+    deleteClass(id) {
+        return axios.delete(API_URL + 'api/mod/class/delete?id=' + id, { headers: authHeader() });
     }
 
     getChildInfo(id) {
@@ -116,6 +125,10 @@ class UserService {
         return axios.post(API_URL + 'account/booknow', { id, childId, isPaid }, { headers: authHeader() })
     }
 
+    postEditService(formData, id) {
+        return axios.put(API_URL + `api/service/edit/${id}`, formData, { headers: authHeader() })
+    }
+
     postCreatePost(formData) {
         return axios.post(API_URL + 'api/post/create', formData, { headers: authHeader() })
     }
@@ -150,6 +163,12 @@ class UserService {
     getUserPfpLink(id) {
         return API_URL + 'account/image?id=' + id;
     }
+
+    deletePost(id) {
+        return axios.delete(API_URL + 'api/post/delete?id=' + id, { headers: authHeader() });
+    }
+
+
 }
 
 export default new UserService();

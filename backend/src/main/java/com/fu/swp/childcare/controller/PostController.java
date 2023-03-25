@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/post")
@@ -46,8 +47,15 @@ public class PostController {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
             User currentUser = userService.getUserDetail(userDetails.getUsername());
+            PostRequest postDTO = new PostRequest();
+            postDTO.setTitle(title);
+            postDTO.setContent(content);
+            if(images != null) {
+                postDTO.setImages(images);
+            }
+            postDTO.setUser(userService.getUserDetail(currentUser.getUsername()));
 
-            postService.savePost(title, content, images, currentUser);
+            postService.savePost(postDTO);
 
             return new ResponseEntity<>("Post created", HttpStatus.OK);
         } catch (Exception e) {
@@ -55,7 +63,7 @@ public class PostController {
         }
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<?> viewPost(@RequestParam String id) {
         try {
             System.out.println("post detail controller here");
@@ -67,7 +75,7 @@ public class PostController {
     }
 
     @PostMapping("/edit")
-    @PreAuthorize("hasRole('USER') or hasRole('ROLE_MANAGER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ROLE_MANAGER')")
     public ResponseEntity<?> editPost(@RequestBody PostRequest request) {
         try {
             Post createdPost = postService.editPost(request);
@@ -83,17 +91,34 @@ public class PostController {
         return postService.downloadPostImage(p);
     }
 
-//    @GetMapping("/all")
-//    public ResponseEntity<?> getAllPost(){
-//        List<PostDTO> postDTO = postService.getALlPost();
-//        return ResponseEntity.ok().body(postDTO);
-//    }
-
     @GetMapping("/all")
-    public ResponseEntity<?> getAllPosts(
+    public ResponseEntity<List<PostDTO>> getAllPosts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
-        Page<Post> posts = postService.getAllPosts(page, size);
-        return new ResponseEntity<>(posts, HttpStatus.OK);
+        try {
+            List<PostDTO> posts = postService.getAllPosts(page, size)
+                    .stream()
+                    .map(PostDTO::new)
+                    .collect(Collectors.toList());
+
+            if (posts.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(posts, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/delete")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> deletePost(@RequestParam String id){
+        try{
+            postService.deletePost(id);
+            return ResponseEntity.ok().body("post deleted");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

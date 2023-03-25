@@ -6,7 +6,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import userService from '../../../services/user.service';
 const Checkout = () => {
-    
+
     const navigate = useNavigate();
     const { child } = useLocation().state.child;
     const { service } = useLocation().state.service;
@@ -99,13 +99,15 @@ const Checkout = () => {
             </Row>
             <Row>
                 <Col sm={12}>
-                    <Button variant="primary" onClick={() => handleSubmit(child)}>Choose this Child</Button>
+                    <Button variant="primary" onClick={() => handleSubmit(child)}>Submit (Pay with cash later)</Button>
                 </Col>
             </Row>
             <Row className="justify-content-center mt-3">
                 <Col sm={3} lg={3}>
-                    <PayPalScriptProvider options={{ "client-id": 
-                    "AYPw-Q-dwQogBKRwCWqKvTrcOPZ2buIwYn2xTf6DsLfh8AwleHZWCrVH9j8mDgDKvGjr0RAxNEz_gJ3f" }}>
+                    <PayPalScriptProvider options={{
+                        "client-id":
+                            "AYPw-Q-dwQogBKRwCWqKvTrcOPZ2buIwYn2xTf6DsLfh8AwleHZWCrVH9j8mDgDKvGjr0RAxNEz_gJ3f"
+                    }}>
                         <PayPalButtons style={{ layout: "horizontal" }}
                             createOrder={(data, actions) => {
                                 return actions.order.create({

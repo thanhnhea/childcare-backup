@@ -59,6 +59,15 @@ public class ClassService {
         classRepository.save(classes);
     }
 
+    public boolean deleteClass(String id){
+        Classes clas = classRepository.findById(Long.parseLong(id)).orElseThrow(()-> new IllegalStateException("Class not found"));
+        if(clas.getChildInformation().size() > 0){
+            return false;
+        }
+        classRepository.delete(clas);
+        return true;
+    }
+
     static final int CLASS_CAPACITY = 32;
 }
 

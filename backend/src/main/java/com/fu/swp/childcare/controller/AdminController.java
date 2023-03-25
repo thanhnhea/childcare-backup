@@ -40,4 +40,14 @@ public class AdminController {
             return new ResponseEntity<>("User's not found", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteUser(@RequestParam String id){
+        try{
+            s.deleteUser(id);
+            return ResponseEntity.ok().body("User Deleted");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.fu.swp.childcare.payload;
 
+import com.fu.swp.childcare.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,15 +17,6 @@ public class PostRequest {
     private String id;
     private String title;
     private String content;
-    private MultipartFile [] images;
-
-    @Override
-    public String toString() {
-        return "PostRequest{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", images=" + Arrays.toString(images) +
-                '}';
-    }
+    private MultipartFile images;
+    private User user;
 }

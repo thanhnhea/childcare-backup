@@ -1,71 +1,102 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import userService from "../../services/user.service";
+import { Container, Form, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EditServiceDetail = () => {
     const { id } = useParams();
-    const [service, setService] = useState(null);
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
+    const [service, setService] = useState();
+    const [originalService, setOriginalService] = useState();
+    const { register, handleSubmit, setValue, errors } = useForm();
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchData() {
-            const data = userService.getServiceDetail(id);
-            setService(data);
+            const response = await userService.getServiceDetail(id);
+            setService(response.data);
+            setOriginalService(response.data);
         }
         fetchData();
+    }, [id]);
 
-    }, [])
+    useEffect(() => {
+        if (service) {
+            setValue("serviceTitle", service.serviceTitle);
+            setValue("serviceDetail", service.serviceDetail);
+            setValue("servicePrice", service.servicePrice);
+        }
+    }, [service, setValue]);
 
+    const onSubmit = async (data) => {
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-
-
+        const formData = new FormData();
+        formData.append("serviceTitle", data.serviceTitle);
+        formData.append("serviceDetail", data.serviceDetail);
+        formData.append("servicePrice", data.servicePrice);
+        try {
+            await userService.postEditService(formData, id);
+            toast.success("Service updated successfully.");
+            navigate(`/service/${id}`)
+        } catch (error) {
+            toast.error("Error updating service.");
+        }
     };
 
-    if (!service) {
-        return <div>Loading...</div>;
-    }
-
     return (
-        <div>
+        <Container>
             <h1>Edit Service</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="name" className="form-label">
-                        Service Title
-                    </label>
-                    <input
+            <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form.Group controlId="formServiceTitle">
+                    <Form.Label>Serivce Title:</Form.Label>
+                    <Form.Control
                         type="text"
-                        className="form-control"
-                        id="name"
-                        value={name}
-                        onChange={(event) => setName(event.target.value)}
+                        placeholder="Enter service title"
+                        {...register("serviceTitle", { required: true })}
                     />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="description" className="form-label">
-                        Description
-                    </label>
-                    <textarea
-                        className="form-control"
-                        id="description"
-                        value={description}
-                        onChange={(event) => setDescription(event.target.value)}
+                    {errors?.serviceTitle && (
+                        <Form.Text className="text-danger">
+                            This field is required
+                        </Form.Text>
+                    )}
+                </Form.Group>
+
+                <Form.Group controlId="formServiceDetail">
+                    <Form.Label>Description:</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows={3}
+                        placeholder="Enter service description"
+                        {...register("serviceDetail", { required: true })}
                     />
-                </div>
-                <div>
-                    <label htmlFor="description" className="form-label">
-                        Price
-                    </label>
-                </div>
-                <button type="submit" className="btn btn-primary">
+                    {errors?.serviceDetail && (
+                        <Form.Text className="text-danger">
+                            This field is required
+                        </Form.Text>
+                    )}
+                </Form.Group>
+
+                <Form.Group controlId="formServicePrice">
+                    <Form.Label>Price:</Form.Label>
+                    <Form.Control
+                        type="number"
+                        placeholder="Enter service price"
+                        {...register("servicePrice", { required: true })}
+                    />
+                    {errors?.servicePrice && (
+                        <Form.Text className="text-danger">
+                            This field is required
+                        </Form.Text>
+                    )}
+                </Form.Group>
+
+                <Button variant="primary" type="submit">
                     Save
-                </button>
-            </form>
-        </div>
+                </Button>
+            </Form>
+        </Container>
     );
 };
 

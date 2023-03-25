@@ -39,7 +39,7 @@ public class ServiceBookingList {
     LocalDate createDate;
 
     public BookingServiceListResponse toBookingServiceListResponse() {
-        return new BookingServiceListResponse(this.id.toString(), this.serviceId.getServiceTitle(), this.customer.getUsername(), this.childID.getLastName(), this.createDate, this.status);
+        return new BookingServiceListResponse(this.id.toString(), this.serviceId.getServiceTitle(), this.customer.getUsername(), this.childID.getLastName(), this.createDate, this.status ,serviceId.getServicePrice());
     }
 
     @Override

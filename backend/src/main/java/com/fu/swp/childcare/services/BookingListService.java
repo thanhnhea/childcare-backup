@@ -79,4 +79,8 @@ public class BookingListService {
     public void save(ServiceBookingList serviceBookingList) {
         serviceBookingRepository.save(serviceBookingList);
     }
+
+    public List<ServiceBookingList> getBookedService(String id){
+        return serviceBookingRepository.findByCustomerId(Long.valueOf(id));
+    }
 }

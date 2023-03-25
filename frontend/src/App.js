@@ -40,6 +40,7 @@ import Post from './Pages/post/Post';
 import NewPost from './Pages/post/NewPost';
 import PostList from './Pages/post/PostList';
 import PostView from './Pages/post/PostView';
+import EditChild from './components/EditChild';
 
 function App() {
   return (
@@ -86,6 +87,7 @@ function App() {
           <Route path="/post/submit" element={<NewPost />} />
           <Route path="/post/:id" element={<PostView />} />
           <Route path="/posts" element={<PostList />} />
+          <Route path='/editchild/:id' element={<EditChild />} />
         </Routes>
         <Footer />
       </Router>

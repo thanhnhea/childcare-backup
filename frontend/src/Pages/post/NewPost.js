@@ -25,7 +25,7 @@ const NewPost = () => {
         }
         try {
             const response = await axios.post('http://localhost:8080/api/post/create', formData, { headers: authHeader() });
-            setSuccessMessage('Form submitted successfully!');
+            setSuccessMessage('Post submitted successfully!');
             setErrorMessage(null);
             setTimeout(() => {
                 navigate('/posts');
@@ -94,8 +94,6 @@ const NewPost = () => {
                         ))}
                     </div>
                 </div>
-
-
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
         </div>

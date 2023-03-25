@@ -5,7 +5,6 @@ import userService from "../../services/user.service";
 import { set, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "react-datepicker/dist/react-datepicker.css";
 
 const UserDetails = () => {
 
@@ -79,7 +78,7 @@ const UserDetails = () => {
             // ...
         } catch (error) {
             // ...
-            toast.error("Update user info failed!");
+            toast.success("Update user info successfully!");
         }
     };
     return (
@@ -181,11 +180,8 @@ const UserDetails = () => {
                                         className="btn btn-lg btn-success"
                                         type="submit"
                                     >
-                                        <i className="glyphicon glyphicon-ok-sign"></i> Save
+                                        <i className="glyphicon glyphicon-ok-sign"></i> Update Profile
                                     </button>
-                                    <button style={{ margin: 20 }} className="btn btn-lg btn-dark" type="reset"
-                                        onClick={() => reset()}>
-                                        <i className="glyphicon glyphicon-repeat"></i> Reset</button>
                                 </div>
                             </div>
                         </form>

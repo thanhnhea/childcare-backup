@@ -21,8 +21,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.springframework.http.MediaType.*;
-
 @Service
 public class PostService {
 
@@ -48,29 +46,34 @@ public class PostService {
      * @param content
      *
      */
-    public void savePost(String title, String content, MultipartFile file , User u) {
+    public void savePost(PostRequest postRequest) {
         Post post = new Post();
-        post.setTitle(title);
-        post.setContent(content);
-        post.setCreatedDate(LocalDateTime.now());
-        post.setUser(u);    
-
-        isFileEmpty(file.isEmpty(), "Cannot upload empty file ");
-//        isFileEmpty(!Arrays.asList(IMAGE_JPEG.get, IMAGE_PNG.getSubtype(), IMAGE_GIF.getSubtype()).contains(file.getContentType()), "File must be an image " + file.getContentType());
-        //Grab metadata from file
-        Map<String, String> metaData = extractMetadata(file);
-
-        //set file name and path in s3 bucket
-
-        String path = String.format("%s/%s" , BucketName.PROFILE_IMAGE.getBucketName() , u.getUsername());
-        String fileName = String.format("%s-%s" , file.getOriginalFilename() , UUID.randomUUID());
-        try {
-            fileStore.save(path,fileName,Optional.of(metaData),file.getInputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if(postRequest.getTitle() != null){
+            post.setTitle(postRequest.getTitle());
         }
-        post.setImageLink(fileName);
+        if(postRequest.getContent() != null){
+            post.setContent(postRequest.getContent());
+        }
+        post.setCreatedDate(LocalDateTime.now());
+        post.setUser(postRequest.getUser());
+
+        if(postRequest.getImages() != null){
+            Map<String, String> metaData = extractMetadata(postRequest.getImages());
+            String path = String.format("%s/%s" , BucketName.PROFILE_IMAGE.getBucketName() , postRequest.getUser().getUsername());
+            String fileName = String.format("%s-%s" , postRequest.getImages().getOriginalFilename() , UUID.randomUUID());
+            try {
+                fileStore.save(path,fileName,Optional.of(metaData),postRequest.getImages().getInputStream());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            post.setImageLink(fileName);
+        }
+//        isFileEmpty(!Arrays.asList(IMAGE_JPEG.get, IMAGE_PNG.getSubtype(), IMAGE_GIF.getSubtype()).contains(file.getContentType()), "File must be an image " + file.getContentType());
         postRepository.save(post);
+    }
+
+    public void deletePost(String id){
+        postRepository.deleteById(Long.valueOf(id));
     }
 
     private Map<String, String> extractMetadata(MultipartFile file) {
@@ -115,8 +118,9 @@ public class PostService {
         }
     }
 
-    public Page<Post> getAllPosts(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
-        return postRepository.findAll(pageable);
+    public List<Post> getAllPosts(int page, int size) {
+        Pageable paging = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Page<Post> pageResult = postRepository.findAll(paging);
+        return pageResult.getContent();
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -60,5 +61,20 @@ public class ServiceController {
             return ResponseEntity.badRequest().body(e);
         }
     }
-    
+
+
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Service> updateService(@PathVariable("id") Long id, @RequestParam("serviceTitle") String serviceTitle, @RequestParam("serviceDetail") String serviceDetail, @RequestParam("servicePrice") double servicePrice) {
+        Optional<Service> optionalService = serviceRepository.findById(id);
+        if (optionalService.isPresent()) {
+            Service service = optionalService.get();
+            service.setServiceTitle(serviceTitle);
+            service.setServiceDetail(serviceDetail);
+            service.setServicePrice(String.valueOf(servicePrice));
+            serviceRepository.save(service);
+            return ResponseEntity.ok(service);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

@@ -3,11 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
 import serviceDetailImg from '../../Images/service-details-promo1.png';
 import './Login.css';
-
-
 import AuthService from "../../services/auth.service";
 import { withRouter } from '../../common/with-router';
 import { Circles, ColorRing, ThreeDots } from 'react-loader-spinner';
+
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class Login extends Component {
 
@@ -88,7 +89,8 @@ class Login extends Component {
 
         AuthService.login(this.state.username, this.state.password)
             .then(() => {
-                this.props.router.navigate("/profile");
+                toast.success("welcome!" + this.state.username);
+                this.props.router.navigate("/");
                 window.location.reload();
             })
             .catch((error) => {
