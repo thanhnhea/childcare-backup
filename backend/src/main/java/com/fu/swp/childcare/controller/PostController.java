@@ -10,6 +10,7 @@ import com.fu.swp.childcare.services.UserService;
 import lombok.Getter;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -82,9 +83,17 @@ public class PostController {
         return postService.downloadPostImage(p);
     }
 
+//    @GetMapping("/all")
+//    public ResponseEntity<?> getAllPost(){
+//        List<PostDTO> postDTO = postService.getALlPost();
+//        return ResponseEntity.ok().body(postDTO);
+//    }
+
     @GetMapping("/all")
-    public ResponseEntity<?> getAllPost(){
-        List<PostDTO> postDTO = postService.getALlPost();
-        return ResponseEntity.ok().body(postDTO);
+    public ResponseEntity<?> getAllPosts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<Post> posts = postService.getAllPosts(page, size);
+        return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }

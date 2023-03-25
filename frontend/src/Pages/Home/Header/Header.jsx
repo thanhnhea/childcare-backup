@@ -8,6 +8,7 @@ import './Header.css';
 
 import AuthService from "../../../services/auth.service";
 import { Component } from 'react';
+import userService from '../../../services/user.service';
 
 class Header extends Component {
 
@@ -59,6 +60,7 @@ class Header extends Component {
                                 <Link to="/home" className='list-item text-decoration-none'>Home</Link>
                                 <Link to="/service" className='list-item text-decoration-none'>Service</Link>
                                 <Link to="/doctor" className='list-item text-decoration-none'>Doctor</Link>
+                                <Link to="/posts" className='list-item text-decoration-none'>Community</Link>
                                 {showModeratorBoard && (
                                     <Link to={"/mod"} className="list-item text-decoration-none">
                                         Manager Board
@@ -79,7 +81,7 @@ class Header extends Component {
                                     <div className="navbar-nav ml-auto">
                                         <li className="nav-item">
                                             <div className="list-item text-decoration-none">
-                                                <img src='http://localhost:8080/account/image?id=6' alt="Profile" className="profile-picture" />
+                                                <img src={userService.getUserPfpLink(currentUser.id)} alt="Profile" className="profile-picture" />
                                             </div>
                                         </li>
                                         <li className="nav-item">

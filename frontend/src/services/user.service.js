@@ -128,8 +128,8 @@ class UserService {
         return axios.get(API_URL + 'api/post/image?id=' + id, { headers: authHeader() });
     }
 
-    getAllPost() {
-        return axios.get(API_URL + 'api/post/all', { headers: authHeader() });
+    getAllPost(page, size) {
+        return axios.get(API_URL + `api/post/all?page=${page}&size=${size}`, { headers: authHeader() });
     }
 
     getUserInfo() {
@@ -142,6 +142,13 @@ class UserService {
 
     getUserPfp(id) {
         return axios.get(API_URL + 'account/image?id=' + id, { headers: authHeader() });
+    }
+
+    getImagePostLink(id) {
+        return API_URL + 'api/post/image?id=' + id;
+    }
+    getUserPfpLink(id) {
+        return API_URL + 'account/image?id=' + id;
     }
 }
 

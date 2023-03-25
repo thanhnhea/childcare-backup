@@ -107,7 +107,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public byte[] downloadPfpImage(User u){
         String fullPath = String.format("/%s/%s",BucketName.PROFILE_IMAGE.getBucketName() , u.getId());
-        if(!u.getPfpImgLink().isEmpty()){
+        if(null != u.getPfpImgLink()){
             return fileStore.download(fullPath, u.getPfpImgLink());
         }else{
             return new byte[0];
