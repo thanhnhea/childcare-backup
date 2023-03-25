@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import userService from "../../services/user.service";
 import { Container, Form, Button } from "react-bootstrap";
@@ -11,6 +11,7 @@ const EditServiceDetail = () => {
     const [service, setService] = useState();
     const [originalService, setOriginalService] = useState();
     const { register, handleSubmit, setValue, errors } = useForm();
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchData() {
@@ -30,9 +31,15 @@ const EditServiceDetail = () => {
     }, [service, setValue]);
 
     const onSubmit = async (data) => {
+
+        const formData = new FormData();
+        formData.append("serviceTitle", data.serviceTitle);
+        formData.append("serviceDetail", data.serviceDetail);
+        formData.append("servicePrice", data.servicePrice);
         try {
-            await userService.updateService(id, data);
-            toast.success("Service updated successfully!");
+            await userService.postEditService(formData, id);
+            toast.success("Service updated successfully.");
+            navigate(`/service/${id}`)
         } catch (error) {
             toast.error("Error updating service.");
         }

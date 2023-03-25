@@ -72,6 +72,7 @@ class UserService {
         return axios.get(API_URL + 'account/current-user-children', { headers: authHeader() });
     }
 
+
     getClassDetails(id) {
         return axios.get(API_URL + 'api/mod/class?id=' + id, { headers: authHeader() });
     }
@@ -122,6 +123,10 @@ class UserService {
 
     postSubmitService(id, childId, isPaid) {
         return axios.post(API_URL + 'account/booknow', { id, childId, isPaid }, { headers: authHeader() })
+    }
+
+    postEditService(formData, id) {
+        return axios.put(API_URL + `api/service/edit/${id}`, formData, { headers: authHeader() })
     }
 
     postCreatePost(formData) {
