@@ -161,10 +161,7 @@ const Register = () => {
                         <input className="form-check-input" type="radio" name="gender" id="maleGender" value="male" />
                         <label className="form-check-label" htmlFor="maleGender">Male</label>
                       </div>
-                      <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="gender" id="otherGender" value="other" required />
-                        <label className="form-check-label" htmlFor="otherGender">Other</label>
-                      </div>
+                
                     </div>
 
                   </div>
