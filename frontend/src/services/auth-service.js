@@ -13,7 +13,7 @@ function formatDate(date) {
 
 export const createService = (title, price, details, category) => {
 
-  return axios.post(API_URL + 'newService', {
+  return axios.post(API_URL + 'services/new', {
     title,
     price,
     details,

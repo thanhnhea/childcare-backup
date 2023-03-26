@@ -8,7 +8,6 @@ const Dentist = () => {
         <>
             <Banner />
             <Details />
-            <Appoinment />
         </>
     );
 };

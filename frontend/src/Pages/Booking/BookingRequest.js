@@ -72,8 +72,11 @@ const Booking = () => {
                                     }
                                 }} className="link-button">
                                     Choose this Child
-                                </Link> */}
-                                <Button variant="primary" onClick={() => handleSubmit(child)}>Choose this Child</Button>
+                                </Link> */}{child.status !== 'UnAssigned' && (
+                                    <Button variant="primary" onClick={() => handleSubmit(child)}>
+                                        Choose this Child
+                                    </Button>
+                                )}
                             </Card.Body>
                         </Card>
                     </Col>
