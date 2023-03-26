@@ -190,6 +190,7 @@ public class UserController {
             bookingListService.save(request, username);
             return ResponseEntity.ok().body("Booking Recorded");
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

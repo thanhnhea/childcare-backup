@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import userService from "../services/user.service";
 
@@ -18,7 +19,7 @@ import userService from "../services/user.service";
 // ];
 
 const Tab2 = () => {
-
+    const navigate = useNavigate();
     const [classes, setClasses] = useState([]);
     const [children, setChildren] = useState([]);
     const [ageRangeFilter, setAgeRangeFilter] = useState("");
@@ -137,7 +138,7 @@ const Tab2 = () => {
                     </select>
                 </div>
                 <div className="col-sm-3">
-                    <button type="submit" className="btn btn-primary mt-3">Add new Class</button>
+                    <button type="submit" onClick={() => navigate("/newclass")} className="btn btn-primary mt-3">Add new Class</button>
                 </div>
             </div>
             <div className="row">

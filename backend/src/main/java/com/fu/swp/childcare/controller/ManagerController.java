@@ -244,6 +244,18 @@ public class ManagerController {
                 : ResponseEntity.ok(children.stream().map(ChildInformation::toChildrenInfoDto).collect(Collectors.toList()));
     }
 
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteService(@RequestParam String id){
+       try {
+           Service service =  serviceRepository.getReferenceById(Long.parseLong(id));
+           serviceRepository.delete(service);
+           return ResponseEntity.ok("DELETE SUCCESS");
+       }catch (Exception e){
+           e.printStackTrace();
+           return ResponseEntity.badRequest().body("DELETE failed");
+       }
+    }
+
     @PostMapping("/services/new")
     @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<?> newService(@RequestBody ServiceRequest request) {

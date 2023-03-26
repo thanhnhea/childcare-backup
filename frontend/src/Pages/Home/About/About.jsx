@@ -31,7 +31,6 @@ const About = () => {
                                 <p>Welcome to our Babysitter Center that represents everything babysisters need.
                                     We have improved the methods of education and child care from both traditional and modern methods.
                                     This perfect combination will make parents happy!</p>
-                                <a href='/page/about'>About Us</a>
                             </div>
                             <div className="fun-fact-sec" data-aos="fade-right">
                                 <div className="single-fun">

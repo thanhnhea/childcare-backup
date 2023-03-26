@@ -168,6 +168,9 @@ class UserService {
         return axios.delete(API_URL + 'api/post/delete?id=' + id, { headers: authHeader() });
     }
 
+    postDeleteService(id) {
+        return axios.post(API_URL + 'api/mod/delete?id=' + id, { headers: authHeader() });
+    }
 
 }
 
