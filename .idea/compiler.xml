@@ -8,12 +8,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="childcare" />
+        <module name="children-care" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="childcare" target="17" />
-      <module name="children-care" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
